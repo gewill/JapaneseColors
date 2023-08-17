@@ -13,7 +13,7 @@ let session = URLSession.shared
 for month in 1...12 {
     group.enter()
 
-    let urlStr = "https://colors.limboy.me/colors/d/\(month)?_data=routes%2Fcolors.d.%24\(month)"
+    let urlStr = "https://colors.limboy.me/colors/d/\(month)?_data=routes%2Fcolors.d.$month"
     guard let url = URL(string: urlStr) else {
         group.leave()
         continue
