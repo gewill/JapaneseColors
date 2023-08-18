@@ -1,0 +1,499 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE1E567B2A8E718A0095E568 /* JapaneseColorsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1E567A2A8E718A0095E568 /* JapaneseColorsApp.swift */; };
+		BE1E567D2A8E718A0095E568 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1E567C2A8E718A0095E568 /* ContentView.swift */; };
+		BE1E567F2A8E718B0095E568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1E567E2A8E718B0095E568 /* Assets.xcassets */; };
+		BE1E56832A8E718B0095E568 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1E56822A8E718B0095E568 /* Preview Assets.xcassets */; };
+		BE9E5CFE2A8E83B40003D53D /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E5CFD2A8E83B40003D53D /* SwiftyJSON.swift */; };
+		BE9E5D002A8E855A0003D53D /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E5CFF2A8E855A0003D53D /* ColorExtensions.swift */; };
+		BE9E5D022A8E9EA50003D53D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E5D012A8E9EA40003D53D /* Constants.swift */; };
+		BEE65CE62A8E71CC0039B287 /* purple.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CCE2A8E71CC0039B287 /* purple.json */; };
+		BEE65CE72A8E71CC0039B287 /* black.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CCF2A8E71CC0039B287 /* black.json */; };
+		BEE65CE82A8E71CC0039B287 /* red.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD02A8E71CC0039B287 /* red.json */; };
+		BEE65CE92A8E71CC0039B287 /* orange.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD12A8E71CC0039B287 /* orange.json */; };
+		BEE65CEA2A8E71CC0039B287 /* green.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD22A8E71CC0039B287 /* green.json */; };
+		BEE65CEB2A8E71CC0039B287 /* brown.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD32A8E71CC0039B287 /* brown.json */; };
+		BEE65CEC2A8E71CC0039B287 /* blue.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD42A8E71CC0039B287 /* blue.json */; };
+		BEE65CED2A8E71CC0039B287 /* yellow.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD52A8E71CC0039B287 /* yellow.json */; };
+		BEE65CEE2A8E71CC0039B287 /* white.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD62A8E71CC0039B287 /* white.json */; };
+		BEE65CEF2A8E71CC0039B287 /* pink.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD72A8E71CC0039B287 /* pink.json */; };
+		BEE65CF02A8E71CC0039B287 /* gray.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD82A8E71CC0039B287 /* gray.json */; };
+		BEE65CF12A8E71CC0039B287 /* 6.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CDA2A8E71CC0039B287 /* 6.json */; };
+		BEE65CF22A8E71CC0039B287 /* 7.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CDB2A8E71CC0039B287 /* 7.json */; };
+		BEE65CF32A8E71CC0039B287 /* 10.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CDC2A8E71CC0039B287 /* 10.json */; };
+		BEE65CF42A8E71CC0039B287 /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CDD2A8E71CC0039B287 /* 1.json */; };
+		BEE65CF52A8E71CC0039B287 /* 11.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CDE2A8E71CC0039B287 /* 11.json */; };
+		BEE65CF62A8E71CC0039B287 /* 2.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CDF2A8E71CC0039B287 /* 2.json */; };
+		BEE65CF72A8E71CC0039B287 /* 12.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CE02A8E71CC0039B287 /* 12.json */; };
+		BEE65CF82A8E71CC0039B287 /* 3.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CE12A8E71CC0039B287 /* 3.json */; };
+		BEE65CF92A8E71CC0039B287 /* 8.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CE22A8E71CC0039B287 /* 8.json */; };
+		BEE65CFA2A8E71CC0039B287 /* 4.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CE32A8E71CC0039B287 /* 4.json */; };
+		BEE65CFB2A8E71CC0039B287 /* 5.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CE42A8E71CC0039B287 /* 5.json */; };
+		BEE65CFC2A8E71CC0039B287 /* 9.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CE52A8E71CC0039B287 /* 9.json */; };
+		BEE65FD92A8E7FE70039B287 /* ColorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE65FD82A8E7FE70039B287 /* ColorModel.swift */; };
+		BEFC5F122A8FC5E4004A2F1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */; };
+		BEFC5F142A8FC9EF004A2F1D /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFC5F132A8FC9EF004A2F1D /* ButtonStyle.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		BE1E56772A8E718A0095E568 /* JapaneseColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JapaneseColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE1E567A2A8E718A0095E568 /* JapaneseColorsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JapaneseColorsApp.swift; sourceTree = "<group>"; };
+		BE1E567C2A8E718A0095E568 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BE1E567E2A8E718B0095E568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BE1E56802A8E718B0095E568 /* JapaneseColors.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JapaneseColors.entitlements; sourceTree = "<group>"; };
+		BE1E56822A8E718B0095E568 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BE9E5CFD2A8E83B40003D53D /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		BE9E5CFF2A8E855A0003D53D /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		BE9E5D012A8E9EA40003D53D /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BEE65CCE2A8E71CC0039B287 /* purple.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = purple.json; sourceTree = "<group>"; };
+		BEE65CCF2A8E71CC0039B287 /* black.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = black.json; sourceTree = "<group>"; };
+		BEE65CD02A8E71CC0039B287 /* red.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = red.json; sourceTree = "<group>"; };
+		BEE65CD12A8E71CC0039B287 /* orange.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orange.json; sourceTree = "<group>"; };
+		BEE65CD22A8E71CC0039B287 /* green.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = green.json; sourceTree = "<group>"; };
+		BEE65CD32A8E71CC0039B287 /* brown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = brown.json; sourceTree = "<group>"; };
+		BEE65CD42A8E71CC0039B287 /* blue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = blue.json; sourceTree = "<group>"; };
+		BEE65CD52A8E71CC0039B287 /* yellow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yellow.json; sourceTree = "<group>"; };
+		BEE65CD62A8E71CC0039B287 /* white.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = white.json; sourceTree = "<group>"; };
+		BEE65CD72A8E71CC0039B287 /* pink.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pink.json; sourceTree = "<group>"; };
+		BEE65CD82A8E71CC0039B287 /* gray.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gray.json; sourceTree = "<group>"; };
+		BEE65CDA2A8E71CC0039B287 /* 6.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 6.json; sourceTree = "<group>"; };
+		BEE65CDB2A8E71CC0039B287 /* 7.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 7.json; sourceTree = "<group>"; };
+		BEE65CDC2A8E71CC0039B287 /* 10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 10.json; sourceTree = "<group>"; };
+		BEE65CDD2A8E71CC0039B287 /* 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 1.json; sourceTree = "<group>"; };
+		BEE65CDE2A8E71CC0039B287 /* 11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 11.json; sourceTree = "<group>"; };
+		BEE65CDF2A8E71CC0039B287 /* 2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 2.json; sourceTree = "<group>"; };
+		BEE65CE02A8E71CC0039B287 /* 12.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 12.json; sourceTree = "<group>"; };
+		BEE65CE12A8E71CC0039B287 /* 3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 3.json; sourceTree = "<group>"; };
+		BEE65CE22A8E71CC0039B287 /* 8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 8.json; sourceTree = "<group>"; };
+		BEE65CE32A8E71CC0039B287 /* 4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 4.json; sourceTree = "<group>"; };
+		BEE65CE42A8E71CC0039B287 /* 5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 5.json; sourceTree = "<group>"; };
+		BEE65CE52A8E71CC0039B287 /* 9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 9.json; sourceTree = "<group>"; };
+		BEE65FD82A8E7FE70039B287 /* ColorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorModel.swift; sourceTree = "<group>"; };
+		BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		BEFC5F132A8FC9EF004A2F1D /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BE1E56742A8E718A0095E568 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BE1E566E2A8E718A0095E568 = {
+			isa = PBXGroup;
+			children = (
+				BE1E56792A8E718A0095E568 /* JapaneseColors */,
+				BE1E56782A8E718A0095E568 /* Products */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+		};
+		BE1E56782A8E718A0095E568 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE1E56772A8E718A0095E568 /* JapaneseColors.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BE1E56792A8E718A0095E568 /* JapaneseColors */ = {
+			isa = PBXGroup;
+			children = (
+				BE1E567A2A8E718A0095E568 /* JapaneseColorsApp.swift */,
+				BE1E567C2A8E718A0095E568 /* ContentView.swift */,
+				BE9E5D012A8E9EA40003D53D /* Constants.swift */,
+				BEE65FD82A8E7FE70039B287 /* ColorModel.swift */,
+				BE9E5CFD2A8E83B40003D53D /* SwiftyJSON.swift */,
+				BE9E5CFF2A8E855A0003D53D /* ColorExtensions.swift */,
+				BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */,
+				BEFC5F132A8FC9EF004A2F1D /* ButtonStyle.swift */,
+				BE1E567E2A8E718B0095E568 /* Assets.xcassets */,
+				BE1E56802A8E718B0095E568 /* JapaneseColors.entitlements */,
+				BEE65CCD2A8E71CC0039B287 /* byColor */,
+				BEE65CD92A8E71CC0039B287 /* byMonth */,
+				BE1E56812A8E718B0095E568 /* Preview Content */,
+			);
+			path = JapaneseColors;
+			sourceTree = "<group>";
+		};
+		BE1E56812A8E718B0095E568 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				BE1E56822A8E718B0095E568 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BEE65CCD2A8E71CC0039B287 /* byColor */ = {
+			isa = PBXGroup;
+			children = (
+				BEE65CCE2A8E71CC0039B287 /* purple.json */,
+				BEE65CCF2A8E71CC0039B287 /* black.json */,
+				BEE65CD02A8E71CC0039B287 /* red.json */,
+				BEE65CD12A8E71CC0039B287 /* orange.json */,
+				BEE65CD22A8E71CC0039B287 /* green.json */,
+				BEE65CD32A8E71CC0039B287 /* brown.json */,
+				BEE65CD42A8E71CC0039B287 /* blue.json */,
+				BEE65CD52A8E71CC0039B287 /* yellow.json */,
+				BEE65CD62A8E71CC0039B287 /* white.json */,
+				BEE65CD72A8E71CC0039B287 /* pink.json */,
+				BEE65CD82A8E71CC0039B287 /* gray.json */,
+			);
+			path = byColor;
+			sourceTree = SOURCE_ROOT;
+		};
+		BEE65CD92A8E71CC0039B287 /* byMonth */ = {
+			isa = PBXGroup;
+			children = (
+				BEE65CDA2A8E71CC0039B287 /* 6.json */,
+				BEE65CDB2A8E71CC0039B287 /* 7.json */,
+				BEE65CDC2A8E71CC0039B287 /* 10.json */,
+				BEE65CDD2A8E71CC0039B287 /* 1.json */,
+				BEE65CDE2A8E71CC0039B287 /* 11.json */,
+				BEE65CDF2A8E71CC0039B287 /* 2.json */,
+				BEE65CE02A8E71CC0039B287 /* 12.json */,
+				BEE65CE12A8E71CC0039B287 /* 3.json */,
+				BEE65CE22A8E71CC0039B287 /* 8.json */,
+				BEE65CE32A8E71CC0039B287 /* 4.json */,
+				BEE65CE42A8E71CC0039B287 /* 5.json */,
+				BEE65CE52A8E71CC0039B287 /* 9.json */,
+			);
+			path = byMonth;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE1E56762A8E718A0095E568 /* JapaneseColors */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE1E56862A8E718B0095E568 /* Build configuration list for PBXNativeTarget "JapaneseColors" */;
+			buildPhases = (
+				BE1E56732A8E718A0095E568 /* Sources */,
+				BE1E56742A8E718A0095E568 /* Frameworks */,
+				BE1E56752A8E718A0095E568 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JapaneseColors;
+			productName = JapaneseColors;
+			productReference = BE1E56772A8E718A0095E568 /* JapaneseColors.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE1E566F2A8E718A0095E568 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					BE1E56762A8E718A0095E568 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = BE1E56722A8E718A0095E568 /* Build configuration list for PBXProject "JapaneseColors" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BE1E566E2A8E718A0095E568;
+			productRefGroup = BE1E56782A8E718A0095E568 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE1E56762A8E718A0095E568 /* JapaneseColors */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BE1E56752A8E718A0095E568 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEE65CFC2A8E71CC0039B287 /* 9.json in Resources */,
+				BEE65CF32A8E71CC0039B287 /* 10.json in Resources */,
+				BEE65CF12A8E71CC0039B287 /* 6.json in Resources */,
+				BE1E56832A8E718B0095E568 /* Preview Assets.xcassets in Resources */,
+				BEE65CF82A8E71CC0039B287 /* 3.json in Resources */,
+				BEE65CEA2A8E71CC0039B287 /* green.json in Resources */,
+				BEE65CEC2A8E71CC0039B287 /* blue.json in Resources */,
+				BEE65CEB2A8E71CC0039B287 /* brown.json in Resources */,
+				BEE65CEE2A8E71CC0039B287 /* white.json in Resources */,
+				BEE65CF92A8E71CC0039B287 /* 8.json in Resources */,
+				BE1E567F2A8E718B0095E568 /* Assets.xcassets in Resources */,
+				BEE65CF42A8E71CC0039B287 /* 1.json in Resources */,
+				BEE65CFB2A8E71CC0039B287 /* 5.json in Resources */,
+				BEE65CF52A8E71CC0039B287 /* 11.json in Resources */,
+				BEE65CE62A8E71CC0039B287 /* purple.json in Resources */,
+				BEE65CFA2A8E71CC0039B287 /* 4.json in Resources */,
+				BEE65CF02A8E71CC0039B287 /* gray.json in Resources */,
+				BEE65CE82A8E71CC0039B287 /* red.json in Resources */,
+				BEE65CF22A8E71CC0039B287 /* 7.json in Resources */,
+				BEE65CF62A8E71CC0039B287 /* 2.json in Resources */,
+				BEE65CE72A8E71CC0039B287 /* black.json in Resources */,
+				BEE65CE92A8E71CC0039B287 /* orange.json in Resources */,
+				BEE65CED2A8E71CC0039B287 /* yellow.json in Resources */,
+				BEE65CF72A8E71CC0039B287 /* 12.json in Resources */,
+				BEE65CEF2A8E71CC0039B287 /* pink.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BE1E56732A8E718A0095E568 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE1E567D2A8E718A0095E568 /* ContentView.swift in Sources */,
+				BEFC5F142A8FC9EF004A2F1D /* ButtonStyle.swift in Sources */,
+				BEFC5F122A8FC5E4004A2F1D /* ViewExtensions.swift in Sources */,
+				BE9E5D002A8E855A0003D53D /* ColorExtensions.swift in Sources */,
+				BE1E567B2A8E718A0095E568 /* JapaneseColorsApp.swift in Sources */,
+				BEE65FD92A8E7FE70039B287 /* ColorModel.swift in Sources */,
+				BE9E5CFE2A8E83B40003D53D /* SwiftyJSON.swift in Sources */,
+				BE9E5D022A8E9EA50003D53D /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BE1E56842A8E718B0095E568 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BE1E56852A8E718B0095E568 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		BE1E56872A8E718B0095E568 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = JapaneseColors/JapaneseColors.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"JapaneseColors/Preview Content\"";
+				DEVELOPMENT_TEAM = RLK76T8Y89;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.JapaneseColors;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+			};
+			name = Debug;
+		};
+		BE1E56882A8E718B0095E568 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = JapaneseColors/JapaneseColors.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"JapaneseColors/Preview Content\"";
+				DEVELOPMENT_TEAM = RLK76T8Y89;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.JapaneseColors;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE1E56722A8E718A0095E568 /* Build configuration list for PBXProject "JapaneseColors" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE1E56842A8E718B0095E568 /* Debug */,
+				BE1E56852A8E718B0095E568 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE1E56862A8E718B0095E568 /* Build configuration list for PBXNativeTarget "JapaneseColors" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE1E56872A8E718B0095E568 /* Debug */,
+				BE1E56882A8E718B0095E568 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE1E566F2A8E718A0095E568 /* Project object */;
+}
