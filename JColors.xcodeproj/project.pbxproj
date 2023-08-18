@@ -43,7 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BE1E56772A8E718A0095E568 /* JapaneseColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JapaneseColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE1E56772A8E718A0095E568 /* JColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1E567A2A8E718A0095E568 /* JapaneseColorsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JapaneseColorsApp.swift; sourceTree = "<group>"; };
 		BE1E567C2A8E718A0095E568 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BE1E567E2A8E718B0095E568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,6 +78,7 @@
 		BEE65FD82A8E7FE70039B287 /* ColorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorModel.swift; sourceTree = "<group>"; };
 		BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		BEFC5F132A8FC9EF004A2F1D /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		BEFC5F152A8FD1A7004A2F1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +105,7 @@
 		BE1E56782A8E718A0095E568 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BE1E56772A8E718A0095E568 /* JapaneseColors.app */,
+				BE1E56772A8E718A0095E568 /* JColors.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,6 +113,7 @@
 		BE1E56792A8E718A0095E568 /* JapaneseColors */ = {
 			isa = PBXGroup;
 			children = (
+				BEFC5F152A8FD1A7004A2F1D /* Info.plist */,
 				BE1E567A2A8E718A0095E568 /* JapaneseColorsApp.swift */,
 				BE1E567C2A8E718A0095E568 /* ContentView.swift */,
 				BE9E5D012A8E9EA40003D53D /* Constants.swift */,
@@ -177,9 +179,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BE1E56762A8E718A0095E568 /* JapaneseColors */ = {
+		BE1E56762A8E718A0095E568 /* JColors */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BE1E56862A8E718B0095E568 /* Build configuration list for PBXNativeTarget "JapaneseColors" */;
+			buildConfigurationList = BE1E56862A8E718B0095E568 /* Build configuration list for PBXNativeTarget "JColors" */;
 			buildPhases = (
 				BE1E56732A8E718A0095E568 /* Sources */,
 				BE1E56742A8E718A0095E568 /* Frameworks */,
@@ -189,9 +191,9 @@
 			);
 			dependencies = (
 			);
-			name = JapaneseColors;
+			name = JColors;
 			productName = JapaneseColors;
-			productReference = BE1E56772A8E718A0095E568 /* JapaneseColors.app */;
+			productReference = BE1E56772A8E718A0095E568 /* JColors.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -209,7 +211,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BE1E56722A8E718A0095E568 /* Build configuration list for PBXProject "JapaneseColors" */;
+			buildConfigurationList = BE1E56722A8E718A0095E568 /* Build configuration list for PBXProject "JColors" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -222,7 +224,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BE1E56762A8E718A0095E568 /* JapaneseColors */,
+				BE1E56762A8E718A0095E568 /* JColors */,
 			);
 		};
 /* End PBXProject section */
@@ -403,6 +405,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JapaneseColors/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -428,6 +431,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 16.0;
 			};
 			name = Debug;
 		};
@@ -444,6 +448,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JapaneseColors/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -469,13 +474,14 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 16.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BE1E56722A8E718A0095E568 /* Build configuration list for PBXProject "JapaneseColors" */ = {
+		BE1E56722A8E718A0095E568 /* Build configuration list for PBXProject "JColors" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE1E56842A8E718B0095E568 /* Debug */,
@@ -484,7 +490,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BE1E56862A8E718B0095E568 /* Build configuration list for PBXNativeTarget "JapaneseColors" */ = {
+		BE1E56862A8E718B0095E568 /* Build configuration list for PBXNativeTarget "JColors" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE1E56872A8E718B0095E568 /* Debug */,
