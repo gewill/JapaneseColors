@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  JapaneseColors
+//  JColors
 //
 //  Created by will on 17/08/2023.
 //

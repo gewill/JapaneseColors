@@ -1,6 +1,6 @@
 //
-//  JapaneseColorsApp.swift
-//  JapaneseColors
+//  JColorsApp.swift
+//  JColors
 //
 //  Created by will on 17/08/2023.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct JapaneseColorsApp: App {
+struct JColorsApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()

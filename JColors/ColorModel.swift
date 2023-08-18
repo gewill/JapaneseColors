@@ -1,6 +1,6 @@
 //
 //  ColorModel.swift
-//  JapaneseColors
+//  JColors
 //
 //  Created by will on 18/08/2023.
 //

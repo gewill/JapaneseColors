@@ -1,2 +1,2 @@
-# JapaneseColors
+# JColors
 gewill
