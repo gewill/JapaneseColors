@@ -8,3 +8,8 @@
 颜色数据均来源于 [暦生活](https://www.543life.com/)
 
 **授权自limboy的网页版https://colors.limboy.me/**
+
+所有颜色数据和图片均存储本地，无需联网。
+
+有什么需求，欢迎提交PR。
+
