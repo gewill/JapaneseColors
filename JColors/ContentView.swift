@@ -8,18 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-  enum CategoryType: String, CaseIterable, Identifiable {
-    case color, month
-    var id: CategoryType { self }
-  }
-
   @State var mode: NavigationSplitViewVisibility = .all
 
   @AppStorage("categoryType") var categoryType: CategoryType = .color
   @AppStorage("selectedCategory") var selectedCategory: String = "yellow"
   @State var selectedColor: ColorModel?
 
-  let colorWidth:CGFloat = {
+  let colorWidth: CGFloat = {
     switch UserInterfaceIdiom.current {
     case .mac, .pad:
       return 300
@@ -31,6 +26,7 @@ struct ContentView: View {
       return 300
     }
   }()
+
   // MARK: - life cycle
 
   var body: some View {
@@ -58,10 +54,10 @@ struct ContentView: View {
   }
 
   var slideView: some View {
-    VStack {
-      Picker("分组方式", selection: $categoryType) {
+    VStack(alignment: .center) {
+      Picker("Category Type", selection: $categoryType) {
         ForEach(CategoryType.allCases) { type in
-          Text(type.rawValue).id(type)
+          Text(type.rawValue.localizedStringKey).id(type)
         }
       }
       .pickerStyle(.segmented)
@@ -71,6 +67,7 @@ struct ContentView: View {
         ScrollView {
           VStack(spacing: 10) {
             categoryView
+            Divider()
           }
         }
         .buttonStyle(PrimaryButtonStyle())
@@ -90,15 +87,31 @@ struct ContentView: View {
   var categoryView: some View {
     Group {
       if categoryType == .color {
-        ForEach(ModelTool.shared.allSeries, id: \.self) { series in
-          let isSelected = selectedCategory == series
+        ForEach(ColorCategory.allCases) { series in
+          let isSelected = selectedCategory == series.rawValue
           Button {
-            selectedCategory = "\(series)"
+            selectedCategory = "\(series.rawValue)"
           } label: {
-            Text("\(series)")
-              .foregroundColor(isSelected ? Color.accentColor : Color.primary)
-              .font(.headline)
+            HStack {
+              ZStack {
+                Circle()
+                  .fill(series.color)
+                  .frame(width: 30, height: 30)
+                if isSelected {
+                  Circle()
+                    .fill(series.color)
+                    .colorInvert()
+                    .frame(width: 10, height: 10)
+                }
+              }
+              Text(series.rawValue.localizedStringKey)
+                .font(.headline)
+                .foregroundColor(isSelected ? Color.accentColor : Color.primary)
+            }
           }
+          .padding(6)
+          .background(Material.ultraThinMaterial)
+          .cornerRadius(30)
         }
       } else {
         ForEach(1 ..< 13) { month in
@@ -107,9 +120,14 @@ struct ContentView: View {
             selectedCategory = "\(month)"
           } label: {
             Text("\(month)月")
+              .padding(.horizontal, 12)
+              .padding(.vertical, 6)
               .foregroundColor(isSelected ? Color.accentColor : Color.primary)
               .font(.headline)
           }
+          .padding(6)
+          .background(Material.ultraThinMaterial)
+          .cornerRadius(30)
         }
       }
     }
