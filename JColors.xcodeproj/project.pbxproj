@@ -17,6 +17,7 @@
 		BEA4AFF32A9066A6004FD8F5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA4AFF22A9066A6004FD8F5 /* StringExtensions.swift */; };
 		BEA4AFF82A906718004FD8F5 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA4AFF72A906718004FD8F5 /* CategoryType.swift */; };
 		BEA4AFFB2A90674C004FD8F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEA4AFFD2A90674C004FD8F5 /* Localizable.strings */; };
+		BEA4AFFF2A907B0D004FD8F5 /* ColorCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA4AFFE2A907B0D004FD8F5 /* ColorCard.swift */; };
 		BEE65CE62A8E71CC0039B287 /* purple.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CCE2A8E71CC0039B287 /* purple.json */; };
 		BEE65CE72A8E71CC0039B287 /* black.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CCF2A8E71CC0039B287 /* black.json */; };
 		BEE65CE82A8E71CC0039B287 /* red.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE65CD02A8E71CC0039B287 /* red.json */; };
@@ -58,6 +59,7 @@
 		BEA4AFF22A9066A6004FD8F5 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		BEA4AFF72A906718004FD8F5 /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		BEA4AFFC2A90674C004FD8F5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		BEA4AFFE2A907B0D004FD8F5 /* ColorCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCard.swift; sourceTree = "<group>"; };
 		BEE65CCE2A8E71CC0039B287 /* purple.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = purple.json; sourceTree = "<group>"; };
 		BEE65CCF2A8E71CC0039B287 /* black.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = black.json; sourceTree = "<group>"; };
 		BEE65CD02A8E71CC0039B287 /* red.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = red.json; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				BEFC5F152A8FD1A7004A2F1D /* Info.plist */,
 				BE1E567A2A8E718A0095E568 /* JColorsApp.swift */,
 				BE1E567C2A8E718A0095E568 /* ContentView.swift */,
+				BEA4AFFE2A907B0D004FD8F5 /* ColorCard.swift */,
 				BE9E5D012A8E9EA40003D53D /* Constants.swift */,
 				BE1E567E2A8E718B0095E568 /* Assets.xcassets */,
 				BE1E56802A8E718B0095E568 /* JColors.entitlements */,
@@ -306,6 +309,7 @@
 				BE1E567D2A8E718A0095E568 /* ContentView.swift in Sources */,
 				BEFC5F142A8FC9EF004A2F1D /* ButtonStyle.swift in Sources */,
 				BEFC5F122A8FC5E4004A2F1D /* ViewExtensions.swift in Sources */,
+				BEA4AFFF2A907B0D004FD8F5 /* ColorCard.swift in Sources */,
 				BEA4AFF82A906718004FD8F5 /* CategoryType.swift in Sources */,
 				BEA4AFF32A9066A6004FD8F5 /* StringExtensions.swift in Sources */,
 				BE9E5D002A8E855A0003D53D /* ColorExtensions.swift in Sources */,

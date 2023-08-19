@@ -33,6 +33,15 @@ struct ContentView: View {
     switch UserInterfaceIdiom.current {
     case .mac, .pad:
       splitView
+    case .tv:
+      HStack {
+        ScrollView {
+          slideView
+        }
+        .frame(width: 260)
+
+        colorListAndDetailView
+      }
     default:
       ScrollView {
         VStack {
@@ -63,7 +72,7 @@ struct ContentView: View {
       .pickerStyle(.segmented)
       .padding()
       switch UserInterfaceIdiom.current {
-      case .mac, .pad:
+      case .mac, .pad, .tv:
         ScrollView {
           VStack(spacing: 10) {
             categoryView
@@ -81,7 +90,6 @@ struct ContentView: View {
         .buttonStyle(PrimaryButtonStyle())
       }
     }
-    .background(Material.ultraThinMaterial)
   }
 
   var categoryView: some View {
@@ -136,7 +144,7 @@ struct ContentView: View {
   var colorListAndDetailView: some View {
     Group {
       switch UserInterfaceIdiom.current {
-      case .mac, .pad:
+      case .mac, .pad, .tv:
         HStack {
           ScrollView {
             VStack {
@@ -160,47 +168,19 @@ struct ContentView: View {
 
   var colorListView: some View {
     ForEach(ModelTool.shared.getColors(filename: selectedCategory)) { model in
-      VStack {
-        HStack {
-          Text("\(model.month).\(model.date)")
-            .font(.title3)
-          Spacer()
-
-          Text(model.hex)
-            .onTapGesture {
-              #if os(tvOS)
-              #elseif os(iOS)
-                UIPasteboard.general.string = model.hex
-              #else
-                NSPasteboard.general.clearContents()
-                NSPasteboard.general.setString(model.hex, forType: .string)
-              #endif
-            }
-        }
-        .monospacedDigit()
-        Spacer()
-        Text(model.kanji)
-          .font(.title)
-        Text(model.ruby)
-          .font(.title2)
-        Spacer()
-      }
-      .padding(20)
-      .foregroundColor(Color(hex: model.hex))
-      .colorInvert()
       #if os(tvOS)
-        .frame(width: 400, height: 400)
-      #else
-        .frame(width: UserInterfaceIdiom.current == .phone ? 200 : 300, height: UserInterfaceIdiom.current == .phone ? 200 : 300)
-      #endif
-        .background(Color(hex: model.hex))
-        .cornerRadius(30)
-        .padding(10)
-        .background(Material.ultraThinMaterial)
-        .cornerRadius(40)
-        .onTapGesture {
-          selectedColor = model
+        Button {
+          updateColor(model)
+        } label: {
+          ColorCard(model: model)
         }
+        .buttonStyle(.card)
+      #else
+        ColorCard(model: model)
+          .onTapGesture {
+            updateColor(model)
+          }
+      #endif
     }
   }
 
@@ -215,13 +195,21 @@ struct ContentView: View {
             .padding(10)
             .background(Material.ultraThinMaterial)
             .cornerRadius(40)
+            .frame(maxWidth: 700)
+          #if os(tvOS)
+            .focusable()
+          #endif
           Text(selectedColor.desc)
+          #if os(tvOS)
+            .focusable()
+          #endif
         }
         .padding()
       } else {
         introView
       }
     }
+    .frame(maxWidth: .infinity)
   }
 
   var introView: some View {
@@ -233,6 +221,10 @@ struct ContentView: View {
         .padding(10)
         .background(Material.ultraThinMaterial)
         .cornerRadius(40)
+        .frame(maxWidth: 700)
+      #if os(tvOS)
+        .focusable()
+      #endif
       Text("""
       日本人自古以来便擅于从各种日常之中获得色彩的灵感，并以纤细的视角赋予各种色彩独一无二的地位，并更进一步应用于绘画、工艺、织染甚至于文学与诗歌上。
 
@@ -244,8 +236,21 @@ struct ContentView: View {
 
       **授权自limboy的网页版https://colors.limboy.me/**
       """)
+      #if os(tvOS)
+      .focusable()
+      #endif
     }
     .padding()
+  }
+
+  // MARK: - private methods
+
+  func updateColor(_ color: ColorModel) {
+    if selectedColor?.id == color.id {
+      selectedColor = nil
+    } else {
+      selectedColor = color
+    }
   }
 }
 
