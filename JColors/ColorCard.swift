@@ -49,8 +49,7 @@ struct ColorCard: View {
       Spacer()
     }
     .padding(20)
-    .foregroundColor(Color(hex: model.hex))
-    .colorInvert()
+    .foregroundColor(Color(hex: model.hex).isLight(threshold: 0.7) == true ? Color.black : Color.white)
     .frame(width: UserInterfaceIdiom.current == .phone ? 200 : 300, height: UserInterfaceIdiom.current == .phone ? 200 : 300)
     .background(Color(hex: model.hex))
     .cornerRadius(30)

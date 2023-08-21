@@ -57,17 +57,7 @@ struct ContentView: View {
         .navigationTitle("日本传统色")
         .toolbar {
           ToolbarItemGroup(placement: .navigationBarTrailing) {
-            Button {
-              setToday()
-            } label: {
-              Text("今天")
-            }
-
-            Button {
-              setRandomDay()
-            } label: {
-              Text("随机")
-            }
+            datesView
           }
         }
       }
@@ -91,21 +81,27 @@ struct ContentView: View {
     #endif
   }
 
+  var datesView: some View {
+    Group {
+      Button {
+        setToday()
+      } label: {
+        Text("今天")
+      }
+
+      Button {
+        setRandomDay()
+      } label: {
+        Text("随机")
+      }
+    }
+  }
+
   var slideView: some View {
     VStack(alignment: .center) {
       Group {
         if UserInterfaceIdiom.current != .phone {
-          Button {
-            setToday()
-          } label: {
-            Text("今天")
-          }
-
-          Button {
-            setRandomDay()
-          } label: {
-            Text("随机")
-          }
+          datesView
         }
 
         Toggle("自动随机\(count)秒后", isOn: $isAutoChange)
