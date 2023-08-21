@@ -70,11 +70,10 @@ struct ContentView: View {
   var splitView: some View {
     NavigationSplitView(columnVisibility: $mode) {
       slideView
+        .navigationSplitViewColumnWidth(min: 200, ideal: 260, max: 300)
       #if os(macOS)
-      .navigationSplitViewColumnWidth(min: 100, ideal: 150, max: 200)
       #else
-      .navigationSplitViewColumnWidth(min: 200, ideal: 260, max: 300)
-      .navigationTitle("日本传统色")
+          .navigationTitle("日本传统色")
       #endif
     } detail: {
       colorListAndDetailView
@@ -351,6 +350,7 @@ struct ContentView: View {
     } else {
       timer.upstream.connect().cancel()
     }
+    count = 5
   }
 }
 
