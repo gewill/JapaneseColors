@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIOverlayContainer
 
 struct ContentView: View {
   @State var mode: NavigationSplitViewVisibility = .all

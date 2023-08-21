@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import SwiftUIOverlayContainer
+import SwiftyJSON
 
 struct ColorCard: View {
   let model: ColorModel
+  
+  @Environment(\.overlayContainerManager) var manager
+  var containerName: String { "MoreSettingsView" + model.id }
 
   var body: some View {
     VStack {
@@ -30,6 +35,7 @@ struct ColorCard: View {
               NSPasteboard.general.clearContents()
               NSPasteboard.general.setString(model.hex, forType: .string)
             #endif
+            manager.show(containerView: Message(text: "\(model.hex)已复制", type: .success, height: 60), in: containerName)
           }
       }
       .monospacedDigit()
@@ -56,6 +62,7 @@ struct ColorCard: View {
     .padding(10)
     .background(Material.ultraThinMaterial)
     .cornerRadius(40)
+    .overlayContainer(containerName, containerConfiguration: ContainerConfigurationForQueueMessage())
   }
 }
 

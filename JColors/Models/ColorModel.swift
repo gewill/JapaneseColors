@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct ColorModel: Identifiable {
   var id: String { "\(month)_\(date)" }
