@@ -5,11 +5,13 @@ import SwiftUI
 enum ProFeature: String, CaseIterable, Identifiable {
   case copy = "复制颜色Hex值"
   case date = "切换日期，今日和随机日期"
+  case universalPurchase = "通用购买项目，一次购买全平台使用"
 
   var imageName: String {
     switch self {
     case .copy: return "doc.on.doc"
     case .date: return "calendar.badge.clock"
+    case .universalPurchase: return "purchased.circle"
     }
   }
 
