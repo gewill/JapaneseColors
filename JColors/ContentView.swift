@@ -55,11 +55,13 @@ struct ContentView: View {
           }
         }
         .navigationTitle("日本传统色")
-        .toolbar {
-          ToolbarItemGroup(placement: .navigationBarTrailing) {
-            datesView
+        #if os(iOS)
+          .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+              datesView
+            }
           }
-        }
+        #endif
       }
     }
   }
