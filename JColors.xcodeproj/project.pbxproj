@@ -42,6 +42,7 @@
 		BEA4AFFB2A90674C004FD8F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEA4AFFD2A90674C004FD8F5 /* Localizable.strings */; };
 		BEA4AFFF2A907B0D004FD8F5 /* ColorCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA4AFFE2A907B0D004FD8F5 /* ColorCard.swift */; };
 		BEE65FD92A8E7FE70039B287 /* ColorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE65FD82A8E7FE70039B287 /* ColorModel.swift */; };
+		BEEE07432A9302BC00354879 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEE07422A9302BC00354879 /* DateExtensions.swift */; };
 		BEFC5F122A8FC5E4004A2F1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */; };
 		BEFC5F142A8FC9EF004A2F1D /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFC5F132A8FC9EF004A2F1D /* ButtonStyle.swift */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,7 @@
 		BEA4AFFC2A90674C004FD8F5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BEA4AFFE2A907B0D004FD8F5 /* ColorCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCard.swift; sourceTree = "<group>"; };
 		BEE65FD82A8E7FE70039B287 /* ColorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorModel.swift; sourceTree = "<group>"; };
+		BEEE07422A9302BC00354879 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		BEFC5F132A8FC9EF004A2F1D /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		BEFC5F152A8FD1A7004A2F1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				BE9E5CFF2A8E855A0003D53D /* ColorExtensions.swift */,
 				BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */,
 				BEA4AFF22A9066A6004FD8F5 /* StringExtensions.swift */,
+				BEEE07422A9302BC00354879 /* DateExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				BEFC5F122A8FC5E4004A2F1D /* ViewExtensions.swift in Sources */,
 				BEA4AFFF2A907B0D004FD8F5 /* ColorCard.swift in Sources */,
 				BEA4AFF82A906718004FD8F5 /* CategoryType.swift in Sources */,
+				BEEE07432A9302BC00354879 /* DateExtensions.swift in Sources */,
 				BEA4AFF32A9066A6004FD8F5 /* StringExtensions.swift in Sources */,
 				BE9E5D002A8E855A0003D53D /* ColorExtensions.swift in Sources */,
 				BE1E567B2A8E718A0095E568 /* JColorsApp.swift in Sources */,

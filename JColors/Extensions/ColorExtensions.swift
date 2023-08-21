@@ -26,4 +26,6 @@ extension Color {
       opacity: Double(a) / 255
     )
   }
+
+  static let backgroundColor = Color("BackgroundColor")
 }

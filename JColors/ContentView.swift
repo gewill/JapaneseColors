@@ -13,6 +13,10 @@ struct ContentView: View {
   @AppStorage("categoryType") var categoryType: CategoryType = .color
   @AppStorage("selectedCategory") var selectedCategory: String = "yellow"
   @State var selectedColor: ColorModel?
+  @State var selectedColorId: String = ""
+  @State var isAutoChange = false
+  @State var count = 5
+  @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
   let colorWidth: CGFloat = {
     switch UserInterfaceIdiom.current {
@@ -38,15 +42,33 @@ struct ContentView: View {
         ScrollView {
           slideView
         }
-        .frame(width: 260)
+        .frame(width: 300)
 
         colorListAndDetailView
       }
     default:
-      ScrollView {
-        VStack {
-          slideView
-          colorListAndDetailView
+      NavigationStack {
+        ScrollView {
+          VStack {
+            slideView
+            colorListAndDetailView
+          }
+        }
+        .navigationTitle("日本传统色")
+        .toolbar {
+          ToolbarItemGroup(placement: .navigationBarTrailing) {
+            Button {
+              setToday()
+            } label: {
+              Text("今天")
+            }
+
+            Button {
+              setRandomDay()
+            } label: {
+              Text("随机")
+            }
+          }
         }
       }
     }
@@ -55,22 +77,62 @@ struct ContentView: View {
   var splitView: some View {
     NavigationSplitView(columnVisibility: $mode) {
       slideView
-        .navigationSplitViewColumnWidth(min: 100, ideal: 150, max: 200)
+      #if os(macOS)
+      .navigationSplitViewColumnWidth(min: 100, ideal: 150, max: 200)
+      #else
+      .navigationSplitViewColumnWidth(min: 200, ideal: 260, max: 300)
+      .navigationTitle("日本传统色")
+      #endif
     } detail: {
       colorListAndDetailView
     }
+    #if os(macOS)
     .navigationTitle("日本传统色")
+    #endif
   }
 
   var slideView: some View {
     VStack(alignment: .center) {
-      Picker("Category Type", selection: $categoryType) {
-        ForEach(CategoryType.allCases) { type in
-          Text(type.rawValue.localizedStringKey).id(type)
+      Group {
+        if UserInterfaceIdiom.current != .phone {
+          Button {
+            setToday()
+          } label: {
+            Text("今天")
+          }
+
+          Button {
+            setRandomDay()
+          } label: {
+            Text("随机")
+          }
         }
+
+        Toggle("自动随机\(count)秒后", isOn: $isAutoChange)
+          .monospacedDigit()
+          .onChange(of: isAutoChange, perform: { _ in
+            updateTimer()
+          })
+          .onAppear {
+            updateTimer()
+          }
+          .onReceive(timer) { _ in
+            var tmp = (count - 1)
+            if tmp == 0 {
+              tmp = 5
+              setRandomDay()
+            }
+            count = tmp
+          }
+        Picker("Category Type", selection: $categoryType) {
+          ForEach(CategoryType.allCases) { type in
+            Text(type.rawValue.localizedStringKey).id(type)
+          }
+        }
+        .pickerStyle(.segmented)
       }
-      .pickerStyle(.segmented)
-      .padding()
+      .padding(.horizontal)
+
       switch UserInterfaceIdiom.current {
       case .mac, .pad, .tv:
         ScrollView {
@@ -146,20 +208,30 @@ struct ContentView: View {
       switch UserInterfaceIdiom.current {
       case .mac, .pad, .tv:
         HStack {
-          ScrollView {
-            VStack {
-              colorListView
+          ScrollViewReader { reader in
+            ScrollView {
+              VStack {
+                colorListView
+              }
+              .padding()
             }
-            .padding()
+            .onChange(of: selectedColorId) { newValue in
+              reader.scrollTo(newValue, anchor: .center)
+            }
           }
           detailView
         }
       default:
-        ScrollView(.horizontal) {
-          HStack {
-            colorListView
+        ScrollViewReader { reader in
+          ScrollView(.horizontal) {
+            HStack {
+              colorListView
+            }
+            .padding()
           }
-          .padding()
+          .onChange(of: selectedColorId) { newValue in
+            reader.scrollTo(newValue, anchor: .center)
+          }
         }
         detailView
       }
@@ -177,6 +249,7 @@ struct ContentView: View {
         .buttonStyle(.card)
       #else
         ColorCard(model: model)
+          .id(model.id)
           .onTapGesture {
             updateColor(model)
           }
@@ -250,6 +323,34 @@ struct ContentView: View {
       selectedColor = nil
     } else {
       selectedColor = color
+      selectedColorId = color.id
+    }
+  }
+
+  func setToday() {
+    let date = Date.now
+    setColor(date: date)
+  }
+
+  func setRandomDay() {
+    // 非闰年即可
+    let date = Date.random(in: Date(integerLiteral: 20230101)! ... Date(integerLiteral: 20231231)!)
+    setColor(date: date)
+  }
+
+  func setColor(date: Date) {
+    let month = date.month
+    let day = date.day
+    categoryType = .month
+    selectedCategory = month.description
+    updateColor(ModelTool.shared.getColors(filename: selectedCategory)[day - 1])
+  }
+
+  func updateTimer() {
+    if isAutoChange {
+      timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    } else {
+      timer.upstream.connect().cancel()
     }
   }
 }
