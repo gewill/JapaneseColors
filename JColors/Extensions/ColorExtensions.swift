@@ -28,6 +28,7 @@ extension Color {
   }
 
   static let backgroundColor = Color("BackgroundColor")
+  static let separatorColor = Color("separatorColor")
 }
 
 extension Color {

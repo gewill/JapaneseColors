@@ -11,9 +11,11 @@ import SwiftyJSON
 
 struct ColorCard: View {
   let model: ColorModel
-  
+
   @Environment(\.overlayContainerManager) var manager
   var containerName: String { "MoreSettingsView" + model.id }
+  @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
+  @State private var showingPro = false
 
   var body: some View {
     VStack {
@@ -28,14 +30,18 @@ struct ColorCard: View {
 
         Text(model.hex)
           .onTapGesture {
-            #if os(tvOS)
-            #elseif os(iOS)
-              UIPasteboard.general.string = model.hex
-            #else
-              NSPasteboard.general.clearContents()
-              NSPasteboard.general.setString(model.hex, forType: .string)
-            #endif
-            manager.show(containerView: Message(text: "\(model.hex)已复制", type: .success, height: 60), in: containerName)
+            if isPro {
+              #if os(tvOS)
+              #elseif os(iOS)
+                UIPasteboard.general.string = model.hex
+              #else
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(model.hex, forType: .string)
+              #endif
+              manager.show(containerView: Message(text: "\(model.hex)已复制", type: .success, height: 60), in: containerName)
+            } else {
+              showingPro = true
+            }
           }
       }
       .monospacedDigit()
@@ -63,6 +69,9 @@ struct ColorCard: View {
     .background(Material.ultraThinMaterial)
     .cornerRadius(40)
     .overlayContainer(containerName, containerConfiguration: ContainerConfigurationForQueueMessage())
+    .sheet(isPresented: $showingPro) {
+      ProView(isPresented: $showingPro)
+    }
   }
 }
 

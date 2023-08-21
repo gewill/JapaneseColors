@@ -12,6 +12,9 @@ struct JColorsApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
+        .onAppear {
+          IAPManager.shared.configure()
+        }
     }
   }
 }

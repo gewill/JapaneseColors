@@ -13,3 +13,12 @@
 "black" = "黑色";
 "gray" = "灰色";
 "white" = "白色";
+
+// MARK: - IAP
+"Premium" = "会员";
+"Restore" = "恢复购买";
+"Buy Now" = "立即开通";
+"pro_lifetime" = "终身会员";
+"Premium features: " = "会员功能：";
+"Thanks for your support!" = "谢谢您的支持！";
+"pro_lifetime_des" = "一次付费，终身使用";

@@ -32,6 +32,9 @@ struct ContentView: View {
     }
   }()
 
+  @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
+  @State private var showingPro = false
+
   // MARK: - life cycle
 
   var body: some View {
@@ -71,9 +74,8 @@ struct ContentView: View {
     NavigationSplitView(columnVisibility: $mode) {
       slideView
         .navigationSplitViewColumnWidth(min: 200, ideal: 260, max: 300)
-      #if os(macOS)
-      #else
-          .navigationTitle("日本传统色")
+      #if !os(macOS)
+        .navigationTitle("日本传统色")
       #endif
     } detail: {
       colorListAndDetailView
@@ -86,6 +88,12 @@ struct ContentView: View {
   var datesView: some View {
     Group {
       Button {
+        showingPro = true
+      } label: {
+        Label("Premium", systemImage: "crown")
+          .foregroundColor(isPro ? .yellow : .accentColor)
+      }
+      Button {
         setToday()
       } label: {
         Text("今天")
@@ -97,10 +105,15 @@ struct ContentView: View {
         Text("随机")
       }
     }
+    .buttonStyle(.bordered)
+    .clipShape(Capsule())
+    .sheet(isPresented: $showingPro) {
+      ProView(isPresented: $showingPro)
+    }
   }
 
   var slideView: some View {
-    VStack(alignment: .center) {
+    VStack(alignment: .center, spacing: Constant.padding) {
       Group {
         if UserInterfaceIdiom.current != .phone {
           datesView
@@ -122,6 +135,7 @@ struct ContentView: View {
             }
             count = tmp
           }
+          .disabled(isPro == false)
         Picker("Category Type", selection: $categoryType) {
           ForEach(CategoryType.allCases) { type in
             Text(type.rawValue.localizedStringKey).id(type)
@@ -174,7 +188,7 @@ struct ContentView: View {
               }
               Text(series.rawValue.localizedStringKey)
                 .font(.headline)
-                .foregroundColor(isSelected ? Color.accentColor : Color.primary)
+                .foregroundColor(isSelected ? Color.accentColor : Color.gray)
             }
           }
           .padding(6)
@@ -190,7 +204,7 @@ struct ContentView: View {
             Text("\(month)月")
               .padding(.horizontal, 12)
               .padding(.vertical, 6)
-              .foregroundColor(isSelected ? Color.accentColor : Color.primary)
+              .foregroundColor(isSelected ? Color.accentColor : Color.gray)
               .font(.headline)
           }
           .padding(6)
@@ -326,11 +340,21 @@ struct ContentView: View {
   }
 
   func setToday() {
+    guard isPro else {
+      showingPro = true
+      return
+    }
+
     let date = Date.now
     setColor(date: date)
   }
 
   func setRandomDay() {
+    guard isPro else {
+      showingPro = true
+      return
+    }
+
     // 非闰年即可
     let date = Date.random(in: Date(integerLiteral: 20230101)! ... Date(integerLiteral: 20231231)!)
     setColor(date: date)

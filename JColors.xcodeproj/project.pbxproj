@@ -11,6 +11,13 @@
 		BE1E567D2A8E718A0095E568 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1E567C2A8E718A0095E568 /* ContentView.swift */; };
 		BE1E567F2A8E718B0095E568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1E567E2A8E718B0095E568 /* Assets.xcassets */; };
 		BE1E56832A8E718B0095E568 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1E56822A8E718B0095E568 /* Preview Assets.xcassets */; };
+		BE27067F2A9341CB00C2A180 /* Glassfy in Frameworks */ = {isa = PBXBuildFile; productRef = BE27067E2A9341CB00C2A180 /* Glassfy */; };
+		BE51B1B92A93422600C6A3A5 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE51B1B82A93422600C6A3A5 /* IAPManager.swift */; };
+		BE51B1BB2A9342EF00C6A3A5 /* ProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE51B1BA2A9342EF00C6A3A5 /* ProView.swift */; };
+		BE51B1BD2A93431600C6A3A5 /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE51B1BC2A93431600C6A3A5 /* SwiftyUserDefaults.swift */; };
+		BE51B1BF2A9343EC00C6A3A5 /* SKProductExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE51B1BE2A9343EC00C6A3A5 /* SKProductExtensions.swift */; };
+		BE51B1C12A93442900C6A3A5 /* CardReflectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE51B1C02A93442900C6A3A5 /* CardReflectionView.swift */; };
+		BE51B1C42A93446000C6A3A5 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE51B1C32A93446000C6A3A5 /* LoadingView.swift */; };
 		BE64CC0F2A90D051004FD3C8 /* 6.json in Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF72A90D051004FD3C8 /* 6.json */; };
 		BE64CC102A90D051004FD3C8 /* 7.json in Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF82A90D051004FD3C8 /* 7.json */; };
 		BE64CC112A90D051004FD3C8 /* 10.json in Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF92A90D051004FD3C8 /* 10.json */; };
@@ -57,6 +64,12 @@
 		BE1E567E2A8E718B0095E568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE1E56802A8E718B0095E568 /* JColors.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JColors.entitlements; sourceTree = "<group>"; };
 		BE1E56822A8E718B0095E568 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BE51B1B82A93422600C6A3A5 /* IAPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
+		BE51B1BA2A9342EF00C6A3A5 /* ProView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProView.swift; sourceTree = "<group>"; };
+		BE51B1BC2A93431600C6A3A5 /* SwiftyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyUserDefaults.swift; sourceTree = "<group>"; };
+		BE51B1BE2A9343EC00C6A3A5 /* SKProductExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKProductExtensions.swift; sourceTree = "<group>"; };
+		BE51B1C02A93442900C6A3A5 /* CardReflectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardReflectionView.swift; sourceTree = "<group>"; };
+		BE51B1C32A93446000C6A3A5 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BE64CBF72A90D051004FD3C8 /* 6.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 6.json; sourceTree = "<group>"; };
 		BE64CBF82A90D051004FD3C8 /* 7.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 7.json; sourceTree = "<group>"; };
 		BE64CBF92A90D051004FD3C8 /* 10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 10.json; sourceTree = "<group>"; };
@@ -100,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE27067F2A9341CB00C2A180 /* Glassfy in Frameworks */,
 				BEEE07462A9325C900354879 /* SwiftyJSON in Frameworks */,
 				BEEE07492A93261000354879 /* SwiftUIOverlayContainer in Frameworks */,
 			);
@@ -132,12 +146,12 @@
 				BEFC5F152A8FD1A7004A2F1D /* Info.plist */,
 				BE1E567A2A8E718A0095E568 /* JColorsApp.swift */,
 				BE1E567C2A8E718A0095E568 /* ContentView.swift */,
-				BEA4AFFE2A907B0D004FD8F5 /* ColorCard.swift */,
-				BEEE074C2A93264F00354879 /* MessageView.swift */,
 				BE9E5D012A8E9EA40003D53D /* Constants.swift */,
+				BE51B1B82A93422600C6A3A5 /* IAPManager.swift */,
 				BE1E567E2A8E718B0095E568 /* Assets.xcassets */,
 				BE1E56802A8E718B0095E568 /* JColors.entitlements */,
 				BEA4AFFD2A90674C004FD8F5 /* Localizable.strings */,
+				BE51B1C22A93442F00C6A3A5 /* Views */,
 				BEA4AFF42A9066D4004FD8F5 /* Models */,
 				BEA4AFF52A9066DB004FD8F5 /* Extensions */,
 				BEA4AFF62A9066EF004FD8F5 /* SwiftUIStyles */,
@@ -154,6 +168,18 @@
 				BE1E56822A8E718B0095E568 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BE51B1C22A93442F00C6A3A5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEA4AFFE2A907B0D004FD8F5 /* ColorCard.swift */,
+				BE51B1BA2A9342EF00C6A3A5 /* ProView.swift */,
+				BEEE074C2A93264F00354879 /* MessageView.swift */,
+				BE51B1C02A93442900C6A3A5 /* CardReflectionView.swift */,
+				BE51B1C32A93446000C6A3A5 /* LoadingView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		BE64CBF62A90D051004FD3C8 /* byMonth */ = {
@@ -201,6 +227,7 @@
 				BEE65FD82A8E7FE70039B287 /* ColorModel.swift */,
 				BEA4AFF72A906718004FD8F5 /* CategoryType.swift */,
 				BEEE074A2A93264400354879 /* ContainerConfigurationForQueueMessage.swift */,
+				BE51B1BC2A93431600C6A3A5 /* SwiftyUserDefaults.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -212,6 +239,7 @@
 				BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */,
 				BEA4AFF22A9066A6004FD8F5 /* StringExtensions.swift */,
 				BEEE07422A9302BC00354879 /* DateExtensions.swift */,
+				BE51B1BE2A9343EC00C6A3A5 /* SKProductExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -243,6 +271,7 @@
 			packageProductDependencies = (
 				BEEE07452A9325C900354879 /* SwiftyJSON */,
 				BEEE07482A93261000354879 /* SwiftUIOverlayContainer */,
+				BE27067E2A9341CB00C2A180 /* Glassfy */,
 			);
 			productName = JColors;
 			productReference = BE1E56772A8E718A0095E568 /* JColors.app */;
@@ -275,6 +304,7 @@
 			packageReferences = (
 				BEEE07442A9325C900354879 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				BEEE07472A93261000354879 /* XCRemoteSwiftPackageReference "SwiftUIOverlayContainer" */,
+				BE27067D2A9341CB00C2A180 /* XCRemoteSwiftPackageReference "glassfy-ios-sdk" */,
 			);
 			productRefGroup = BE1E56782A8E718A0095E568 /* Products */;
 			projectDirPath = "";
@@ -326,18 +356,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE51B1BD2A93431600C6A3A5 /* SwiftyUserDefaults.swift in Sources */,
+				BE51B1B92A93422600C6A3A5 /* IAPManager.swift in Sources */,
 				BE1E567D2A8E718A0095E568 /* ContentView.swift in Sources */,
 				BEFC5F142A8FC9EF004A2F1D /* ButtonStyle.swift in Sources */,
 				BEFC5F122A8FC5E4004A2F1D /* ViewExtensions.swift in Sources */,
+				BE51B1C12A93442900C6A3A5 /* CardReflectionView.swift in Sources */,
 				BEA4AFFF2A907B0D004FD8F5 /* ColorCard.swift in Sources */,
+				BE51B1BF2A9343EC00C6A3A5 /* SKProductExtensions.swift in Sources */,
 				BEA4AFF82A906718004FD8F5 /* CategoryType.swift in Sources */,
 				BEEE074D2A93264F00354879 /* MessageView.swift in Sources */,
 				BEEE07432A9302BC00354879 /* DateExtensions.swift in Sources */,
+				BE51B1BB2A9342EF00C6A3A5 /* ProView.swift in Sources */,
 				BEA4AFF32A9066A6004FD8F5 /* StringExtensions.swift in Sources */,
 				BE9E5D002A8E855A0003D53D /* ColorExtensions.swift in Sources */,
 				BE1E567B2A8E718A0095E568 /* JColorsApp.swift in Sources */,
 				BEE65FD92A8E7FE70039B287 /* ColorModel.swift in Sources */,
 				BEEE074B2A93264400354879 /* ContainerConfigurationForQueueMessage.swift in Sources */,
+				BE51B1C42A93446000C6A3A5 /* LoadingView.swift in Sources */,
 				BE9E5D022A8E9EA50003D53D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,6 +613,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BE27067D2A9341CB00C2A180 /* XCRemoteSwiftPackageReference "glassfy-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gewill/glassfy-ios-sdk.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		BEEE07442A9325C900354879 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -596,6 +640,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BE27067E2A9341CB00C2A180 /* Glassfy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE27067D2A9341CB00C2A180 /* XCRemoteSwiftPackageReference "glassfy-ios-sdk" */;
+			productName = Glassfy;
+		};
 		BEEE07452A9325C900354879 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BEEE07442A9325C900354879 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;

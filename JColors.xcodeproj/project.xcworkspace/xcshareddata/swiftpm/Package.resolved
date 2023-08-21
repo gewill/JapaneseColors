@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "glassfy-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gewill/glassfy-ios-sdk.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "8e3e61a25ece70031b37f7bbeb17889ee40b82f0"
+      }
+    },
+    {
       "identity" : "swiftuioverlaycontainer",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/fatbobman/SwiftUIOverlayContainer.git",
