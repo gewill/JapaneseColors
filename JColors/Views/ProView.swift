@@ -85,7 +85,7 @@ struct ProView: View {
     Group {
       if self.errorMessage.isEmpty == false {
         Text(self.errorMessage).foregroundColor(.pink)
-          .focusable()
+          .afocusable()
       }
 
       VStack(alignment: .leading, spacing: Constant.padding) {
@@ -106,7 +106,7 @@ struct ProView: View {
         RoundedRectangle(cornerRadius: Constant.cornerRadius, style: .continuous)
           .stroke(Color.separatorColor, lineWidth: 0.5)
       )
-      .focusable()
+      .afocusable()
       .focused($focus, equals: "Pro features")
       .scaleEffect(focus == "Pro features" ? 1.05 : 1)
     }
@@ -123,7 +123,7 @@ struct ProView: View {
           }
           .foregroundColor(.yellow)
         }
-        .focusable()
+        .afocusable()
         .focused($focus, equals: "proView")
         .scaleEffect(focus == "proView" ? 1.05 : 1)
       } else {
@@ -148,7 +148,7 @@ struct ProView: View {
                 }
                 .foregroundColor(.white)
               }
-              .focusable()
+              .afocusable()
               .focused($focus, equals: sku.skuId)
               .scaleEffect(focus == sku.skuId ? 1.05 : 1)
 
