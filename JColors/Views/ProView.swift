@@ -126,6 +126,7 @@ struct ProView: View {
         .afocusable()
         .focused($focus, equals: "proView")
         .scaleEffect(focus == "proView" ? 1.05 : 1)
+        Spacer()
       } else {
         ScrollView {
           ForEach(skus, id: \.skuId) { sku in
