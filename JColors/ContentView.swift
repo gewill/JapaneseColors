@@ -14,6 +14,7 @@ struct ContentView: View {
   @AppStorage("categoryType") var categoryType: CategoryType = .color
   @AppStorage("selectedCategory") var selectedCategory: String = "yellow"
   @State var selectedColor: ColorModel?
+  @State var fullscreenColor: ColorModel?
   @State var selectedColorId: String = ""
   @State var isAutoChange = false
   @State var count = 5
@@ -38,35 +39,38 @@ struct ContentView: View {
   // MARK: - life cycle
 
   var body: some View {
-    switch UserInterfaceIdiom.current {
-    case .mac, .pad:
-      splitView
-    case .tv:
-      HStack {
-        ScrollView {
-          slideView
-        }
-        .frame(width: 300)
-
-        colorListAndDetailView
-      }
-    default:
-      NavigationStack {
-        ScrollView {
-          VStack {
+    ZStack {
+      switch UserInterfaceIdiom.current {
+      case .mac, .pad:
+        splitView
+      case .tv:
+        HStack {
+          ScrollView {
             slideView
-            colorListAndDetailView
           }
+          .frame(width: 300)
+
+          colorListAndDetailView
         }
-        .navigationTitle("日本传统色")
-        #if os(iOS)
-          .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-              datesView
+      default:
+        NavigationStack {
+          ScrollView {
+            VStack {
+              slideView
+              colorListAndDetailView
             }
           }
-        #endif
+          .navigationTitle("日本传统色")
+          #if os(iOS)
+            .toolbar {
+              ToolbarItemGroup(placement: .navigationBarTrailing) {
+                datesView
+              }
+            }
+          #endif
+        }
       }
+      fullscreenColorView
     }
   }
 
@@ -260,12 +264,41 @@ struct ContentView: View {
         }
         .buttonStyle(.card)
       #else
-        ColorCard(model: model)
-          .id(model.id)
-          .onTapGesture {
-            updateColor(model)
+        ZStack(alignment: .bottomTrailing) {
+          ColorCard(model: model)
+            .id(model.id)
+            .onTapGesture {
+              updateColor(model)
+            }
+          Button {
+            fullscreenColor = model
+          } label: {
+            Image(systemName: "arrow.up.left.and.arrow.down.right")
+              .rotationEffect(Angle.radians(Double.pi / 2))
+              .foregroundColor(Color(hex: model.hex).isLight(threshold: 0.7) == true ? Color.black : Color.white)
           }
+          .padding(30)
+          .buttonStyle(.plain)
+        }
       #endif
+    }
+  }
+
+  var fullscreenColorView: some View {
+    ZStack(alignment: .bottomTrailing) {
+      if let model = fullscreenColor {
+        Color(hex: model.hex)
+        #if os(iOS)
+          .statusBarHidden()
+          .ignoresSafeArea()
+        #endif
+          .persistentSystemOverlays(.hidden)
+          .onTapGesture {
+            withAnimation(.spring()) {
+              self.fullscreenColor = nil
+            }
+          }
+      }
     }
   }
 
