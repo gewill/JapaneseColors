@@ -271,13 +271,16 @@ struct ContentView: View {
               updateColor(model)
             }
           Button {
-            fullscreenColor = model
+            withAnimation(.spring()) {
+              fullscreenColor = model
+            }
           } label: {
-            Image(systemName: "arrow.up.left.and.arrow.down.right")
+            Image(systemName: "arrow.up.left.and.arrow.down.right.circle.fill")
+              .font(.title)
               .rotationEffect(Angle.radians(Double.pi / 2))
               .foregroundColor(Color(hex: model.hex).isLight(threshold: 0.7) == true ? Color.black : Color.white)
+              .padding(30)
           }
-          .padding(30)
           .buttonStyle(.plain)
         }
       #endif
