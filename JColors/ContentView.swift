@@ -126,8 +126,8 @@ struct ContentView: View {
         if UserInterfaceIdiom.current != .phone {
           datesView
         }
-
-        AdaptiveStack(isVertical: .constant(UserInterfaceIdiom.current == .mac ? true : false)) {
+        let layout = UserInterfaceIdiom.current == .phone ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+        layout {
           Picker("自动切换方式", selection: $autoChangeType) {
             ForEach(AutoChangeType.allCases) {
               Text($0.rawValue.localizedStringKey)
