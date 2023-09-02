@@ -16,7 +16,8 @@ struct ContentView: View {
   @State var selectedColor: ColorModel?
   @AppStorage(UserDefaultsKeys.isFullscreenColor.rawValue) var isFullscreenColor: Bool = false
   @AppStorage(UserDefaultsKeys.selectedColorId.rawValue) var selectedColorId: String = ""
-  @State var isAutoChange = false
+  @AppStorage(UserDefaultsKeys.isAutoChange.rawValue) var isAutoChange = false
+  @AppStorage(UserDefaultsKeys.autoChangeType.rawValue) var autoChangeType: AutoChangeType = .order
   @State var count = 5
   @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -126,23 +127,39 @@ struct ContentView: View {
           datesView
         }
 
-        Toggle("自动随机\(count)秒后", isOn: $isAutoChange)
-          .monospacedDigit()
-          .onChange(of: isAutoChange, perform: { _ in
-            updateTimer()
-          })
-          .onAppear {
-            updateTimer()
-          }
-          .onReceive(timer) { _ in
-            var tmp = (count - 1)
-            if tmp == 0 {
-              tmp = 5
-              setRandomDay()
+        VStack {
+          Picker("自动切换方式", selection: $autoChangeType) {
+            ForEach(AutoChangeType.allCases) {
+              Text($0.rawValue.localizedStringKey)
             }
-            count = tmp
           }
-          .disabled(isPro == false)
+          Toggle("自动切换\(count)秒后", isOn: $isAutoChange)
+            .monospacedDigit()
+            .onChange(of: isAutoChange, perform: { _ in
+              updateTimer()
+            })
+            .onAppear {
+              updateTimer()
+            }
+            .onReceive(timer) { _ in
+              var tmp = (count - 1)
+              if tmp == 0 {
+                tmp = 5
+                switch autoChangeType {
+                case .order:
+                  nextColor()
+                case .random:
+                  setRandomDay()
+                }
+              }
+              count = tmp
+            }
+            .disabled(isPro == false)
+        }
+        .padding(Constant.padding)
+        .background(Material.regular)
+        .cornerRadius(Constant.cornerRadius)
+
         Picker("Category Type", selection: $categoryType) {
           ForEach(CategoryType.allCases) { type in
             Text(type.rawValue.localizedStringKey).id(type)

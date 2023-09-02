@@ -5,4 +5,6 @@ enum UserDefaultsKeys: String {
   case lastCheckProDate
   case isFullscreenColor
   case selectedColorId
+  case isAutoChange
+  case autoChangeType
 }

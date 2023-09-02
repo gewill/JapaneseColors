@@ -44,3 +44,8 @@ enum ColorCategory: String, CaseIterable, Identifiable {
     }
   }
 }
+
+enum AutoChangeType: String, CaseIterable, Identifiable {
+  case order, random
+  var id: AutoChangeType { self }
+}
