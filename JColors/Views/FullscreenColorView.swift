@@ -32,8 +32,10 @@ struct FullscreenColorView: View {
       if showingInfo {
         ZStack {
           VStack(spacing: 0) {
-            Capsule().fill(Material.bar)
-              .frame(width: 54, height: 7.5)
+            #if !os(tvOS)
+              Capsule().fill(Material.bar)
+                .frame(width: 54, height: 7.5)
+            #endif
             HStack {
               Text("\(model.month).\(model.date)")
               #if os(tvOS)
@@ -105,6 +107,7 @@ struct FullscreenColorView: View {
         .zIndex(1)
       }
     }
+    #if !os(tvOS)
     .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
       .onEnded { value in
         let horizontalAmount = value.translation.width
@@ -124,10 +127,11 @@ struct FullscreenColorView: View {
           }
         }
       })
-    .overlayContainer(containerName, containerConfiguration: ContainerConfigurationForQueueMessage())
-    .sheet(isPresented: $showingPro) {
-      ProView(isPresented: $showingPro)
-    }
+    #endif
+      .overlayContainer(containerName, containerConfiguration: ContainerConfigurationForQueueMessage())
+      .sheet(isPresented: $showingPro) {
+        ProView(isPresented: $showingPro)
+      }
   }
 }
 
