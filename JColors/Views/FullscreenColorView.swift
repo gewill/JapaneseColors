@@ -122,7 +122,7 @@ struct FullscreenColorView: View {
           }
         } else {
           print(verticalAmount < 0 ? "up swipe" : "down swipe")
-          withAnimation(.smooth) {
+          withAnimation(.spring()) {
             showingInfo = verticalAmount < 0
           }
         }

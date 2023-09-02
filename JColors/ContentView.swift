@@ -293,7 +293,7 @@ struct ContentView: View {
           Button {
             selectedColor = model
             selectedColorId = model.id
-            withAnimation(.smooth) {
+            withAnimation(.spring()) {
               isFullscreenColor = true
             }
           } label: {
@@ -322,7 +322,7 @@ struct ContentView: View {
             nextColor()
           })
           .onTapGesture {
-            withAnimation(.smooth) {
+            withAnimation(.spring()) {
               self.isFullscreenColor = false
             }
           }
