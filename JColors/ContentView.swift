@@ -274,9 +274,8 @@ struct ContentView: View {
               updateColor(model)
             }
           Button {
-            if selectedColor == nil {
-              updateColor(model)
-            }
+            selectedColor = model
+            selectedColorId = model.id
             withAnimation(.smooth) {
               isFullscreenColor = true
             }
@@ -396,9 +395,18 @@ struct ContentView: View {
         }) {
           index += 1
           if index > colors.count - 1 {
-            index = 0
+            let all = ColorCategory.allCases
+            if var i = all.firstIndex(where: { $0.rawValue == selectedCategory }) {
+              i += 1
+              if i > all.count - 1 {
+                i = 0
+              }
+              selectedCategory = all[i].rawValue
+              updateColor(ModelTool.shared.getColors(filename: selectedCategory)[0])
+            }
+          } else {
+            updateColor(colors[index])
           }
-          updateColor(colors[index])
         }
       }
     }
@@ -416,9 +424,19 @@ struct ContentView: View {
         }) {
           index -= 1
           if index < 0 {
-            index = colors.count - 1
+            let all = ColorCategory.allCases
+            if var i = all.firstIndex(where: { $0.rawValue == selectedCategory }) {
+              i -= 1
+              if i < 0 {
+                i = all.count - 1
+              }
+              selectedCategory = all[i].rawValue
+              let colors = ModelTool.shared.getColors(filename: selectedCategory)
+              updateColor(colors[colors.count - 1])
+            }
+          } else {
+            updateColor(colors[index])
           }
-          updateColor(colors[index])
         }
       }
     }
