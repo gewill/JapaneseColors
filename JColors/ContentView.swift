@@ -15,7 +15,7 @@ struct ContentView: View {
   @AppStorage("selectedCategory") var selectedCategory: String = "yellow"
   @State var selectedColor: ColorModel?
   @AppStorage(UserDefaultsKeys.isFullscreenColor.rawValue) var isFullscreenColor: Bool = false
-  @State var selectedColorId: String = ""
+  @AppStorage(UserDefaultsKeys.selectedColorId.rawValue) var selectedColorId: String = ""
   @State var isAutoChange = false
   @State var count = 5
   @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -71,6 +71,9 @@ struct ContentView: View {
         }
       }
       fullscreenColorView
+    }
+    .onAppear {
+      restoreById()
     }
   }
 
@@ -382,18 +385,42 @@ struct ContentView: View {
   }
 
   func nextColor() {
-    if let model = selectedColor,
-       let date = "2023-\(model.month)-\(model.date)".date()
-    {
-      setColor(date: date.tomorrow)
+    if let model = selectedColor {
+      if categoryType == .month {
+        if let date = "2023-\(model.month)-\(model.date)".date() {
+          setColor(date: date.tomorrow)
+        }
+      } else {
+        let colors = ModelTool.shared.getColors(filename: selectedCategory)
+        if var index = colors.firstIndex(where: { $0.id == model.id
+        }) {
+          index += 1
+          if index > colors.count - 1 {
+            index = 0
+          }
+          updateColor(colors[index])
+        }
+      }
     }
   }
 
   func previousColor() {
-    if let model = selectedColor,
-       let date = "2023-\(model.month)-\(model.date)".date()
-    {
-      setColor(date: date.yesterday)
+    if let model = selectedColor {
+      if categoryType == .month {
+        if let date = "2023-\(model.month)-\(model.date)".date() {
+          setColor(date: date.yesterday)
+        }
+      } else {
+        let colors = ModelTool.shared.getColors(filename: selectedCategory)
+        if var index = colors.firstIndex(where: { $0.id == model.id
+        }) {
+          index -= 1
+          if index < 0 {
+            index = colors.count - 1
+          }
+          updateColor(colors[index])
+        }
+      }
     }
   }
 
@@ -436,6 +463,15 @@ struct ContentView: View {
       timer.upstream.connect().cancel()
     }
     count = 5
+  }
+
+  func restoreById() {
+    if selectedColorId.isEmpty == false {
+      let monthDay = selectedColorId.replacingOccurrences(of: "_", with: "-")
+      if let date = "2023-\(monthDay)".date() {
+        setColor(date: date.tomorrow)
+      }
+    }
   }
 }
 
