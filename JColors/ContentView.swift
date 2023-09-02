@@ -14,7 +14,7 @@ struct ContentView: View {
   @AppStorage("categoryType") var categoryType: CategoryType = .color
   @AppStorage("selectedCategory") var selectedCategory: String = "yellow"
   @State var selectedColor: ColorModel?
-  @State var fullscreenColor: ColorModel?
+  @AppStorage(UserDefaultsKeys.isFullscreenColor.rawValue) var isFullscreenColor: Bool = false
   @State var selectedColorId: String = ""
   @State var isAutoChange = false
   @State var count = 5
@@ -271,8 +271,11 @@ struct ContentView: View {
               updateColor(model)
             }
           Button {
-            withAnimation(.spring()) {
-              fullscreenColor = model
+            if selectedColor == nil {
+              updateColor(model)
+            }
+            withAnimation(.smooth) {
+              isFullscreenColor = true
             }
           } label: {
             Image(systemName: "arrow.up.left.and.arrow.down.right.circle.fill")
@@ -289,11 +292,19 @@ struct ContentView: View {
 
   var fullscreenColorView: some View {
     ZStack(alignment: .bottomTrailing) {
-      if let model = fullscreenColor {
-        FullscreenColorView(model: model)
+      if isFullscreenColor,
+         let model = selectedColor
+      {
+        FullscreenColorView(
+          model: model,
+          didSwipeLeft: {
+            previousColor()
+          }, didSwipeRight: {
+            nextColor()
+          })
           .onTapGesture {
-            withAnimation(.spring()) {
-              self.fullscreenColor = nil
+            withAnimation(.smooth) {
+              self.isFullscreenColor = false
             }
           }
       }
@@ -370,13 +381,32 @@ struct ContentView: View {
     }
   }
 
+  func nextColor() {
+    if let model = selectedColor,
+       let date = "2023-\(model.month)-\(model.date)".date()
+    {
+      setColor(date: date.tomorrow)
+    }
+  }
+
+  func previousColor() {
+    if let model = selectedColor,
+       let date = "2023-\(model.month)-\(model.date)".date()
+    {
+      setColor(date: date.yesterday)
+    }
+  }
+
   func setToday() {
     guard isPro else {
       showingPro = true
       return
     }
 
-    let date = Date.now
+    var date = Date.now
+    if date.month == 2 && date.day == 29 {
+      date = date.yesterday
+    }
     setColor(date: date)
   }
 

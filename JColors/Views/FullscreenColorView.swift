@@ -11,9 +11,11 @@ import SwiftyJSON
 
 struct FullscreenColorView: View {
   let model: ColorModel
+  let didSwipeLeft: () -> Void
+  let didSwipeRight: () -> Void
 
   @Environment(\.overlayContainerManager) var manager
-  var containerName: String { "FullscreenColorView" + model.id }
+  let containerName: String = "FullscreenColorView"
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State private var showingPro = false
   @State private var showingInfo = true
@@ -28,51 +30,69 @@ struct FullscreenColorView: View {
         .persistentSystemOverlays(.hidden)
 
       if showingInfo {
-        VStack(spacing: 0) {
-          Capsule().fill(Material.bar)
-            .frame(width: 54, height: 7.5)
-          HStack {
-            Text("\(model.month).\(model.date)")
+        ZStack {
+          VStack(spacing: 0) {
+            Capsule().fill(Material.bar)
+              .frame(width: 54, height: 7.5)
+            HStack {
+              Text("\(model.month).\(model.date)")
+              #if os(tvOS)
+                .font(.headline)
+              #else
+                .font(.title3)
+              #endif
+
+              Spacer()
+
+              Text(model.hex)
+                .onTapGesture {
+                  if isPro {
+                    #if os(tvOS)
+                    #elseif os(iOS)
+                      UIPasteboard.general.string = model.hex
+                    #else
+                      NSPasteboard.general.clearContents()
+                      NSPasteboard.general.setString(model.hex, forType: .string)
+                    #endif
+                    manager.show(containerView: Message(text: "\(model.hex)已复制", type: .success, height: 60), in: containerName)
+                  } else {
+                    showingPro = true
+                  }
+                }
+            }
+            .monospacedDigit()
+
+            Spacer()
+            Text(model.kanji)
             #if os(tvOS)
               .font(.headline)
             #else
               .font(.title3)
             #endif
-
+            Text(model.ruby)
+            #if os(tvOS)
+              .font(.body)
+            #else
+              .font(.title3)
+            #endif
             Spacer()
-
-            Text(model.hex)
-              .onTapGesture {
-                if isPro {
-                  #if os(tvOS)
-                  #elseif os(iOS)
-                    UIPasteboard.general.string = model.hex
-                  #else
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(model.hex, forType: .string)
-                  #endif
-                  manager.show(containerView: Message(text: "\(model.hex)已复制", type: .success, height: 60), in: containerName)
-                } else {
-                  showingPro = true
-                }
-              }
           }
-          .monospacedDigit()
-
-          Spacer()
-          Text(model.kanji)
-          #if os(tvOS)
-            .font(.headline)
-          #else
-            .font(.title3)
-          #endif
-          Text(model.ruby)
-          #if os(tvOS)
-            .font(.body)
-          #else
-            .font(.title3)
-          #endif
-          Spacer()
+          HStack {
+            Button(action: {
+              didSwipeLeft()
+            }, label: {
+              Image(systemName: "arrow.left.circle.fill")
+                .font(.title)
+            })
+            Spacer()
+            Button(action: {
+              didSwipeRight()
+            }, label: {
+              Image(systemName: "arrow.right.circle.fill")
+                .font(.title)
+            })
+          }
+          .buttonStyle(.plain)
         }
         .foregroundColor(Color(hex: model.hex).isLight(threshold: 0.7) == true ? Color.black : Color.white)
         .padding(.horizontal, 30)
@@ -92,7 +112,11 @@ struct FullscreenColorView: View {
 
         if abs(horizontalAmount) > abs(verticalAmount) {
           print(horizontalAmount < 0 ? "left swipe" : "right swipe")
-
+          if horizontalAmount < 0 {
+            didSwipeLeft()
+          } else {
+            didSwipeRight()
+          }
         } else {
           print(verticalAmount < 0 ? "up swipe" : "down swipe")
           withAnimation(.smooth) {
