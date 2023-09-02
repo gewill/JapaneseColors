@@ -13,7 +13,7 @@ struct ColorCard: View {
   let model: ColorModel
 
   @Environment(\.overlayContainerManager) var manager
-  var containerName: String { "MoreSettingsView" + model.id }
+  var containerName: String { "ColorCard" + model.id }
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State private var showingPro = false
 

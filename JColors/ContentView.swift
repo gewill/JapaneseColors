@@ -290,12 +290,7 @@ struct ContentView: View {
   var fullscreenColorView: some View {
     ZStack(alignment: .bottomTrailing) {
       if let model = fullscreenColor {
-        Color(hex: model.hex)
-        #if os(iOS)
-          .statusBarHidden()
-          .ignoresSafeArea()
-        #endif
-          .persistentSystemOverlays(.hidden)
+        FullscreenColorView(model: model)
           .onTapGesture {
             withAnimation(.spring()) {
               self.fullscreenColor = nil
