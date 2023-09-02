@@ -127,7 +127,7 @@ struct ContentView: View {
           datesView
         }
 
-        VStack {
+        AdaptiveStack(isVertical: .constant(UserInterfaceIdiom.current == .mac ? true : false)) {
           Picker("自动切换方式", selection: $autoChangeType) {
             ForEach(AutoChangeType.allCases) {
               Text($0.rawValue.localizedStringKey)
