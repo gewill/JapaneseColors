@@ -11,7 +11,7 @@ extension View {
   }
   
   func afocusable(_ isFocusable: Bool = true) -> some View {
-    #if os(tvOS) || os(macOS)
+    #if os(tvOS)
       self.focusable(isFocusable)
     #else
       self

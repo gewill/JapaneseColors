@@ -43,6 +43,7 @@
 		BE64CC242A90D051004FD3C8 /* pink.json in Resources */ = {isa = PBXBuildFile; fileRef = BE64CC0D2A90D051004FD3C8 /* pink.json */; };
 		BE64CC252A90D051004FD3C8 /* gray.json in Resources */ = {isa = PBXBuildFile; fileRef = BE64CC0E2A90D051004FD3C8 /* gray.json */; };
 		BE781CBA2CA1A9E60022C4B8 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = BE781CB92CA1A9E60022C4B8 /* RevenueCat */; };
+		BE781CBD2CA1AE5F0022C4B8 /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = BE781CBC2CA1AE5F0022C4B8 /* ColorfulX */; };
 		BE9E5D002A8E855A0003D53D /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E5CFF2A8E855A0003D53D /* ColorExtensions.swift */; };
 		BE9E5D022A8E9EA50003D53D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E5D012A8E9EA40003D53D /* Constants.swift */; };
 		BEA4AFF32A9066A6004FD8F5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA4AFF22A9066A6004FD8F5 /* StringExtensions.swift */; };
@@ -120,6 +121,7 @@
 				BEEE07462A9325C900354879 /* SwiftyJSON in Frameworks */,
 				BEEE07492A93261000354879 /* SwiftUIOverlayContainer in Frameworks */,
 				BE781CBA2CA1A9E60022C4B8 /* RevenueCat in Frameworks */,
+				BE781CBD2CA1AE5F0022C4B8 /* ColorfulX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +280,7 @@
 				BEEE07452A9325C900354879 /* SwiftyJSON */,
 				BEEE07482A93261000354879 /* SwiftUIOverlayContainer */,
 				BE781CB92CA1A9E60022C4B8 /* RevenueCat */,
+				BE781CBC2CA1AE5F0022C4B8 /* ColorfulX */,
 			);
 			productName = JColors;
 			productReference = BE1E56772A8E718A0095E568 /* JColors.app */;
@@ -311,6 +314,7 @@
 				BEEE07442A9325C900354879 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				BEEE07472A93261000354879 /* XCRemoteSwiftPackageReference "SwiftUIOverlayContainer" */,
 				BE781CB82CA1A9E60022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+				BE781CBB2CA1AE5F0022C4B8 /* XCRemoteSwiftPackageReference "ColorfulX" */,
 			);
 			productRefGroup = BE1E56782A8E718A0095E568 /* Products */;
 			projectDirPath = "";
@@ -629,6 +633,14 @@
 				minimumVersion = 5.3.4;
 			};
 		};
+		BE781CBB2CA1AE5F0022C4B8 /* XCRemoteSwiftPackageReference "ColorfulX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Lakr233/ColorfulX";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.5.1;
+			};
+		};
 		BEEE07442A9325C900354879 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -652,6 +664,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BE781CB82CA1A9E60022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
 			productName = RevenueCat;
+		};
+		BE781CBC2CA1AE5F0022C4B8 /* ColorfulX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE781CBB2CA1AE5F0022C4B8 /* XCRemoteSwiftPackageReference "ColorfulX" */;
+			productName = ColorfulX;
 		};
 		BEEE07452A9325C900354879 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
