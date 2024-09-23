@@ -1,11 +1,11 @@
-import Glassfy
+import RevenueCat
 import SwiftUI
 
 struct ProView: View {
   @Binding var isPresented: Bool
 
-  @State var skus: [Glassfy.Sku] = []
-  @State var permissions: [Glassfy.Permission] = []
+  @State var packages: [RevenueCat.Package] = []
+  @State var entitlementInfos: [String: RevenueCat.EntitlementInfo] = [:]
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State var isLoading: Bool = false
   @State var errorMessage: String = ""
@@ -34,10 +34,10 @@ struct ProView: View {
 
         Button {
           self.isLoading = true
-          Glassfy.restorePurchases { permissions, error in
-            self.showError(message: error?.localizedDescription)
-            self.setPermissions(permissions?.all)
+          Purchases.shared.restorePurchases { customerInfo, error in
             self.isLoading = false
+            self.showError(message: error?.localizedDescription)
+            self.setEntitlementInfos(customerInfo?.entitlements.all)
           }
         } label: {
           Text("Restore")
@@ -129,40 +129,37 @@ struct ProView: View {
         Spacer()
       } else {
         ScrollView {
-          ForEach(skus, id: \.skuId) { sku in
+          ForEach(packages) { package in
             VStack(spacing: 20) {
               CardReflectionView {
                 VStack(spacing: 10) {
-                  if sku.productId == IAPManager.Sku.ios_jcolors_pro_lifetime_3.rawValue {
+                  if package.identifier == IAPManager.Sku.ios_jcolors_pro_lifetime_3.rawValue {
                     Text("pro_lifetime")
                       .font(.title)
                     Text("pro_lifetime_des")
                       .font(.headline)
                   } else {
-                    Text(sku.product.localizedTitle)
+                    Text(package.storeProduct.localizedTitle)
                       .font(.title)
-                    Text(sku.product.localizedDescription)
+                    Text(package.storeProduct.localizedDescription)
                       .font(.headline)
                   }
-                  Text(sku.product.localizedPrice)
+                  Text(package.localizedPriceString)
                     .font(.title)
                 }
                 .foregroundColor(.white)
               }
               .afocusable()
-              .focused($focus, equals: sku.skuId)
-              .scaleEffect(focus == sku.skuId ? 1.05 : 1)
+              .focused($focus, equals: package.identifier)
+              .scaleEffect(focus == package.identifier ? 1.05 : 1)
 
               Spacer()
               Button {
                 self.isLoading = true
-                Glassfy.purchase(sku: sku) { transaction, error in
-                  self.showError(message: error?.localizedDescription)
+                Purchases.shared.purchase(package: packages[0]) { _, customerInfo, error, _ in
                   self.isLoading = false
-                  guard let t = transaction, error == nil else {
-                    return
-                  }
-                  self.setPermissions(t.permissions.all)
+                  self.showError(message: error?.localizedDescription)
+                  self.setEntitlementInfos(customerInfo?.entitlements.all)
                 }
               } label: {
                 Text("Buy Now")
@@ -189,16 +186,16 @@ struct ProView: View {
     isLoading = true
     let group = DispatchGroup()
     group.enter()
-    Glassfy.offerings { offers, error in
+    Purchases.shared.getOfferings { offerings, error in
       self.showError(message: error?.localizedDescription)
       group.leave()
-      self.skus = offers?.all.flatMap { $0.skus } ?? []
+      self.packages = offerings?.all.flatMap { $0.value.availablePackages } ?? []
     }
     group.enter()
-    Glassfy.permissions { permissions, error in
+    Purchases.shared.getCustomerInfo { customerInfo, error in
       self.showError(message: error?.localizedDescription)
       group.leave()
-      self.setPermissions(permissions?.all)
+      self.setEntitlementInfos(customerInfo?.entitlements.all)
     }
     group.notify(queue: .main) {
       self.isLoading = false
@@ -207,30 +204,30 @@ struct ProView: View {
 
   func updateOfferings() {
     isLoading = true
-    Glassfy.offerings { offers, error in
+    Purchases.shared.getOfferings { offerings, error in
       self.showError(message: error?.localizedDescription)
       self.isLoading = false
-      self.skus = offers?.all.flatMap { $0.skus } ?? []
+      self.packages = offerings?.all.flatMap { $0.value.availablePackages } ?? []
     }
   }
 
   func updatePermissions() {
-    Glassfy.permissions { permissions, error in
-      self.showError(message: error?.localizedDescription)
-      self.setPermissions(permissions?.all)
+    Purchases.shared.getCustomerInfo { customerInfo, _ in
+      self.setEntitlementInfos(customerInfo?.entitlements.all)
     }
   }
 
-  func setPermissions(_ permissions: [Glassfy.Permission]?) {
-    if let permissions,
-       permissions.contains(where: { $0.isValid && $0.permissionId == IAPManager.Permission.pro_lifetime.rawValue })
+  func setEntitlementInfos(_ entitlementInfos: [String: RevenueCat.EntitlementInfo]?) {
+    if let entitlementInfos,
+       let pro = entitlementInfos[IAPManager.Permission.pro_lifetime.rawValue],
+       pro.isActive
     {
       isPro = true
     } else {
       isPro = false
     }
 
-    self.permissions = permissions ?? []
+    self.entitlementInfos = entitlementInfos ?? [:]
   }
 
   func showError(message: String?) {

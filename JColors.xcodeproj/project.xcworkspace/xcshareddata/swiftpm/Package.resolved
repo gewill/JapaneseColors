@@ -1,12 +1,13 @@
 {
+  "originHash" : "aec9d45ecd79f5503fbab67bf425e5e1ba9985568f801b21ea6e69777e5657a9",
   "pins" : [
     {
-      "identity" : "glassfy-ios-sdk",
+      "identity" : "purchases-ios-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gewill/glassfy-ios-sdk.git",
+      "location" : "https://github.com/RevenueCat/purchases-ios-spm.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "8e3e61a25ece70031b37f7bbeb17889ee40b82f0"
+        "revision" : "dab15ad6125f78c79f7397e7c9af8f5be00c0ad6",
+        "version" : "5.3.4"
       }
     },
     {
@@ -28,5 +29,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
