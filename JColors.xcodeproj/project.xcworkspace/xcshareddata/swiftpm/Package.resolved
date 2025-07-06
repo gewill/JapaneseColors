@@ -1,13 +1,13 @@
 {
-  "originHash" : "767144bb86d87119fe127f98fb6908b64e9c04afe8e77a28e487389333362d88",
+  "originHash" : "1800ce1d533e23b8dd2e81ee58bfcbab235162c296b672aa68d089df2af71d29",
   "pins" : [
     {
       "identity" : "colorfulx",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Lakr233/ColorfulX",
       "state" : {
-        "revision" : "2f877abb865dcd28a7a13551b7a05fae89f7ed84",
-        "version" : "5.5.1"
+        "revision" : "72101a9f6447c1dd6a44a95d50c875e77e7adada",
+        "version" : "5.6.6"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Lakr233/ColorVector.git",
       "state" : {
-        "revision" : "031ce6ce65c0b347fb192302aa8ec4a17cc1494f",
-        "version" : "1.0.3"
+        "revision" : "6da8726bf38d68eb943d0f2139ac2a1fac70e65b",
+        "version" : "1.0.4"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Lakr233/MSDisplayLink.git",
       "state" : {
-        "revision" : "89e224c797de6d2ec6552a568f62ef9ba016def0",
-        "version" : "1.1.0"
+        "revision" : "ebf5823cb5fc1326639d9a05bc06d16bbe82989f",
+        "version" : "2.0.8"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/RevenueCat/purchases-ios-spm.git",
       "state" : {
-        "revision" : "dab15ad6125f78c79f7397e7c9af8f5be00c0ad6",
-        "version" : "5.3.4"
+        "revision" : "7ac8ce4ef91b8642b66353b123a3cca43a2f976c",
+        "version" : "5.31.0"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Lakr233/SpringInterpolation.git",
       "state" : {
-        "revision" : "ff526fec3ef6df62395141a0cc55a4ba2d82ee81",
-        "version" : "1.2.2"
+        "revision" : "f9ae95ece5d6b7cdceafd4381f1d5f0f9494e5d2",
+        "version" : "1.3.1"
       }
     },
     {
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/fatbobman/SwiftUIOverlayContainer.git",
       "state" : {
-        "revision" : "d9ff87b16eb8743326dc0a3e901e15a82ed46530",
-        "version" : "2.3.3"
+        "revision" : "64a124ba613adc9f2bb7bf00f5a5e8b22a816d14",
+        "version" : "2.4.1"
       }
     },
     {
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SwiftyJSON/SwiftyJSON.git",
       "state" : {
-        "revision" : "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
-        "version" : "5.0.1"
+        "revision" : "af76cf3ef710b6ca5f8c05f3a31307d44a3c5828",
+        "version" : "5.0.2"
       }
     }
   ],
