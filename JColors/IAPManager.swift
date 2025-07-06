@@ -40,6 +40,7 @@ final class IAPManager {
     Purchases.logLevel = .debug
     #endif
     Purchases.configure(withAPIKey: "appl_qkcGKdlnRMjdvrsRTfqANMqWeiu")
+    Purchases.proxyURL = URL(string: "https://api.rc-backup.com/")!
   }
 
   func checkProLifetime(completion: @escaping (Bool) -> Void) {
