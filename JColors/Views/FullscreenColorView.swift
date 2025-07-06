@@ -132,6 +132,28 @@ struct FullscreenColorView: View {
       .sheet(isPresented: $showingPro) {
         ProView(isPresented: $showingPro)
       }
+      .onReceive(NotificationCenter.default.publisher(for: .init(rawValue: "RightArrow")), perform: { _ in
+        didSwipeRight()
+      })
+      .onReceive(NotificationCenter.default.publisher(for: .init(rawValue: "LeftArrow")), perform: { _ in
+        didSwipeLeft()
+      })
+      .onAppear {
+        #if os(macOS)
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+          switch event.keyCode {
+          case 123: // Left arrow
+            NotificationCenter.default.post(name: .init(rawValue: "LeftArrow"), object: nil)
+            return nil
+          case 124: // Right arrow
+            NotificationCenter.default.post(name: .init(rawValue: "RightArrow"), object: nil)
+            return nil
+          default:
+            return event
+          }
+        }
+        #endif
+      }
   }
 }
 
