@@ -6,12 +6,18 @@ enum ProFeature: String, CaseIterable, Identifiable {
   case copy = "复制颜色Hex值"
   case date = "切换日期，今日和随机日期"
   case universalPurchase = "通用购买项目，一次购买全平台使用"
+  #if !os(tvOS)
+  case dailyColorWidget = "每日色小组件，每天遇见一色"
+  #endif
 
   var imageName: String {
     switch self {
     case .copy: return "doc.on.doc"
     case .date: return "calendar.badge.clock"
     case .universalPurchase: return "purchased.circle"
+    #if !os(tvOS)
+    case .dailyColorWidget: return "square.grid.2x2"
+    #endif
     }
   }
 
@@ -38,6 +44,7 @@ final class IAPManager: NSObject, PurchasesDelegate {
   }
 
   func configure() {
+    WidgetAccess.seed(isPro: UserDefaults.standard.bool(forKey: UserDefaultsKeys.isPro.rawValue))
     guard !Purchases.isConfigured else { return }
 
     #if DEBUG
@@ -64,6 +71,7 @@ final class IAPManager: NSObject, PurchasesDelegate {
     if defaults.bool(forKey: UserDefaultsKeys.isPro.rawValue) != isPro {
       defaults.set(isPro, forKey: UserDefaultsKeys.isPro.rawValue)
     }
+    WidgetAccess.update(isPro: isPro)
   }
 
   func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {

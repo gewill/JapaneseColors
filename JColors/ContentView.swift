@@ -26,7 +26,7 @@ struct ContentView: View {
   }
 
   var shouldAutoChange: Bool {
-    isAutoChange && isPro && scenePhase == .active && !showingPro
+    isAutoChange && isPro && scenePhase == .active && presentedSheet == nil && !playback.isPaused
       && (playback.owner == nil || playback.owner?.viewID == playbackID)
   }
 
@@ -44,7 +44,14 @@ struct ContentView: View {
   }()
 
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
-  @State private var showingPro = false
+  @State private var presentedSheet: PresentedSheet?
+  @State private var pendingRoute: AppRoute?
+  @State private var isSheetPresented = false
+
+  private enum PresentedSheet: String, Identifiable {
+    case premium, favorites, search
+    var id: Self { self }
+  }
 
   // MARK: - life cycle
 
@@ -76,6 +83,9 @@ struct ContentView: View {
               ToolbarItemGroup(placement: .navigationBarTrailing) {
                 datesView
               }
+              ToolbarItemGroup(placement: .navigationBarLeading) {
+                libraryButtons
+              }
             }
           #endif
         }
@@ -85,6 +95,55 @@ struct ContentView: View {
     .onAppear {
       restoreSelection()
     }
+    .sheet(item: $presentedSheet, onDismiss: {
+      isSheetPresented = false
+      playback.setPaused(false, for: playbackID)
+      if let route = pendingRoute {
+        pendingRoute = nil
+        applyRoute(route)
+      }
+    }) { sheet in
+      switch sheet {
+      case .premium:
+        ProView(isPresented: Binding(
+          get: { presentedSheet == .premium },
+          set: { if !$0 { presentedSheet = nil } }
+        ))
+      case .favorites, .search:
+        #if !os(tvOS)
+        ColorLibraryView(mode: sheet == .favorites ? .favorites : .search) { color in
+          isFullscreenColor = false
+          categoryType = .month
+          selectColor(color)
+          presentedSheet = nil
+        }
+        #else
+        EmptyView()
+        #endif
+      }
+    }
+    .onChange(of: presentedSheet) { sheet in
+      if sheet != nil {
+        playback.setPaused(true, for: playbackID)
+      }
+    }
+    .onDisappear {
+      playback.setPaused(false, for: playbackID)
+    }
+    #if !os(tvOS)
+    .onOpenURL { url in
+      guard let route = AppRoute(url: url) else { return }
+      isAutoChange = false
+      isFullscreenColor = false
+      if isSheetPresented {
+        pendingRoute = route
+        presentedSheet = nil
+      } else {
+        pendingRoute = nil
+        applyRoute(route)
+      }
+    }
+    #endif
     .onChange(of: categoryType) { _ in
       alignCategoryWithSelection()
     }
@@ -123,16 +182,59 @@ struct ContentView: View {
       #endif
     } detail: {
       colorListAndDetailView
+        #if os(iOS)
+        .toolbar {
+          ToolbarItemGroup(placement: .navigationBarTrailing) { libraryButtons }
+        }
+        #endif
     }
     #if os(macOS)
     .navigationTitle("日本传统色")
     #endif
+    .toolbar {
+      #if os(macOS)
+      ToolbarItemGroup { libraryButtons }
+      #endif
+    }
   }
+
+  #if !os(tvOS)
+  var libraryButtons: some View {
+    Group {
+      Button {
+        present(.favorites)
+      } label: {
+        Label("Favorites", systemImage: "heart")
+      }
+      .accessibilityIdentifier("open-favorites")
+      Button {
+        present(.search)
+      } label: {
+        Label("Search colors", systemImage: "magnifyingglass")
+      }
+      .keyboardShortcut("f", modifiers: .command)
+      .accessibilityIdentifier("open-search")
+    }
+    .labelStyle(.iconOnly)
+  }
+  #endif
 
   var datesView: some View {
     Group {
+      if UserInterfaceIdiom.current == .phone {
+        dateButtons
+      } else {
+        dateButtons
+          .buttonStyle(.bordered)
+          .clipShape(Capsule())
+      }
+    }
+  }
+
+  var dateButtons: some View {
+    Group {
       Button {
-        showingPro = true
+        present(.premium)
       } label: {
         Label("Premium", systemImage: "crown")
           .foregroundColor(isPro ? .yellow : .accentColor)
@@ -148,11 +250,6 @@ struct ContentView: View {
       } label: {
         Text("随机")
       }
-    }
-    .buttonStyle(.bordered)
-    .clipShape(Capsule())
-    .sheet(isPresented: $showingPro) {
-      ProView(isPresented: $showingPro)
     }
   }
 
@@ -303,12 +400,12 @@ struct ContentView: View {
         Button {
           updateColor(model)
         } label: {
-          ColorCard(model: model)
+          ColorCard(model: model, onShowPremium: { present(.premium) })
         }
         .buttonStyle(.card)
       #else
         ZStack(alignment: .bottomTrailing) {
-          ColorCard(model: model)
+          ColorCard(model: model, onShowPremium: { present(.premium) })
             .id(model.id)
             .onTapGesture {
               updateColor(model)
@@ -346,6 +443,8 @@ struct ContentView: View {
             previousColor()
           }, didSwipeRight: {
             nextColor()
+          }, onShowPremium: {
+            present(.premium)
           }, onDismiss: {
             withAnimation(.spring()) {
               isFullscreenColor = false
@@ -359,6 +458,14 @@ struct ContentView: View {
     ScrollView {
       if let selectedColor {
         VStack {
+          #if !os(tvOS)
+          HStack {
+            Text(selectedColor.kanji).font(.title2)
+            Spacer()
+            FavoriteButton(color: selectedColor)
+          }
+          .frame(maxWidth: 700)
+          #endif
           Image(selectedColor.id)
             .resizable()
             .aspectRatio(contentMode: .fill)
@@ -416,6 +523,24 @@ struct ContentView: View {
 
   // MARK: - private methods
 
+  private func present(_ sheet: PresentedSheet) {
+    guard !isSheetPresented else { return }
+    isSheetPresented = true
+    playback.setPaused(true, for: playbackID)
+    presentedSheet = sheet
+  }
+
+  private func applyRoute(_ route: AppRoute) {
+    switch route {
+    case .color(let id):
+      guard let color = ModelTool.shared.color(id: id) else { return }
+      categoryType = .month
+      selectColor(color)
+    case .premium:
+      present(.premium)
+    }
+  }
+
   func updateColor(_ color: ColorModel) {
     selectedColorId = selectedColorId == color.id ? "" : color.id
   }
@@ -441,7 +566,7 @@ struct ContentView: View {
 
   func setToday() {
     guard isPro else {
-      showingPro = true
+      present(.premium)
       return
     }
     if let color = ModelTool.shared.color(on: .now) {
@@ -452,7 +577,7 @@ struct ContentView: View {
 
   func setRandomDay() {
     guard isPro else {
-      showingPro = true
+      present(.premium)
       return
     }
     if let color = ModelTool.shared.randomColor() {
@@ -530,6 +655,17 @@ private final class AutoChangeCoordinator: ObservableObject {
   static let shared = AutoChangeCoordinator()
   @Published private(set) var owner: Reservation?
   @Published private(set) var nextChangeDate: Date?
+  @Published private var pausedWindows: Set<UUID> = []
+
+  var isPaused: Bool { !pausedWindows.isEmpty }
+
+  func setPaused(_ paused: Bool, for viewID: UUID) {
+    if paused {
+      if !pausedWindows.contains(viewID) { pausedWindows.insert(viewID) }
+    } else if pausedWindows.contains(viewID) {
+      pausedWindows.remove(viewID)
+    }
+  }
 
   func acquire(for viewID: UUID) -> Reservation? {
     guard owner == nil || owner?.viewID == viewID else { return nil }

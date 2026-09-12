@@ -53,13 +53,84 @@
 		BEA4AFFF2A907B0D004FD8F5 /* ColorCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA4AFFE2A907B0D004FD8F5 /* ColorCard.swift */; };
 		BEE65FD92A8E7FE70039B287 /* ColorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE65FD82A8E7FE70039B287 /* ColorModel.swift */; };
 		BEEE07432A9302BC00354879 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEE07422A9302BC00354879 /* DateExtensions.swift */; };
-		BEEE07462A9325C900354879 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = BEEE07452A9325C900354879 /* SwiftyJSON */; };
 		BEEE07492A93261000354879 /* SwiftUIOverlayContainer in Frameworks */ = {isa = PBXBuildFile; productRef = BEEE07482A93261000354879 /* SwiftUIOverlayContainer */; };
 		BEEE074B2A93264400354879 /* ContainerConfigurationForQueueMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEE074A2A93264400354879 /* ContainerConfigurationForQueueMessage.swift */; };
 		BEEE074D2A93264F00354879 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEE074C2A93264F00354879 /* MessageView.swift */; };
 		BEFC5F122A8FC5E4004A2F1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */; };
 		BEFC5F142A8FC9EF004A2F1D /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFC5F132A8FC9EF004A2F1D /* ButtonStyle.swift */; };
+		BE7786CD7FFF7E3BB99711BD /* ColorCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DE8CAD17472F247F27D287 /* ColorCatalog.swift */; };
+		A5E3BAF3403B5C461AD020A4 /* ModelTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD0CC699C590763481B256 /* ModelTool.swift */; };
+		54E0AACD9A4D677C42A91018 /* FavoritesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01FF20D7FF4E03BDAF48EC /* FavoritesStore.swift */; };
+		1250334D2C73A153278A4C08 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DAF12C8B435FAD121C7C6A /* AppRoute.swift */; };
+		5B634F9F9D7708457DF3196C /* ColorLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E0324F006B81EEEE0B3EB7 /* ColorLibraryView.swift */; };
+		3848B6597DB4C58D5C0A79EA /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA16C142D93EA6B6555988E /* FavoriteButton.swift */; };
+		F99BC3CC6BC08DD573976CB2 /* WidgetAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E6D7BED414E05696FA56C1 /* WidgetAccess.swift */; };
+		00363ADEF1A096F59F1BE2E6 /* DailyColorWidget.swift in JColorsWidgetsiOS Sources */ = {isa = PBXBuildFile; fileRef = 571332B5E3D960830F5F80F7 /* DailyColorWidget.swift */; };
+		5477D1D8919154B8DAF55118 /* DailyColorSchedule.swift in JColorsWidgetsiOS Sources */ = {isa = PBXBuildFile; fileRef = E81DF8EF57FE9FD3DC5F0875 /* DailyColorSchedule.swift */; };
+		B497D03CAC8246A351639045 /* WidgetAccess.swift in JColorsWidgetsiOS Sources */ = {isa = PBXBuildFile; fileRef = F3E6D7BED414E05696FA56C1 /* WidgetAccess.swift */; };
+		4454D00BDDDD198CDAF1F69A /* ColorCatalog.swift in JColorsWidgetsiOS Sources */ = {isa = PBXBuildFile; fileRef = 02DE8CAD17472F247F27D287 /* ColorCatalog.swift */; };
+		2182B325C48B9BC9C551217A /* ColorModel.swift in JColorsWidgetsiOS Sources */ = {isa = PBXBuildFile; fileRef = BEE65FD82A8E7FE70039B287 /* ColorModel.swift */; };
+		B718FF826AE27DC56D26CA43 /* ColorExtensions.swift in JColorsWidgetsiOS Sources */ = {isa = PBXBuildFile; fileRef = BE9E5CFF2A8E855A0003D53D /* ColorExtensions.swift */; };
+		F8FA7220E419E695B328125E /* 1.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFA2A90D051004FD3C8 /* 1.json */; };
+		97F6A94428A38C257E1C9B9C /* 2.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFC2A90D051004FD3C8 /* 2.json */; };
+		C886E225F1258AA4C294CAF9 /* 3.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFE2A90D051004FD3C8 /* 3.json */; };
+		C770E8461494E577F6CCFD50 /* 4.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CC002A90D051004FD3C8 /* 4.json */; };
+		78C02D6C8A0B1838F6A30963 /* 5.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CC012A90D051004FD3C8 /* 5.json */; };
+		3E90EC4B24D30C02A62E2CED /* 6.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF72A90D051004FD3C8 /* 6.json */; };
+		B3FA3FEC1D739EDA4FFAB5C5 /* 7.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF82A90D051004FD3C8 /* 7.json */; };
+		E33806731DFB16ADC217A0B1 /* 8.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFF2A90D051004FD3C8 /* 8.json */; };
+		B1BADDDC762DF06DCE32113D /* 9.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CC022A90D051004FD3C8 /* 9.json */; };
+		349A1603B71D9CFDD4AF524C /* 10.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF92A90D051004FD3C8 /* 10.json */; };
+		0C409F3C65F2BBD14A5C02AF /* 11.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFB2A90D051004FD3C8 /* 11.json */; };
+		B9D4347F6AC928A3ACAE0F05 /* 12.json in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFD2A90D051004FD3C8 /* 12.json */; };
+		01180F37BB462E7F7D51C6A6 /* PrivacyInfo.xcprivacy in JColorsWidgetsiOS Resources */ = {isa = PBXBuildFile; fileRef = CC046A71ADE8B8DE8969FA84 /* PrivacyInfo.xcprivacy */; };
+		8F3005BB0C61E0E90B6448B7 /* JColorsWidgetsiOS.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 798FCCA4A22A9BDC5BAA5345 /* JColorsWidgetsiOS.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CEFA06709C43BCED869D14BF /* DailyColorWidget.swift in JColorsWidgetsmacOS Sources */ = {isa = PBXBuildFile; fileRef = 571332B5E3D960830F5F80F7 /* DailyColorWidget.swift */; };
+		5B1431B9F3BBEDDD8C09E292 /* DailyColorSchedule.swift in JColorsWidgetsmacOS Sources */ = {isa = PBXBuildFile; fileRef = E81DF8EF57FE9FD3DC5F0875 /* DailyColorSchedule.swift */; };
+		DB704D72ECF400B7CFB6642D /* WidgetAccess.swift in JColorsWidgetsmacOS Sources */ = {isa = PBXBuildFile; fileRef = F3E6D7BED414E05696FA56C1 /* WidgetAccess.swift */; };
+		9238973148DB62FBE16E6258 /* ColorCatalog.swift in JColorsWidgetsmacOS Sources */ = {isa = PBXBuildFile; fileRef = 02DE8CAD17472F247F27D287 /* ColorCatalog.swift */; };
+		77F51E0082A5C4B3D10B85F3 /* ColorModel.swift in JColorsWidgetsmacOS Sources */ = {isa = PBXBuildFile; fileRef = BEE65FD82A8E7FE70039B287 /* ColorModel.swift */; };
+		6091E7DB2BBCF731A6A5D816 /* ColorExtensions.swift in JColorsWidgetsmacOS Sources */ = {isa = PBXBuildFile; fileRef = BE9E5CFF2A8E855A0003D53D /* ColorExtensions.swift */; };
+		E6D39FDAF280BA6C9D6F29E7 /* 1.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFA2A90D051004FD3C8 /* 1.json */; };
+		38C20E7C68CC8380542DC2FC /* 2.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFC2A90D051004FD3C8 /* 2.json */; };
+		C44AAC8B94CC4E14EE5AC7DE /* 3.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFE2A90D051004FD3C8 /* 3.json */; };
+		661083BEF890CB0D0C7B7890 /* 4.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CC002A90D051004FD3C8 /* 4.json */; };
+		76F41488F4AB0FD720E369DD /* 5.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CC012A90D051004FD3C8 /* 5.json */; };
+		A749D382CA4E38958CBB7FF7 /* 6.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF72A90D051004FD3C8 /* 6.json */; };
+		7396D946855F50A975CF1DD6 /* 7.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF82A90D051004FD3C8 /* 7.json */; };
+		732C7F184DACEADA695D7C6F /* 8.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFF2A90D051004FD3C8 /* 8.json */; };
+		ECE7D6C7F4693853EE0F7B0A /* 9.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CC022A90D051004FD3C8 /* 9.json */; };
+		919681B523361A3D72DF36D2 /* 10.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBF92A90D051004FD3C8 /* 10.json */; };
+		F52AE6FDCCCCA499BA928682 /* 11.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFB2A90D051004FD3C8 /* 11.json */; };
+		23B87B155168D90F97F007BA /* 12.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFD2A90D051004FD3C8 /* 12.json */; };
+		302347F7257E777931D49C9C /* PrivacyInfo.xcprivacy in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = CC046A71ADE8B8DE8969FA84 /* PrivacyInfo.xcprivacy */; };
+		BA5704EC71A257CC86406D3D /* JColorsWidgetsmacOS.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 237048014E123F0F4754503B /* JColorsWidgetsmacOS.appex */; platformFilters = (macos,); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7FC628ACAA24D50FEF763B3D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8F3005BB0C61E0E90B6448B7 /* JColorsWidgetsiOS.appex in Embed App Extensions */,
+				BA5704EC71A257CC86406D3D /* JColorsWidgetsmacOS.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXContainerItemProxy section */
+		A836A770BACE8998A41E40BC /* PBXContainerItemProxy */ = {isa = PBXContainerItemProxy; containerPortal = BE1E566F2A8E718A0095E568 /* Project object */; proxyType = 1; remoteGlobalIDString = A88A54229BF512C199D0A9C5; remoteInfo = JColorsWidgetsiOS; };
+		AE0901E55FCEC2B6CBD31F10 /* PBXContainerItemProxy */ = {isa = PBXContainerItemProxy; containerPortal = BE1E566F2A8E718A0095E568 /* Project object */; proxyType = 1; remoteGlobalIDString = 936A77ABEF851F52A7EF45AF; remoteInfo = JColorsWidgetsmacOS; };
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXTargetDependency section */
+		054A1D2150FA8444C4727572 /* PBXTargetDependency */ = {isa = PBXTargetDependency; platformFilter = ios; target = A88A54229BF512C199D0A9C5 /* JColorsWidgetsiOS */; targetProxy = A836A770BACE8998A41E40BC /* PBXContainerItemProxy */; };
+		4EB8097A5D421E85EB8F0431 /* PBXTargetDependency */ = {isa = PBXTargetDependency; platformFilters = (macos,); target = 936A77ABEF851F52A7EF45AF /* JColorsWidgetsmacOS */; targetProxy = AE0901E55FCEC2B6CBD31F10 /* PBXContainerItemProxy */; };
+/* End PBXTargetDependency section */
 
 /* Begin PBXFileReference section */
 		C07E20260912000000000002 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -113,6 +184,22 @@
 		BEFC5F112A8FC5E4004A2F1D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		BEFC5F132A8FC9EF004A2F1D /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		BEFC5F152A8FD1A7004A2F1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		02DE8CAD17472F247F27D287 /* ColorCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorCatalog.swift"; sourceTree = "<group>"; };
+		1FFD0CC699C590763481B256 /* ModelTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelTool.swift"; sourceTree = "<group>"; };
+		4A01FF20D7FF4E03BDAF48EC /* FavoritesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoritesStore.swift"; sourceTree = "<group>"; };
+		08DAF12C8B435FAD121C7C6A /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRoute.swift"; sourceTree = "<group>"; };
+		71E0324F006B81EEEE0B3EB7 /* ColorLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorLibraryView.swift"; sourceTree = "<group>"; };
+		9DA16C142D93EA6B6555988E /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteButton.swift"; sourceTree = "<group>"; };
+		F3E6D7BED414E05696FA56C1 /* WidgetAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WidgetAccess.swift"; sourceTree = "<group>"; };
+		56A35DE0F369260A8F622FF4 /* JColors-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "JColors-iOS.entitlements"; sourceTree = "<group>"; };
+		571332B5E3D960830F5F80F7 /* DailyColorWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyColorWidget.swift"; sourceTree = "<group>"; };
+		E81DF8EF57FE9FD3DC5F0875 /* DailyColorSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyColorSchedule.swift"; sourceTree = "<group>"; };
+		5D6DB695F769731330FCE978 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		FE8FF2A488FCE77041B0B66C /* JColorsWidgets-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "JColorsWidgets-iOS.entitlements"; sourceTree = "<group>"; };
+		BF63AA667559CFECAD96A013 /* JColorsWidgets-macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "JColorsWidgets-macOS.entitlements"; sourceTree = "<group>"; };
+		CC046A71ADE8B8DE8969FA84 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "PrivacyInfo.xcprivacy"; sourceTree = "<group>"; };
+		798FCCA4A22A9BDC5BAA5345 /* JColorsWidgetsiOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JColorsWidgetsiOS.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		237048014E123F0F4754503B /* JColorsWidgetsmacOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JColorsWidgetsmacOS.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,10 +207,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEEE07462A9325C900354879 /* SwiftyJSON in Frameworks */,
 				BEEE07492A93261000354879 /* SwiftUIOverlayContainer in Frameworks */,
 				BE781CBA2CA1A9E60022C4B8 /* RevenueCat in Frameworks */,
 				BE781CBD2CA1AE5F0022C4B8 /* ColorfulX in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4C9C19BE0D77FA544779426 /* JColorsWidgetsiOS */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8EB096F91E333378180BA6B6 /* JColorsWidgetsmacOS */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +233,7 @@
 		BE1E566E2A8E718A0095E568 = {
 			isa = PBXGroup;
 			children = (
+				0D13F28A43E8C9575F3DCDF3 /* JColorsWidgets */,
 				BE1E56792A8E718A0095E568 /* JColors */,
 				BE1E56782A8E718A0095E568 /* Products */,
 			);
@@ -143,6 +244,8 @@
 		BE1E56782A8E718A0095E568 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				237048014E123F0F4754503B /* JColorsWidgetsmacOS.appex */,
+				798FCCA4A22A9BDC5BAA5345 /* JColorsWidgetsiOS.appex */,
 				BE1E56772A8E718A0095E568 /* JColors.app */,
 			);
 			name = Products;
@@ -164,9 +267,11 @@
 				BEA4AFF42A9066D4004FD8F5 /* Models */,
 				BEA4AFF52A9066DB004FD8F5 /* Extensions */,
 				BEA4AFF62A9066EF004FD8F5 /* SwiftUIStyles */,
-				BE64CC032A90D051004FD3C8 /* byColor */,
-				BE64CBF62A90D051004FD3C8 /* byMonth */,
+				BE64CC032A90D051004FD3C8 /* scripts/byColor */,
+				BE64CBF62A90D051004FD3C8 /* scripts/byMonth */,
 				BE1E56812A8E718B0095E568 /* Preview Content */,
+				E6C76F0D2C86CE518B76AFFD /* Shared */,
+				56A35DE0F369260A8F622FF4 /* JColors-iOS.entitlements */,
 			);
 			path = JColors;
 			sourceTree = "<group>";
@@ -188,6 +293,8 @@
 				BEEE074C2A93264F00354879 /* MessageView.swift */,
 				BE51B1C02A93442900C6A3A5 /* CardReflectionView.swift */,
 				BE51B1C32A93446000C6A3A5 /* LoadingView.swift */,
+				71E0324F006B81EEEE0B3EB7 /* ColorLibraryView.swift */,
+				9DA16C142D93EA6B6555988E /* FavoriteButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -238,6 +345,10 @@
 				BEA4AFF72A906718004FD8F5 /* CategoryType.swift */,
 				BEEE074A2A93264400354879 /* ContainerConfigurationForQueueMessage.swift */,
 				BE51B1BC2A93431600C6A3A5 /* SwiftyUserDefaults.swift */,
+				02DE8CAD17472F247F27D287 /* ColorCatalog.swift */,
+				1FFD0CC699C590763481B256 /* ModelTool.swift */,
+				4A01FF20D7FF4E03BDAF48EC /* FavoritesStore.swift */,
+				08DAF12C8B435FAD121C7C6A /* AppRoute.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,6 +374,25 @@
 			path = SwiftUIStyles;
 			sourceTree = "<group>";
 		};
+		E6C76F0D2C86CE518B76AFFD /* Shared */ = {
+			isa = PBXGroup;
+			children = (F3E6D7BED414E05696FA56C1 /* WidgetAccess.swift */,);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		0D13F28A43E8C9575F3DCDF3 /* JColorsWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				571332B5E3D960830F5F80F7 /* DailyColorWidget.swift */,
+				E81DF8EF57FE9FD3DC5F0875 /* DailyColorSchedule.swift */,
+				5D6DB695F769731330FCE978 /* Info.plist */,
+				FE8FF2A488FCE77041B0B66C /* JColorsWidgets-iOS.entitlements */,
+				BF63AA667559CFECAD96A013 /* JColorsWidgets-macOS.entitlements */,
+				CC046A71ADE8B8DE8969FA84 /* PrivacyInfo.xcprivacy */,
+			);
+			path = JColorsWidgets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -273,14 +403,16 @@
 				BE1E56732A8E718A0095E568 /* Sources */,
 				BE1E56742A8E718A0095E568 /* Frameworks */,
 				BE1E56752A8E718A0095E568 /* Resources */,
+				7FC628ACAA24D50FEF763B3D /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4EB8097A5D421E85EB8F0431 /* PBXTargetDependency */,
+				054A1D2150FA8444C4727572 /* PBXTargetDependency */,
 			);
 			name = JColors;
 			packageProductDependencies = (
-				BEEE07452A9325C900354879 /* SwiftyJSON */,
 				BEEE07482A93261000354879 /* SwiftUIOverlayContainer */,
 				BE781CB92CA1A9E60022C4B8 /* RevenueCat */,
 				BE781CBC2CA1AE5F0022C4B8 /* ColorfulX */,
@@ -288,6 +420,28 @@
 			productName = JColors;
 			productReference = BE1E56772A8E718A0095E568 /* JColors.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A88A54229BF512C199D0A9C5 /* JColorsWidgetsiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E10E2794812011102ED4B08D /* JColorsWidgetsiOS */;
+			buildPhases = (4260CB824A0766565779277A /* Sources */, D4C9C19BE0D77FA544779426 /* Frameworks */, 4DBC02293C309B0940951857 /* Resources */,);
+			buildRules = ();
+			dependencies = ();
+			name = JColorsWidgetsiOS;
+			productName = JColorsWidgetsiOS;
+			productReference = 798FCCA4A22A9BDC5BAA5345 /* JColorsWidgetsiOS.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		936A77ABEF851F52A7EF45AF /* JColorsWidgetsmacOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 125E6E6E3D5D3DFD3E6031A5 /* JColorsWidgetsmacOS */;
+			buildPhases = (8731A99F1A16D4F3727473AA /* Sources */, 8EB096F91E333378180BA6B6 /* Frameworks */, 9E4E4E9DC4B9F7FAD1A61CB1 /* Resources */,);
+			buildRules = ();
+			dependencies = ();
+			name = JColorsWidgetsmacOS;
+			productName = JColorsWidgetsmacOS;
+			productReference = 237048014E123F0F4754503B /* JColorsWidgetsmacOS.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -314,7 +468,6 @@
 			);
 			mainGroup = BE1E566E2A8E718A0095E568;
 			packageReferences = (
-				BEEE07442A9325C900354879 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				BEEE07472A93261000354879 /* XCRemoteSwiftPackageReference "SwiftUIOverlayContainer" */,
 				BE781CB82CA1A9E60022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 				BE781CBB2CA1AE5F0022C4B8 /* XCRemoteSwiftPackageReference "ColorfulX" */,
@@ -323,6 +476,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				936A77ABEF851F52A7EF45AF /* JColorsWidgetsmacOS */,
+				A88A54229BF512C199D0A9C5 /* JColorsWidgetsiOS */,
 				BE1E56762A8E718A0095E568 /* JColors */,
 			);
 		};
@@ -363,6 +518,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4DBC02293C309B0940951857 /* JColorsWidgetsiOS */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8FA7220E419E695B328125E /* 1.json in JColorsWidgetsiOS Resources */,
+				97F6A94428A38C257E1C9B9C /* 2.json in JColorsWidgetsiOS Resources */,
+				C886E225F1258AA4C294CAF9 /* 3.json in JColorsWidgetsiOS Resources */,
+				C770E8461494E577F6CCFD50 /* 4.json in JColorsWidgetsiOS Resources */,
+				78C02D6C8A0B1838F6A30963 /* 5.json in JColorsWidgetsiOS Resources */,
+				3E90EC4B24D30C02A62E2CED /* 6.json in JColorsWidgetsiOS Resources */,
+				B3FA3FEC1D739EDA4FFAB5C5 /* 7.json in JColorsWidgetsiOS Resources */,
+				E33806731DFB16ADC217A0B1 /* 8.json in JColorsWidgetsiOS Resources */,
+				B1BADDDC762DF06DCE32113D /* 9.json in JColorsWidgetsiOS Resources */,
+				349A1603B71D9CFDD4AF524C /* 10.json in JColorsWidgetsiOS Resources */,
+				0C409F3C65F2BBD14A5C02AF /* 11.json in JColorsWidgetsiOS Resources */,
+				B9D4347F6AC928A3ACAE0F05 /* 12.json in JColorsWidgetsiOS Resources */,
+				01180F37BB462E7F7D51C6A6 /* PrivacyInfo.xcprivacy in JColorsWidgetsiOS Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9E4E4E9DC4B9F7FAD1A61CB1 /* JColorsWidgetsmacOS */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6D39FDAF280BA6C9D6F29E7 /* 1.json in JColorsWidgetsmacOS Resources */,
+				38C20E7C68CC8380542DC2FC /* 2.json in JColorsWidgetsmacOS Resources */,
+				C44AAC8B94CC4E14EE5AC7DE /* 3.json in JColorsWidgetsmacOS Resources */,
+				661083BEF890CB0D0C7B7890 /* 4.json in JColorsWidgetsmacOS Resources */,
+				76F41488F4AB0FD720E369DD /* 5.json in JColorsWidgetsmacOS Resources */,
+				A749D382CA4E38958CBB7FF7 /* 6.json in JColorsWidgetsmacOS Resources */,
+				7396D946855F50A975CF1DD6 /* 7.json in JColorsWidgetsmacOS Resources */,
+				732C7F184DACEADA695D7C6F /* 8.json in JColorsWidgetsmacOS Resources */,
+				ECE7D6C7F4693853EE0F7B0A /* 9.json in JColorsWidgetsmacOS Resources */,
+				919681B523361A3D72DF36D2 /* 10.json in JColorsWidgetsmacOS Resources */,
+				F52AE6FDCCCCA499BA928682 /* 11.json in JColorsWidgetsmacOS Resources */,
+				23B87B155168D90F97F007BA /* 12.json in JColorsWidgetsmacOS Resources */,
+				302347F7257E777931D49C9C /* PrivacyInfo.xcprivacy in JColorsWidgetsmacOS Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -391,6 +586,39 @@
 				BEEE074B2A93264400354879 /* ContainerConfigurationForQueueMessage.swift in Sources */,
 				BE51B1C42A93446000C6A3A5 /* LoadingView.swift in Sources */,
 				BE9E5D022A8E9EA50003D53D /* Constants.swift in Sources */,
+				BE7786CD7FFF7E3BB99711BD /* ColorCatalog.swift in Sources */,
+				A5E3BAF3403B5C461AD020A4 /* ModelTool.swift in Sources */,
+				54E0AACD9A4D677C42A91018 /* FavoritesStore.swift in Sources */,
+				1250334D2C73A153278A4C08 /* AppRoute.swift in Sources */,
+				5B634F9F9D7708457DF3196C /* ColorLibraryView.swift in Sources */,
+				3848B6597DB4C58D5C0A79EA /* FavoriteButton.swift in Sources */,
+				F99BC3CC6BC08DD573976CB2 /* WidgetAccess.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4260CB824A0766565779277A /* JColorsWidgetsiOS */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00363ADEF1A096F59F1BE2E6 /* DailyColorWidget.swift in JColorsWidgetsiOS Sources */,
+				5477D1D8919154B8DAF55118 /* DailyColorSchedule.swift in JColorsWidgetsiOS Sources */,
+				B497D03CAC8246A351639045 /* WidgetAccess.swift in JColorsWidgetsiOS Sources */,
+				4454D00BDDDD198CDAF1F69A /* ColorCatalog.swift in JColorsWidgetsiOS Sources */,
+				2182B325C48B9BC9C551217A /* ColorModel.swift in JColorsWidgetsiOS Sources */,
+				B718FF826AE27DC56D26CA43 /* ColorExtensions.swift in JColorsWidgetsiOS Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8731A99F1A16D4F3727473AA /* JColorsWidgetsmacOS */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEFA06709C43BCED869D14BF /* DailyColorWidget.swift in JColorsWidgetsmacOS Sources */,
+				5B1431B9F3BBEDDD8C09E292 /* DailyColorSchedule.swift in JColorsWidgetsmacOS Sources */,
+				DB704D72ECF400B7CFB6642D /* WidgetAccess.swift in JColorsWidgetsmacOS Sources */,
+				9238973148DB62FBE16E6258 /* ColorCatalog.swift in JColorsWidgetsmacOS Sources */,
+				77F51E0082A5C4B3D10B85F3 /* ColorModel.swift in JColorsWidgetsmacOS Sources */,
+				6091E7DB2BBCF731A6A5D816 /* ColorExtensions.swift in JColorsWidgetsmacOS Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,7 +751,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]" = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = JColors/JColors.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = JColors/JColors.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphone*]" = "JColors/JColors-iOS.entitlements";
+				JCOLORS_APP_GROUP = group.org.gewill.JapaneseColors;
+				"JCOLORS_APP_GROUP[sdk=macosx*]" = "$(DEVELOPMENT_TEAM).org.gewill.JapaneseColors";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"JColors/Preview Content\"";
@@ -547,7 +779,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.JapaneseColors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -567,7 +799,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]" = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = JColors/JColors.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = JColors/JColors.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphone*]" = "JColors/JColors-iOS.entitlements";
+				JCOLORS_APP_GROUP = group.org.gewill.JapaneseColors;
+				"JCOLORS_APP_GROUP[sdk=macosx*]" = "$(DEVELOPMENT_TEAM).org.gewill.JapaneseColors";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"JColors/Preview Content\"";
@@ -591,7 +827,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.JapaneseColors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -602,6 +838,118 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
 				TVOS_DEPLOYMENT_TARGET = 16.0;
+			};
+			name = Release;
+		};
+		C00E8BBD76BE83A18928222E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = JColorsWidgets/JColorsWidgets-iOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RLK76T8Y89;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JColorsWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "每日一色";
+				JCOLORS_APP_GROUP = group.org.gewill.JapaneseColors;
+				MARKETING_VERSION = 1.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.JapaneseColors.WidgetsiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WIDGET_EXTENSION";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTS_MACCATALYST = NO;
+			};
+			name = Debug;
+		};
+		70E7087371EA6E41CA70500A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = JColorsWidgets/JColorsWidgets-iOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RLK76T8Y89;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JColorsWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "每日一色";
+				JCOLORS_APP_GROUP = group.org.gewill.JapaneseColors;
+				MARKETING_VERSION = 1.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.JapaneseColors.WidgetsiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WIDGET_EXTENSION";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTS_MACCATALYST = NO;
+			};
+			name = Release;
+		};
+		948081426428FBA538A4A719 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = JColorsWidgets/JColorsWidgets-macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RLK76T8Y89;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JColorsWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "每日一色";
+				JCOLORS_APP_GROUP = "$(DEVELOPMENT_TEAM).org.gewill.JapaneseColors";
+				MARKETING_VERSION = 1.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.JapaneseColors.WidgetsmacOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WIDGET_EXTENSION";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+			};
+			name = Debug;
+		};
+		9FEB7AB9CAC4AD333E9678C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = JColorsWidgets/JColorsWidgets-macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RLK76T8Y89;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JColorsWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "每日一色";
+				JCOLORS_APP_GROUP = "$(DEVELOPMENT_TEAM).org.gewill.JapaneseColors";
+				MARKETING_VERSION = 1.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.JapaneseColors.WidgetsmacOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WIDGET_EXTENSION";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};
@@ -626,6 +974,18 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		E10E2794812011102ED4B08D /* JColorsWidgetsiOS */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (C00E8BBD76BE83A18928222E /* Debug */, 70E7087371EA6E41CA70500A /* Release */,);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		125E6E6E3D5D3DFD3E6031A5 /* JColorsWidgetsmacOS */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (948081426428FBA538A4A719 /* Debug */, 9FEB7AB9CAC4AD333E9678C4 /* Release */,);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -643,14 +1003,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.5.1;
-			};
-		};
-		BEEE07442A9325C900354879 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
 			};
 		};
 		BEEE07472A93261000354879 /* XCRemoteSwiftPackageReference "SwiftUIOverlayContainer" */ = {
@@ -673,11 +1025,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BE781CBB2CA1AE5F0022C4B8 /* XCRemoteSwiftPackageReference "ColorfulX" */;
 			productName = ColorfulX;
-		};
-		BEEE07452A9325C900354879 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BEEE07442A9325C900354879 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
 		};
 		BEEE07482A93261000354879 /* SwiftUIOverlayContainer */ = {
 			isa = XCSwiftPackageProductDependency;
