@@ -61,6 +61,8 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 
 发布查询被本机钥匙串读取阻塞，尚未取得线上版本/构建状态。已终止挂起的只读 ASC 查询；计算机操作工具拒绝访问 SecurityAgent，不能代替用户处理授权。当前本机未找到此 App 的 provisioning profile 或 App Store Distribution 身份，远端 App Group/扩展注册状态仍待核实。
 
+另已实际尝试 iOS 自动签名构建（`-allowProvisioningUpdates`）：Xcode 对 App 与 Widget 均返回 `No Accounts`，选用的通配 `iOS Team Provisioning Profile: *` 不支持 App Groups 或本项目共享组。需先在 Xcode 登录对应开发者账号，配置 App/扩展的显式 Bundle ID 和 App Group profile，再进行设备与分发构建。
+
 ## 发布前必须完成
 
 - 注册 App Group，确认 App 与两项扩展的 Bundle ID、证书及 provisioning profile；构建并检查签名内的组一致。
