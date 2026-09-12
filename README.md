@@ -12,9 +12,9 @@
 
 **授权自limboy的网页版https://colors.limboy.me/**
 
-所有颜色数据和图片均存储本地，无需联网。
+所有颜色数据和图片均存储本地，浏览颜色无需联网。会员状态验证、购买与恢复购买需要联网。
 
 有什么需求，欢迎提交PR。
 
 ## 隐私政策
-本App不进行任何隐私信息收集或上传。
+本 App 的颜色浏览与选择记录保存在本地。会员功能使用 Apple App Store 与 RevenueCat 服务；启动时的会员验证、购买与恢复购买会联网，RevenueCat 会处理匿名用户标识及购买记录，以验证和维护会员权益。详情参见 [RevenueCat 隐私政策](https://www.revenuecat.com/privacy/)。

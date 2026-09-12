@@ -32,6 +32,26 @@ extension Color {
 }
 
 extension Color {
+  /// Chooses the higher-contrast foreground for an opaque, fixed color using WCAG sRGB luminance.
+  var contrastingForegroundColor: Color {
+    guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB),
+          let components = cgColor?.converted(to: colorSpace, intent: .defaultIntent, options: nil)?.components,
+          components.count >= 3
+    else {
+      return .primary
+    }
+
+    func linearize(_ component: CGFloat) -> CGFloat {
+      component <= 0.04045 ? component / 12.92 : pow((component + 0.055) / 1.055, 2.4)
+    }
+    let luminance = 0.2126 * linearize(components[0])
+      + 0.7152 * linearize(components[1])
+      + 0.0722 * linearize(components[2])
+    let blackContrast = (luminance + 0.05) / 0.05
+    let whiteContrast = 1.05 / (luminance + 0.05)
+    return blackContrast >= whiteContrast ? .black : .white
+  }
+
   // Check if the color is light or dark, as defined by the injected lightness threshold.
   // Some people report that 0.7 is best. I suggest to find out for yourself.
   // A nil value is returned if the lightness couldn't be determined.

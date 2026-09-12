@@ -13,11 +13,12 @@ struct ColorCard: View {
   let model: ColorModel
 
   @Environment(\.overlayContainerManager) var manager
-  var containerName: String { "ColorCard" + model.id }
+  @State private var containerName = "ColorCard-" + UUID().uuidString
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State private var showingPro = false
 
   var body: some View {
+    let color = Color(hex: model.hex)
     VStack {
       HStack {
         Text("\(model.month).\(model.date)")
@@ -28,11 +29,12 @@ struct ColorCard: View {
         #endif
         Spacer()
 
-        Text(model.hex)
-          .onTapGesture {
+        #if os(tvOS)
+          Text(model.hex)
+        #else
+          Button {
             if isPro {
-              #if os(tvOS)
-              #elseif os(iOS)
+              #if os(iOS)
                 UIPasteboard.general.string = model.hex
               #else
                 NSPasteboard.general.clearContents()
@@ -42,7 +44,14 @@ struct ColorCard: View {
             } else {
               showingPro = true
             }
+          } label: {
+            Text(model.hex)
+              .frame(minHeight: 44)
           }
+          .buttonStyle(.plain)
+          .accessibilityLabel("Copy color code")
+          .accessibilityValue(model.hex)
+        #endif
       }
       .monospacedDigit()
       Spacer()
@@ -61,9 +70,9 @@ struct ColorCard: View {
       Spacer()
     }
     .padding(20)
-    .foregroundColor(Color(hex: model.hex).isLight(threshold: 0.7) == true ? Color.black : Color.white)
+    .foregroundColor(color.contrastingForegroundColor)
     .frame(width: UserInterfaceIdiom.current == .phone ? 200 : 300, height: UserInterfaceIdiom.current == .phone ? 200 : 300)
-    .background(Color(hex: model.hex))
+    .background(color)
     .cornerRadius(30)
     .padding(10)
     .background(Material.ultraThinMaterial)

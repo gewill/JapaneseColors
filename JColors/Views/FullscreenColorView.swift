@@ -13,16 +13,22 @@ struct FullscreenColorView: View {
   let model: ColorModel
   let didSwipeLeft: () -> Void
   let didSwipeRight: () -> Void
+  let onDismiss: () -> Void
 
   @Environment(\.overlayContainerManager) var manager
-  let containerName: String = "FullscreenColorView"
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
+  @State private var containerName = "FullscreenColorView-" + UUID().uuidString
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State private var showingPro = false
   @State private var showingInfo = true
 
   var body: some View {
     ZStack(alignment: .bottom) {
-      Color(hex: model.hex)
+      Button(action: onDismiss) {
+        Color(hex: model.hex)
+      }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Exit full screen")
       #if os(iOS)
         .statusBarHidden()
         .ignoresSafeArea()
@@ -35,6 +41,7 @@ struct FullscreenColorView: View {
             #if !os(tvOS)
               Capsule().fill(Material.bar)
                 .frame(width: 54, height: 7.5)
+                .accessibilityHidden(true)
             #endif
             HStack {
               Text("\(model.month).\(model.date)")
@@ -46,11 +53,12 @@ struct FullscreenColorView: View {
 
               Spacer()
 
-              Text(model.hex)
-                .onTapGesture {
+              #if os(tvOS)
+                Text(model.hex)
+              #else
+                Button {
                   if isPro {
-                    #if os(tvOS)
-                    #elseif os(iOS)
+                    #if os(iOS)
                       UIPasteboard.general.string = model.hex
                     #else
                       NSPasteboard.general.clearContents()
@@ -60,7 +68,14 @@ struct FullscreenColorView: View {
                   } else {
                     showingPro = true
                   }
+                } label: {
+                  Text(model.hex)
+                    .frame(minHeight: 44)
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Copy color code")
+                .accessibilityValue(model.hex)
+              #endif
             }
             .monospacedDigit()
 
@@ -85,25 +100,29 @@ struct FullscreenColorView: View {
             }, label: {
               Image(systemName: "arrow.left.circle.fill")
                 .font(.title)
+                .frame(minWidth: 44, minHeight: 44)
             })
+            .accessibilityLabel("Previous color")
             Spacer()
             Button(action: {
               didSwipeRight()
             }, label: {
               Image(systemName: "arrow.right.circle.fill")
                 .font(.title)
+                .frame(minWidth: 44, minHeight: 44)
             })
+            .accessibilityLabel("Next color")
           }
           .buttonStyle(.plain)
         }
-        .foregroundColor(Color(hex: model.hex).isLight(threshold: 0.7) == true ? Color.black : Color.white)
+        .foregroundStyle(.primary)
         .padding(.horizontal, 30)
         .padding(.vertical)
         .background(Material.regular)
         .cornerRadius(40)
         .frame(maxWidth: Constant.maxiPhoneScreenWidth, maxHeight: 200)
         .padding()
-        .transition(.move(edge: .bottom))
+        .transition(reduceMotion ? .opacity : .move(edge: .bottom))
         .zIndex(1)
       }
     }
@@ -114,15 +133,13 @@ struct FullscreenColorView: View {
         let verticalAmount = value.translation.height
 
         if abs(horizontalAmount) > abs(verticalAmount) {
-          print(horizontalAmount < 0 ? "left swipe" : "right swipe")
           if horizontalAmount < 0 {
             didSwipeLeft()
           } else {
             didSwipeRight()
           }
         } else {
-          print(verticalAmount < 0 ? "up swipe" : "down swipe")
-          withAnimation(.spring()) {
+          withAnimation(reduceMotion ? nil : .spring()) {
             showingInfo = verticalAmount < 0
           }
         }
@@ -132,30 +149,81 @@ struct FullscreenColorView: View {
       .sheet(isPresented: $showingPro) {
         ProView(isPresented: $showingPro)
       }
-      .onReceive(NotificationCenter.default.publisher(for: .init(rawValue: "RightArrow")), perform: { _ in
-        didSwipeRight()
-      })
-      .onReceive(NotificationCenter.default.publisher(for: .init(rawValue: "LeftArrow")), perform: { _ in
-        didSwipeLeft()
-      })
-      .onAppear {
-        #if os(macOS)
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-          switch event.keyCode {
-          case 123: // Left arrow
-            NotificationCenter.default.post(name: .init(rawValue: "LeftArrow"), object: nil)
-            return nil
-          case 124: // Right arrow
-            NotificationCenter.default.post(name: .init(rawValue: "RightArrow"), object: nil)
-            return nil
-          default:
-            return event
-          }
-        }
-        #endif
+      .accessibilityAction(.escape) {
+        onDismiss()
       }
+    #if os(macOS)
+      .background(FullscreenKeyboardNavigation(
+        isEnabled: !showingPro,
+        previousColor: didSwipeLeft,
+        nextColor: didSwipeRight
+      ))
+    #endif
   }
 }
+
+#if os(macOS)
+private struct FullscreenKeyboardNavigation: NSViewRepresentable {
+  let isEnabled: Bool
+  let previousColor: () -> Void
+  let nextColor: () -> Void
+
+  func makeNSView(context: Context) -> KeyboardView {
+    let view = KeyboardView()
+    updateNSView(view, context: context)
+    return view
+  }
+
+  func updateNSView(_ view: KeyboardView, context: Context) {
+    view.isEnabled = isEnabled
+    view.previousColor = previousColor
+    view.nextColor = nextColor
+  }
+
+  static func dismantleNSView(_ view: KeyboardView, coordinator: ()) {
+    view.removeMonitor()
+  }
+
+  final class KeyboardView: NSView {
+    var isEnabled = false
+    var previousColor: () -> Void = {}
+    var nextColor: () -> Void = {}
+    private var monitor: Any?
+
+    override func viewDidMoveToWindow() {
+      super.viewDidMoveToWindow()
+      removeMonitor()
+      guard window != nil else { return }
+      monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+        guard let self, self.isEnabled,
+              let window = self.window,
+              event.window === window, window.isKeyWindow,
+              window.attachedSheet == nil,
+              !(window.firstResponder is NSTextView),
+              event.modifierFlags.intersection([.command, .control, .option, .shift]).isEmpty
+        else { return event }
+
+        switch event.keyCode {
+        case 123:
+          self.previousColor()
+          return nil
+        case 124:
+          self.nextColor()
+          return nil
+        default:
+          return event
+        }
+      }
+    }
+
+    func removeMonitor() {
+      guard let monitor else { return }
+      NSEvent.removeMonitor(monitor)
+      self.monitor = nil
+    }
+  }
+}
+#endif
 
 struct FullscreenColorView_Previews: PreviewProvider {
   static var previews: some View {

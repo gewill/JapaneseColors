@@ -18,7 +18,7 @@ enum ProFeature: String, CaseIterable, Identifiable {
   var id: ProFeature { self }
 }
 
-final class IAPManager {
+final class IAPManager: NSObject, PurchasesDelegate {
   enum Sku: String {
     case ios_jcolors_pro_lifetime_3
   }
@@ -33,26 +33,40 @@ final class IAPManager {
 
   static let shared = IAPManager()
 
-  private init() {}
+  private override init() {
+    super.init()
+  }
 
   func configure() {
+    guard !Purchases.isConfigured else { return }
+
     #if DEBUG
     Purchases.logLevel = .debug
     #endif
-    Purchases.configure(withAPIKey: "appl_qkcGKdlnRMjdvrsRTfqANMqWeiu")
     Purchases.proxyURL = URL(string: "https://api.rc-backup.com/")!
+    Purchases.configure(withAPIKey: "appl_qkcGKdlnRMjdvrsRTfqANMqWeiu")
+    Purchases.shared.delegate = self
+    checkProLifetime()
   }
 
-  func checkProLifetime(completion: @escaping (Bool) -> Void) {
+  func checkProLifetime() {
     Purchases.shared.getCustomerInfo { customerInfo, _ in
-      if let infos = customerInfo?.entitlements.active,
-         let _ = infos[IAPManager.Permission.pro_lifetime.rawValue]
-      {
-        completion(true)
-      } else {
-        completion(false)
-      }
+      self.updateProStatus(from: customerInfo)
     }
-    Purchases.shared.restorePurchases()
+  }
+
+  func updateProStatus(from customerInfo: CustomerInfo?) {
+    // A failed request is not evidence that an existing entitlement was revoked.
+    guard let customerInfo else { return }
+
+    let isPro = customerInfo.entitlements[Permission.pro_lifetime.rawValue]?.isActive == true
+    let defaults = UserDefaults.standard
+    if defaults.bool(forKey: UserDefaultsKeys.isPro.rawValue) != isPro {
+      defaults.set(isPro, forKey: UserDefaultsKeys.isPro.rawValue)
+    }
+  }
+
+  func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
+    updateProStatus(from: customerInfo)
   }
 }
