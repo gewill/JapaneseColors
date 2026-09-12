@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C07E20260912000000000001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C07E20260912000000000002 /* PrivacyInfo.xcprivacy */; };
 		BE1E567B2A8E718A0095E568 /* JColorsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1E567A2A8E718A0095E568 /* JColorsApp.swift */; };
 		BE1E567D2A8E718A0095E568 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1E567C2A8E718A0095E568 /* ContentView.swift */; };
 		BE1E567F2A8E718B0095E568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1E567E2A8E718B0095E568 /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C07E20260912000000000002 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BE1E56772A8E718A0095E568 /* JColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1E567A2A8E718A0095E568 /* JColorsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JColorsApp.swift; sourceTree = "<group>"; };
 		BE1E567C2A8E718A0095E568 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				BEFC5F152A8FD1A7004A2F1D /* Info.plist */,
+				C07E20260912000000000002 /* PrivacyInfo.xcprivacy */,
 				BE1E567A2A8E718A0095E568 /* JColorsApp.swift */,
 				BE1E567C2A8E718A0095E568 /* ContentView.swift */,
 				BE9E5D012A8E9EA40003D53D /* Constants.swift */,
@@ -330,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C07E20260912000000000001 /* PrivacyInfo.xcprivacy in Resources */,
 				BE64CC1A2A90D051004FD3C8 /* 9.json in Resources */,
 				BE64CC182A90D051004FD3C8 /* 4.json in Resources */,
 				BE64CC192A90D051004FD3C8 /* 5.json in Resources */,

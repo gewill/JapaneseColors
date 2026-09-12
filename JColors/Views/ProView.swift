@@ -5,12 +5,11 @@ struct ProView: View {
   @Binding var isPresented: Bool
 
   @State var packages: [RevenueCat.Package] = []
-  @State var entitlementInfos: [String: RevenueCat.EntitlementInfo] = [:]
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State var isLoading: Bool = false
   @State var errorMessage: String = ""
 
-  @FocusState private var focus: String?
+  @FocusState private var focus: [String]?
 
   // MARK: - life cycle
 
@@ -33,11 +32,13 @@ struct ProView: View {
         Spacer()
 
         Button {
+          guard !self.isLoading else { return }
+          self.errorMessage = ""
           self.isLoading = true
           Purchases.shared.restorePurchases { customerInfo, error in
             self.isLoading = false
             self.showError(message: error?.localizedDescription)
-            self.setEntitlementInfos(customerInfo?.entitlements.all)
+            IAPManager.shared.updateProStatus(from: customerInfo)
           }
         } label: {
           Text("Restore")
@@ -107,8 +108,8 @@ struct ProView: View {
           .stroke(Color.separatorColor, lineWidth: 0.5)
       )
       .afocusable()
-      .focused($focus, equals: "Pro features")
-      .scaleEffect(focus == "Pro features" ? 1.05 : 1)
+      .focused($focus, equals: ["Pro features"])
+      .scaleEffect(focus == ["Pro features"] ? 1.05 : 1)
     }
   }
 
@@ -124,16 +125,16 @@ struct ProView: View {
           .foregroundColor(.yellow)
         }
         .afocusable()
-        .focused($focus, equals: "proView")
-        .scaleEffect(focus == "proView" ? 1.05 : 1)
+        .focused($focus, equals: ["proView"])
+        .scaleEffect(focus == ["proView"] ? 1.05 : 1)
         Spacer()
       } else {
         ScrollView {
-          ForEach(packages) { package in
+          ForEach(packages, id: \.paywallID) { package in
             VStack(spacing: 20) {
               CardReflectionView {
                 VStack(spacing: 10) {
-                  if package.identifier == IAPManager.Sku.ios_jcolors_pro_lifetime_3.rawValue {
+                  if package.storeProduct.productIdentifier == IAPManager.Sku.ios_jcolors_pro_lifetime_3.rawValue {
                     Text("pro_lifetime")
                       .font(.title)
                     Text("pro_lifetime_des")
@@ -150,16 +151,19 @@ struct ProView: View {
                 .foregroundColor(.white)
               }
               .afocusable()
-              .focused($focus, equals: package.identifier)
-              .scaleEffect(focus == package.identifier ? 1.05 : 1)
+              .focused($focus, equals: package.paywallID)
+              .scaleEffect(focus == package.paywallID ? 1.05 : 1)
 
               Spacer()
               Button {
+                guard !self.isLoading else { return }
+                self.errorMessage = ""
                 self.isLoading = true
-                Purchases.shared.purchase(package: packages[0]) { _, customerInfo, error, _ in
+                Purchases.shared.purchase(package: package) { _, customerInfo, error, userCancelled in
                   self.isLoading = false
+                  guard !userCancelled else { return }
                   self.showError(message: error?.localizedDescription)
-                  self.setEntitlementInfos(customerInfo?.entitlements.all)
+                  IAPManager.shared.updateProStatus(from: customerInfo)
                 }
               } label: {
                 Text("Buy Now")
@@ -181,62 +185,41 @@ struct ProView: View {
   }
 
   func updateOfferingsAndPermissions() {
-    guard isPro == false else { return }
+    guard !isLoading else { return }
 
+    errorMessage = ""
     isLoading = true
     let group = DispatchGroup()
     group.enter()
     Purchases.shared.getOfferings { offerings, error in
       self.showError(message: error?.localizedDescription)
+      if let offerings {
+        self.packages = offerings.all.keys.sorted().flatMap { offerings.all[$0]?.availablePackages ?? [] }
+      }
       group.leave()
-      self.packages = offerings?.all.flatMap { $0.value.availablePackages } ?? []
     }
     group.enter()
     Purchases.shared.getCustomerInfo { customerInfo, error in
       self.showError(message: error?.localizedDescription)
+      IAPManager.shared.updateProStatus(from: customerInfo)
       group.leave()
-      self.setEntitlementInfos(customerInfo?.entitlements.all)
     }
     group.notify(queue: .main) {
       self.isLoading = false
     }
   }
 
-  func updateOfferings() {
-    isLoading = true
-    Purchases.shared.getOfferings { offerings, error in
-      self.showError(message: error?.localizedDescription)
-      self.isLoading = false
-      self.packages = offerings?.all.flatMap { $0.value.availablePackages } ?? []
-    }
-  }
-
-  func updatePermissions() {
-    Purchases.shared.getCustomerInfo { customerInfo, _ in
-      self.setEntitlementInfos(customerInfo?.entitlements.all)
-    }
-  }
-
-  func setEntitlementInfos(_ entitlementInfos: [String: RevenueCat.EntitlementInfo]?) {
-    if let entitlementInfos,
-       let pro = entitlementInfos[IAPManager.Permission.pro_lifetime.rawValue],
-       pro.isActive
-    {
-      isPro = true
-    } else {
-      isPro = false
-    }
-
-    self.entitlementInfos = entitlementInfos ?? [:]
-  }
-
   func showError(message: String?) {
     if let message, message.isEmpty == false {
       errorMessage = message
-      DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-        self.errorMessage = ""
-      }
     }
+  }
+}
+
+private extension RevenueCat.Package {
+  // Package identifiers are unique within an offering, not across all offerings.
+  var paywallID: [String] {
+    [presentedOfferingContext.offeringIdentifier, identifier]
   }
 }
 

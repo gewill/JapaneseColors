@@ -2,6 +2,8 @@ import ColorfulX
 import SwiftUI
 
 struct CardReflectionView<Content: View>: View {
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
+  @Environment(\.scenePhase) private var scenePhase
   @State var translation: CGSize = .zero
   @State var isDragging = false
   @State var colors: ColorfulPreset = .neon
@@ -31,7 +33,11 @@ struct CardReflectionView<Content: View>: View {
 
   var body: some View {
     ZStack {
-      ColorfulView(color: $colors)
+      ColorfulView(
+        color: $colors,
+        speed: .constant(scenePhase == .active && !reduceMotion ? 1 : 0),
+        transitionSpeed: .constant(reduceMotion ? 0 : 5)
+      )
       #if os(tvOS)
         .frame(height: 300)
       #else
@@ -45,9 +51,9 @@ struct CardReflectionView<Content: View>: View {
         )
         .cornerRadius(20)
         .scaleEffect(0.9)
-        .rotation3DEffect(.degrees(isDragging ? 10 : 0), axis: (x: -translation.height, y: translation.width, z: 0))
+        .rotation3DEffect(.degrees(isDragging && !reduceMotion ? 10 : 0), axis: (x: -translation.height, y: translation.width, z: 0))
       #if !os(tvOS)
-        .gesture(drag)
+        .gesture(drag, including: reduceMotion ? .none : .all)
       #endif
     }
   }

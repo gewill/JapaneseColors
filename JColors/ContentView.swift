@@ -13,13 +13,22 @@ struct ContentView: View {
 
   @AppStorage("categoryType") var categoryType: CategoryType = .color
   @AppStorage("selectedCategory") var selectedCategory: String = "yellow"
-  @State var selectedColor: ColorModel?
   @AppStorage(UserDefaultsKeys.isFullscreenColor.rawValue) var isFullscreenColor: Bool = false
   @AppStorage(UserDefaultsKeys.selectedColorId.rawValue) var selectedColorId: String = ""
   @AppStorage(UserDefaultsKeys.isAutoChange.rawValue) var isAutoChange = false
   @AppStorage(UserDefaultsKeys.autoChangeType.rawValue) var autoChangeType: AutoChangeType = .order
-  @State var count = 5
-  @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+  @Environment(\.scenePhase) private var scenePhase
+  @State private var playbackID = UUID()
+  @ObservedObject private var playback = AutoChangeCoordinator.shared
+
+  var selectedColor: ColorModel? {
+    ModelTool.shared.color(id: selectedColorId)
+  }
+
+  var shouldAutoChange: Bool {
+    isAutoChange && isPro && scenePhase == .active && !showingPro
+      && (playback.owner == nil || playback.owner?.viewID == playbackID)
+  }
 
   let colorWidth: CGFloat = {
     switch UserInterfaceIdiom.current {
@@ -74,7 +83,34 @@ struct ContentView: View {
       fullscreenColorView
     }
     .onAppear {
-      restoreById()
+      restoreSelection()
+    }
+    .onChange(of: categoryType) { _ in
+      alignCategoryWithSelection()
+    }
+    .onChange(of: selectedCategory) { _ in
+      selectCategoryIfNeeded()
+    }
+    .task(id: shouldAutoChange) {
+      guard shouldAutoChange, let reservation = playback.acquire(for: playbackID) else {
+        return
+      }
+      defer { playback.release(reservation) }
+      while !Task.isCancelled {
+        playback.scheduleNextChange(for: reservation)
+        do {
+          try await Task.sleep(nanoseconds: 5_000_000_000)
+        } catch {
+          return
+        }
+        guard !Task.isCancelled, shouldAutoChange else { return }
+        switch autoChangeType {
+        case .order:
+          nextColor()
+        case .random:
+          setRandomDay()
+        }
+      }
     }
   }
 
@@ -133,27 +169,7 @@ struct ContentView: View {
               Text($0.rawValue.localizedStringKey)
             }
           }
-          Toggle("自动切换\(count)秒后", isOn: $isAutoChange)
-            .monospacedDigit()
-            .onChange(of: isAutoChange, perform: { _ in
-              updateTimer()
-            })
-            .onAppear {
-              updateTimer()
-            }
-            .onReceive(timer) { _ in
-              var tmp = (count - 1)
-              if tmp == 0 {
-                tmp = 5
-                switch autoChangeType {
-                case .order:
-                  nextColor()
-                case .random:
-                  setRandomDay()
-                }
-              }
-              count = tmp
-            }
+          AutoChangeToggle(isOn: $isAutoChange, nextChangeDate: playback.nextChangeDate)
             .disabled(isPro == false)
         }
         .padding(Constant.padding)
@@ -246,10 +262,13 @@ struct ContentView: View {
         HStack {
           ScrollViewReader { reader in
             ScrollView {
-              VStack {
+              LazyVStack {
                 colorListView
               }
               .padding()
+            }
+            .task(id: selectedCategory) {
+              reader.scrollTo(selectedColorId, anchor: .center)
             }
             .onChange(of: selectedColorId) { newValue in
               reader.scrollTo(newValue, anchor: .center)
@@ -260,10 +279,14 @@ struct ContentView: View {
       default:
         ScrollViewReader { reader in
           ScrollView(.horizontal) {
-            HStack {
+            LazyHStack {
               colorListView
             }
             .padding()
+          }
+          .frame(height: colorWidth + 52)
+          .task(id: selectedCategory) {
+            reader.scrollTo(selectedColorId, anchor: .center)
           }
           .onChange(of: selectedColorId) { newValue in
             reader.scrollTo(newValue, anchor: .center)
@@ -290,8 +313,10 @@ struct ContentView: View {
             .onTapGesture {
               updateColor(model)
             }
+            .accessibilityAction(named: Text("选择颜色")) {
+              updateColor(model)
+            }
           Button {
-            selectedColor = model
             selectedColorId = model.id
             withAnimation(.spring()) {
               isFullscreenColor = true
@@ -300,10 +325,11 @@ struct ContentView: View {
             Image(systemName: "arrow.up.left.and.arrow.down.right.circle.fill")
               .font(.title)
               .rotationEffect(Angle.radians(Double.pi / 2))
-              .foregroundColor(Color(hex: model.hex).isLight(threshold: 0.7) == true ? Color.black : Color.white)
+              .foregroundColor(Color(hex: model.hex).contrastingForegroundColor)
               .padding(30)
           }
           .buttonStyle(.plain)
+          .accessibilityLabel("全屏显示颜色")
         }
       #endif
     }
@@ -320,12 +346,11 @@ struct ContentView: View {
             previousColor()
           }, didSwipeRight: {
             nextColor()
-          })
-          .onTapGesture {
+          }, onDismiss: {
             withAnimation(.spring()) {
-              self.isFullscreenColor = false
+              isFullscreenColor = false
             }
-          }
+          })
       }
     }
   }
@@ -392,70 +417,25 @@ struct ContentView: View {
   // MARK: - private methods
 
   func updateColor(_ color: ColorModel) {
-    if selectedColor?.id == color.id {
-      selectedColor = nil
-    } else {
-      selectedColor = color
-      selectedColorId = color.id
-    }
+    selectedColorId = selectedColorId == color.id ? "" : color.id
+  }
+
+  func selectColor(_ color: ColorModel) {
+    selectedColorId = color.id
+    selectedCategory = categoryType == .month
+      ? color.month
+      : ModelTool.shared.colorCategory(for: color) ?? selectedCategory
   }
 
   func nextColor() {
-    if let model = selectedColor {
-      if categoryType == .month {
-        if let date = "2023-\(model.month)-\(model.date)".date() {
-          setColor(date: date.tomorrow)
-        }
-      } else {
-        let colors = ModelTool.shared.getColors(filename: selectedCategory)
-        if var index = colors.firstIndex(where: { $0.id == model.id
-        }) {
-          index += 1
-          if index > colors.count - 1 {
-            let all = ColorCategory.allCases
-            if var i = all.firstIndex(where: { $0.rawValue == selectedCategory }) {
-              i += 1
-              if i > all.count - 1 {
-                i = 0
-              }
-              selectedCategory = all[i].rawValue
-              updateColor(ModelTool.shared.getColors(filename: selectedCategory)[0])
-            }
-          } else {
-            updateColor(colors[index])
-          }
-        }
-      }
+    if let color = ModelTool.shared.adjacentColor(to: selectedColorId, in: selectedCategory, forward: true) {
+      selectColor(color)
     }
   }
 
   func previousColor() {
-    if let model = selectedColor {
-      if categoryType == .month {
-        if let date = "2023-\(model.month)-\(model.date)".date() {
-          setColor(date: date.yesterday)
-        }
-      } else {
-        let colors = ModelTool.shared.getColors(filename: selectedCategory)
-        if var index = colors.firstIndex(where: { $0.id == model.id
-        }) {
-          index -= 1
-          if index < 0 {
-            let all = ColorCategory.allCases
-            if var i = all.firstIndex(where: { $0.rawValue == selectedCategory }) {
-              i -= 1
-              if i < 0 {
-                i = all.count - 1
-              }
-              selectedCategory = all[i].rawValue
-              let colors = ModelTool.shared.getColors(filename: selectedCategory)
-              updateColor(colors[colors.count - 1])
-            }
-          } else {
-            updateColor(colors[index])
-          }
-        }
-      }
+    if let color = ModelTool.shared.adjacentColor(to: selectedColorId, in: selectedCategory, forward: false) {
+      selectColor(color)
     }
   }
 
@@ -464,12 +444,10 @@ struct ContentView: View {
       showingPro = true
       return
     }
-
-    var date = Date.now
-    if date.month == 2 && date.day == 29 {
-      date = date.yesterday
+    if let color = ModelTool.shared.color(on: .now) {
+      categoryType = .month
+      selectColor(color)
     }
-    setColor(date: date)
   }
 
   func setRandomDay() {
@@ -477,34 +455,39 @@ struct ContentView: View {
       showingPro = true
       return
     }
-
-    // 非闰年即可
-    let date = Date.random(in: Date(integerLiteral: 20230101)! ... Date(integerLiteral: 20231231)!)
-    setColor(date: date)
-  }
-
-  func setColor(date: Date) {
-    let month = date.month
-    let day = date.day
-    categoryType = .month
-    selectedCategory = month.description
-    updateColor(ModelTool.shared.getColors(filename: selectedCategory)[day - 1])
-  }
-
-  func updateTimer() {
-    if isAutoChange {
-      timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    } else {
-      timer.upstream.connect().cancel()
+    if let color = ModelTool.shared.randomColor() {
+      categoryType = .month
+      selectColor(color)
     }
-    count = 5
   }
 
-  func restoreById() {
-    if selectedColorId.isEmpty == false {
-      let monthDay = selectedColorId.replacingOccurrences(of: "_", with: "-")
-      if let date = "2023-\(monthDay)".date() {
-        setColor(date: date.tomorrow)
+  func alignCategoryWithSelection() {
+    if let color = selectedColor {
+      selectColor(color)
+    } else {
+      selectedCategory = categoryType == .month ? "1" : ColorCategory.yellow.rawValue
+    }
+  }
+
+  func selectCategoryIfNeeded() {
+    let colors = ModelTool.shared.getColors(filename: selectedCategory)
+    if !selectedColorId.isEmpty && !colors.contains(where: { $0.id == selectedColorId }) {
+      selectedColorId = colors.first?.id ?? ""
+    }
+  }
+
+  func restoreSelection() {
+    // Resolve the persisted ID directly; restoring must neither advance nor toggle it.
+    if selectedColor != nil {
+      alignCategoryWithSelection()
+    } else {
+      selectedColorId = ""
+      isFullscreenColor = false
+      let isValidCategory = categoryType == .month
+        ? ModelTool.shared.allMonths.contains { String($0) == selectedCategory }
+        : ColorCategory(rawValue: selectedCategory) != nil
+      if !isValidCategory {
+        alignCategoryWithSelection()
       }
     }
   }
@@ -513,5 +496,58 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     ContentView()
+  }
+}
+
+// Only this small subtree refreshes each second; the catalog and detail do not.
+private struct AutoChangeToggle: View {
+  @Binding var isOn: Bool
+  let nextChangeDate: Date?
+
+  var body: some View {
+    if let nextChangeDate {
+      TimelineView(.periodic(from: .now, by: 1)) { context in
+        let seconds = max(1, min(5, Int(ceil(nextChangeDate.timeIntervalSince(context.date)))))
+        Toggle("自动切换\(seconds)秒后", isOn: $isOn)
+          .monospacedDigit()
+      }
+    } else {
+      Toggle("自动切换\(5)秒后", isOn: $isOn)
+        .monospacedDigit()
+    }
+  }
+}
+
+// Selection and playback preferences are shared by WindowGroup instances.
+// A single reservation prevents multiple active windows from advancing them twice.
+@MainActor
+private final class AutoChangeCoordinator: ObservableObject {
+  struct Reservation: Equatable {
+    let viewID: UUID
+    let token = UUID()
+  }
+
+  static let shared = AutoChangeCoordinator()
+  @Published private(set) var owner: Reservation?
+  @Published private(set) var nextChangeDate: Date?
+
+  func acquire(for viewID: UUID) -> Reservation? {
+    guard owner == nil || owner?.viewID == viewID else { return nil }
+    let reservation = Reservation(viewID: viewID)
+    owner = reservation
+    return reservation
+  }
+
+  func scheduleNextChange(for reservation: Reservation) {
+    if owner == reservation {
+      nextChangeDate = Date.now.addingTimeInterval(5)
+    }
+  }
+
+  func release(_ reservation: Reservation) {
+    if owner == reservation {
+      owner = nil
+      nextChangeDate = nil
+    }
   }
 }

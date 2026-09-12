@@ -13,7 +13,11 @@ struct Message<S: ShapeStyle>: View {
     self.textColor = textColor
   }
 
-  init(text: LocalizedStringKey, type: MessageType, background: S = Color.backgroundColor, height: CGFloat) {
+  init(text: LocalizedStringKey, type: MessageType, height: CGFloat) where S == Color {
+    self.init(text: text, type: type, background: Color.backgroundColor, height: height)
+  }
+
+  init(text: LocalizedStringKey, type: MessageType, background: S, height: CGFloat) {
     switch type {
     case .success:
       self.textColor = Color.green

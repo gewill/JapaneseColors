@@ -1,10 +1,13 @@
 import Foundation
+import ImageIO
+
+func fail(_ message: String) -> Never {
+    FileHandle.standardError.write(Data("\(message)\n".utf8))
+    exit(EXIT_FAILURE)
+}
 
 // 创建一个DispatchGroup以便等待所有请求完成
 let group = DispatchGroup()
-
-// 创建一个并发队列用于执行异步操作
-let queue = DispatchQueue(label: "com.example.networkQueue", attributes: .concurrent)
 
 // 创建一个URLSession对象
 let session = URLSession.shared
@@ -14,7 +17,11 @@ let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userD
 let saveFolderPath = documentsPath.appendingPathComponent("images")
 
 // 确保文件夹存在
-try? FileManager.default.createDirectory(at: saveFolderPath, withIntermediateDirectories: true, attributes: nil)
+do {
+    try FileManager.default.createDirectory(at: saveFolderPath, withIntermediateDirectories: true, attributes: nil)
+} catch {
+    fail("Cannot create image directory: \(error)")
+}
 
 // 定义每个月的天数
 let daysInMonths: [Int] = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -26,24 +33,34 @@ for month in 1...12 {
 
         let urlStr = "https://colors.limboy.me/images/\(month).\(day).jpg"
         guard let url = URL(string: urlStr) else {
-            group.leave()
-            continue
+            fail("Invalid image URL: \(urlStr)")
         }
 
         let task = session.dataTask(with: url) { data, response, error in
             defer { group.leave() }
 
-            if let data = data {
+            if let error = error {
+                fail("Image request failed for \(month)/\(day): \(error)")
+            }
+            guard let response = response as? HTTPURLResponse,
+                  (200...299).contains(response.statusCode) else {
+                fail("Image request failed for \(month)/\(day): \(String(describing: response))")
+            }
+            guard let data = data,
+                  let source = CGImageSourceCreateWithData(data as CFData, nil),
+                  CGImageSourceGetType(source) as String? == "public.jpeg",
+                  CGImageSourceGetStatus(source) == .statusComplete else {
+                fail("Invalid JPEG for \(month)/\(day)")
+            }
+            do {
                 // 构建文件路径
                 let filePath = saveFolderPath.appendingPathComponent("\(month)_\(day).jpg")
 
                 // 将图片数据保存为文件
-                do {
-                    try data.write(to: filePath)
-                    print("Image saved for \(month)/\(day) at \(filePath)")
-                } catch {
-                    print("Error writing image for \(month)/\(day): \(error)")
-                }
+                try data.write(to: filePath, options: .atomic)
+                print("Image saved for \(month)/\(day) at \(filePath)")
+            } catch {
+                fail("Error writing image for \(month)/\(day): \(error)")
             }
         }
         task.resume()
