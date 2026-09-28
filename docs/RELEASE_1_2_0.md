@@ -87,6 +87,13 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 - `scripts/VerifyCore.sh` 新增 `VerifyContrast.swift`，直接编译生产 `ColorExtensions.swift`，用 Core Graphics 线性 sRGB 转换独立计算实际前景/背景对比度。365 色全部达到 4.5:1，最低 4.5850:1（9_1）；依据 [WCAG 1.4.3](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum)。仅证明原色模式的色对，不证明系统着色、字体布局或 VoiceOver 阅读顺序。
 - 对当前三平台产物检查：iOS/macOS 各一个对应 Widget，扩展资源均为十二个月份 JSON、无 JPG/PNG/Assets.car；链接依赖无 RevenueCat、ColorfulX 或 SwiftUIOverlayContainer。tvOS App 内没有 `.appex`。
 
+### Release 归档与分发导出（2026-09-28，908a8ca）
+
+- 使用 `asc xcode archive` 完成 iOS、macOS Release Archive，版本均为 1.2.0 (1)。iOS App/Widget 下限 16.0；macOS App/Widget 下限 13.0，均包含 arm64 与 x86_64。
+- 使用 `asc xcode export --method app-store-connect` 本地导出 IPA/PKG 成功。iOS 导出 App/Widget 的 App Store profile 和共享组正确、`get-task-allow=false`，严格签名校验通过；Mac PKG 由 `3rd Party Mac Developer Installer` 签名，证书链检查通过。
+- 本地候选位于 `/tmp/jcolors-issues-20260928/JColors-iOS-1.2.0-1.ipa` 与 `JColors-macOS-1.2.0-1.pkg`。IPA SHA-256：`a9df457eec03a10b08357cc64e90be77a7a14bfc8ac7828e54a3d35563f99b3a`；PKG：`ed1a4e56c5d676cf12109587448b5b6660da5c10a0a182039ecc9e4912d5c37f`。
+- 已开始上传候选，iOS upload `fcb531a3-a13b-4683-b034-23537813a88f` 已提交、ASC 状态 PROCESSING；macOS upload `fe12d1b7-8118-46f3-b386-b49f259abaad` 正在上传。后续状态以 #7 和 ASC 当前查询为准。此记录不是 TestFlight 处理成功、测试分发或商店发布证明。
+
 ## 发布前必须完成
 
 - 注册 App Group，确认 App 与两项扩展的 Bundle ID、证书及 provisioning profile；构建并检查签名内的组一致。
