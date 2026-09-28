@@ -44,7 +44,7 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 
 覆盖目录完整性、搜索字段及顺序/缓存、收藏去重/恢复/无效存档/通知、URL 校验、公历/跨年/闰日/DST/时区、七天时间线及权益缓存状态迁移。
 
-## 本次验证记录（2026-09-12）
+## 历史验证记录（2026-09-12）
 
 | 验证 | 结果 |
 | --- | --- |
@@ -64,6 +64,15 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 发布查询被本机钥匙串读取阻塞，尚未取得线上版本/构建状态。已终止挂起的只读 ASC 查询；计算机操作工具拒绝访问 SecurityAgent，不能代替用户处理授权。当前本机未找到此 App 的 provisioning profile 或 App Store Distribution 身份，远端 App Group/扩展注册状态仍待核实。
 
 另已实际尝试 iOS 自动签名构建（`-allowProvisioningUpdates`）：Xcode 对 App 与 Widget 均返回 `No Accounts`，选用的通配 `iOS Team Provisioning Profile: *` 不支持 App Groups 或本项目共享组。需先在 Xcode 登录对应开发者账号，配置 App/扩展的显式 Bundle ID 和 App Group profile，再进行设备与分发构建。
+
+## 当前复验（2026-09-28）
+
+- Xcode 27.0（27A266a）暴露 RevenueCat 5.31.0 的 `PaywallColor.init(stringRepresentation:)` 合成初始化方法冲突。按 [上游 #6949](https://github.com/RevenueCat/purchases-ios/pull/6949) 将唯一受影响依赖更新至首个声明修复的 [5.78.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.78.0)，锁定 `629a56ecef190469914b8f0914bf0446363eb09f`；其他包锁定版本不变。
+- 更新后 iOS Simulator、macOS、tvOS Simulator 的 arm64 Debug 构建全部通过；iOS/macOS 包含各自 Widget。均为 `CODE_SIGNING_ALLOWED=NO`，仍不代表设备或分发签名通过。
+- PR 核心回归已由 GitHub Actions 执行通过：[运行 36441438656](https://github.com/gewill/JapaneseColors/actions/runs/36441438656)，对应 `e2ea3f0`。工作流与本地使用同一个 `scripts/VerifyCore.sh`。
+- ASC 只读查询已恢复；线上 iOS/macOS 仍为 1.1.1，状态 `READY_FOR_DISTRIBUTION`。本机现有有效 Apple Distribution 身份。以上取代历史记录中的钥匙串及无分发身份结论。
+- 当前 Bundle ID 查询仅返回主 App，能力为 In-App Purchase；未返回两个 Widget Bundle ID 或 App Groups 能力。正式注册、共享组绑定、profile、真机权益闭环、TestFlight 和发布仍未完成。
+- 逐项验收由 [#3](https://github.com/gewill/JapaneseColors/issues/3) 汇总，收藏 #4、搜索 #5、小组件 #6、发布 #7；Xcode 27 兼容修复 #8。
 
 ## 发布前必须完成
 
