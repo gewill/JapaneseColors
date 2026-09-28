@@ -71,7 +71,8 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 - 更新后 iOS Simulator、macOS、tvOS Simulator 的 arm64 Debug 构建全部通过；iOS/macOS 包含各自 Widget。均为 `CODE_SIGNING_ALLOWED=NO`，仍不代表设备或分发签名通过。
 - PR 核心回归已由 GitHub Actions 执行通过：[运行 36441438656](https://github.com/gewill/JapaneseColors/actions/runs/36441438656)，对应 `e2ea3f0`。工作流与本地使用同一个 `scripts/VerifyCore.sh`。
 - ASC 只读查询已恢复；线上 iOS/macOS 仍为 1.1.1，状态 `READY_FOR_DISTRIBUTION`。本机现有有效 Apple Distribution 身份。以上取代历史记录中的钥匙串及无分发身份结论。
-- 当前 Bundle ID 查询仅返回主 App，能力为 In-App Purchase；未返回两个 Widget Bundle ID 或 App Groups 能力。正式注册、共享组绑定、profile、真机权益闭环、TestFlight 和发布仍未完成。
+- 自动签名前的 Bundle ID 查询仅返回主 App。随后使用 `-allowProvisioningUpdates` 的 iOS Debug 设备构建成功；通过 `codesign -d --entitlements :-` 验证 App 与 iOS Widget 均属于团队 `RLK76T8Y89` 且包含 `group.org.gewill.JapaneseColors`。签名产物已通过 `devicectl` 安装至 iPhone 16 Pro / iOS 27.0；启动因设备锁定被系统拒绝（`FBSOpenApplicationErrorDomain Code 7 / Locked`），真机交互尚未通过。macOS 分发签名、真实权益闭环、TestFlight 和发布仍未完成。
+- 使用 AXe 在 iPhone 18 Pro / iOS 27.0 模拟器验证收藏空态、添加后显示及选择返回；截图和操作录像已通过 `gh issue edit --attach` 上传至 #4。搜索的模型回归通过，但本次 AXe 输入未实际进入查询框，不把工具发出事件当作 UI 搜索通过。
 - 逐项验收由 [#3](https://github.com/gewill/JapaneseColors/issues/3) 汇总，收藏 #4、搜索 #5、小组件 #6、发布 #7；Xcode 27 兼容修复 #8。
 
 ## 发布前必须完成
