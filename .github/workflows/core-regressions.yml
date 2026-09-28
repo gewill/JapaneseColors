@@ -1,0 +1,28 @@
+name: Core regressions
+
+on:
+  pull_request:
+  push:
+    branches: [build]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: core-regressions-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core:
+    name: Resources, catalog, favorites, routes and widget schedule
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Record toolchain
+        run: |
+          xcodebuild -version
+          xcrun swift --version
+      - name: Verify offline core behavior
+        run: bash scripts/VerifyCore.sh
