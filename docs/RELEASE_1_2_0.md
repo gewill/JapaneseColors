@@ -82,6 +82,11 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 - 自动签名 macOS arm64 Debug 构建成功；App 与 Widget 的签名 readback 均含 `RLK76T8Y89.org.gewill.JapaneseColors`，`codesign --verify --deep --strict` 成功。此为开发签名，不等于 App Store 分发归档通过。
 - 最新核心 CI：[065fa6a / 36443939763](https://github.com/gewill/JapaneseColors/actions/runs/36443939763)。生产自动切换协调器已纳入回归。
 
+### 小组件自动检查补齐（2026-09-28）
+
+- `scripts/VerifyCore.sh` 新增 `VerifyContrast.swift`，直接编译生产 `ColorExtensions.swift`，用 Core Graphics 线性 sRGB 转换独立计算实际前景/背景对比度。365 色全部达到 4.5:1，最低 4.5850:1（9_1）；依据 [WCAG 1.4.3](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum)。仅证明原色模式的色对，不证明系统着色、字体布局或 VoiceOver 阅读顺序。
+- 对当前三平台产物检查：iOS/macOS 各一个对应 Widget，扩展资源均为十二个月份 JSON、无 JPG/PNG/Assets.car；链接依赖无 RevenueCat、ColorfulX 或 SwiftUIOverlayContainer。tvOS App 内没有 `.appex`。
+
 ## 发布前必须完成
 
 - 注册 App Group，确认 App 与两项扩展的 Bundle ID、证书及 provisioning profile；构建并检查签名内的组一致。

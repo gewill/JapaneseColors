@@ -20,3 +20,9 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
   JColors/Shared/WidgetAccess.swift JColorsWidgets/DailyColorSchedule.swift \
   scripts/VerifyWidgets.swift -o "$verification_dir/verify-widgets"
 "$verification_dir/verify-widgets" "$repository_dir/scripts/byMonth"
+
+xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
+  JColors/Models/ColorModel.swift JColors/Models/ColorCatalog.swift \
+  JColors/Extensions/ColorExtensions.swift scripts/VerifyContrast.swift \
+  -o "$verification_dir/verify-contrast"
+"$verification_dir/verify-contrast" "$repository_dir/scripts/byMonth"
