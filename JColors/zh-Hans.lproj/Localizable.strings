@@ -35,3 +35,29 @@
 "Next color" = "下一个颜色";
 
 "Loading" = "加载中";
+
+"Favorites" = "收藏";
+
+"Search colors" = "搜索颜色";
+
+"Close" = "关闭";
+
+"Add to favorites" = "收藏颜色";
+
+"Remove from favorites" = "取消收藏";
+
+"Name, reading, story or HEX" = "色名、读音、典故或 HEX";
+
+"No favorites yet" = "还没有收藏的颜色";
+
+"Tap the heart on a color to keep it here." = "点击颜色详情中的爱心，把喜欢的颜色留在这里。";
+
+"Browse colors" = "浏览颜色";
+
+"Find your color" = "寻找喜欢的颜色";
+
+"Search all 365 colors by name, reading, story or HEX." = "输入色名、读音、典故中的文字或 HEX，搜索全部 365 种颜色。";
+
+"No matching colors" = "没有找到匹配的颜色";
+
+"Try another name or HEX value." = "试试其他色名或 HEX 色值。";

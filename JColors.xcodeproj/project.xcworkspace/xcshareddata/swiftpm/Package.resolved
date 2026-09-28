@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/RevenueCat/purchases-ios-spm.git",
       "state" : {
-        "revision" : "7ac8ce4ef91b8642b66353b123a3cca43a2f976c",
-        "version" : "5.31.0"
+        "revision" : "629a56ecef190469914b8f0914bf0446363eb09f",
+        "version" : "5.78.0"
       }
     },
     {
@@ -53,15 +53,6 @@
       "state" : {
         "revision" : "64a124ba613adc9f2bb7bf00f5a5e8b22a816d14",
         "version" : "2.4.1"
-      }
-    },
-    {
-      "identity" : "swiftyjson",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftyJSON/SwiftyJSON.git",
-      "state" : {
-        "revision" : "af76cf3ef710b6ca5f8c05f3a31307d44a3c5828",
-        "version" : "5.0.2"
       }
     }
   ],

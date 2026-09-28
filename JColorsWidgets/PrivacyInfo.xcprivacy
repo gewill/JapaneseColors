@@ -8,10 +8,7 @@
 			<key>NSPrivacyAccessedAPIType</key>
 			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
 			<key>NSPrivacyAccessedAPITypeReasons</key>
-			<array>
-				<string>CA92.1</string>
-				<string>1C8F.1</string>
-			</array>
+			<array><string>1C8F.1</string></array>
 		</dict>
 	</array>
 	<key>NSPrivacyTracking</key>

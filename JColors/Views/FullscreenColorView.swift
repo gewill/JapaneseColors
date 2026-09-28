@@ -7,19 +7,18 @@
 
 import SwiftUI
 import SwiftUIOverlayContainer
-import SwiftyJSON
 
 struct FullscreenColorView: View {
   let model: ColorModel
   let didSwipeLeft: () -> Void
   let didSwipeRight: () -> Void
+  let onShowPremium: () -> Void
   let onDismiss: () -> Void
 
   @Environment(\.overlayContainerManager) var manager
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
   @State private var containerName = "FullscreenColorView-" + UUID().uuidString
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
-  @State private var showingPro = false
   @State private var showingInfo = true
 
   var body: some View {
@@ -56,6 +55,7 @@ struct FullscreenColorView: View {
               #if os(tvOS)
                 Text(model.hex)
               #else
+                FavoriteButton(color: model)
                 Button {
                   if isPro {
                     #if os(iOS)
@@ -66,7 +66,7 @@ struct FullscreenColorView: View {
                     #endif
                     manager.show(containerView: Message(text: "\(model.hex)已复制", type: .success, height: 60), in: containerName)
                   } else {
-                    showingPro = true
+                    onShowPremium()
                   }
                 } label: {
                   Text(model.hex)
@@ -146,15 +146,12 @@ struct FullscreenColorView: View {
       })
     #endif
       .overlayContainer(containerName, containerConfiguration: ContainerConfigurationForQueueMessage())
-      .sheet(isPresented: $showingPro) {
-        ProView(isPresented: $showingPro)
-      }
       .accessibilityAction(.escape) {
         onDismiss()
       }
     #if os(macOS)
       .background(FullscreenKeyboardNavigation(
-        isEnabled: !showingPro,
+        isEnabled: true,
         previousColor: didSwipeLeft,
         nextColor: didSwipeRight
       ))
@@ -227,8 +224,9 @@ private struct FullscreenKeyboardNavigation: NSViewRepresentable {
 
 struct FullscreenColorView_Previews: PreviewProvider {
   static var previews: some View {
-    ColorCard(model: ColorModel(json: JSON([
-      "month": "3", "date": "8", "kanji": "薄卵色", "hex": "#FFF4D9", "cat": "动物", "series": "黄色", "ruby": "うすたまごいろ", "desc": "这是一种略带红色的浅黄色。据说在江户时代，日本开始食用鸡蛋。随着饮食文化的变化，鸡蛋逐渐变得常见，并出现了这个颜色的名称。这种温柔的自然色彩令人感到宁静。",
-    ])))
+    ColorCard(model: ColorModel(
+      date: "8", desc: "这是一种略带红色的浅黄色。温柔的自然色彩令人感到宁静。",
+      hex: "#FFF4D9", kanji: "薄卵色", month: "3", ruby: "うすたまごいろ", series: "黄色"
+    ))
   }
 }

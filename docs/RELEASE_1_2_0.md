@@ -1,0 +1,161 @@
+# v1.2.0 — 收藏喜欢的颜色，每天遇见一色
+
+状态（2026-09-29）：功能已实现，核心回归、三平台编译及 iOS/macOS 分发签名通过。1.2.0 (25) 两平台均为 ASC VALID / IN_BETA_TESTING，现有内测群已关联；仍待 TestFlight 客户端安装、真机小组件与真实权益验收、PR 审阅合入及正式发布。构建 25 尚未包含 Mac 深链窗口复用修复；新候选 26（`627b4d4`）两平台均已 VALID / IN_BETA_TESTING，已关联内测群并写入测试说明。后文较早阶段记录保留为历史，以本段和最新结果为准。
+
+## 功能与边界
+
+| 功能 | 权限 | 行为 |
+| --- | --- | --- |
+| 收藏 | 免费 | 详情、全屏信息栏与收藏列表可添加/取消；最近收藏在前；本机持久化、同进程多窗口共享 |
+| 搜索 | 免费 | 全目录色名、假名、正文、HEX；忽略首尾空白及英文大小写，HEX 可省略 `#`；日期排序；Mac `⌘F` |
+| 每日色小组件 | 现有终身会员 | iOS/macOS 独立扩展，小号/中号；纯色、日期、色名、读音、HEX，中号追加典故 |
+
+保留 iOS/tvOS 16、macOS 13 下限。tvOS 不显示收藏、搜索和小组件入口。不新增商品、云同步、账号、推送或行为埋点。
+
+## 实现约定
+
+- `ColorCatalog.shared` 仅解析十二个月份文件一次，保留 `month_day` ID；搜索使用预计算文本索引，不在输入时读盘。
+- `FavoritesStore.shared` 在主线程提供所有窗口的唯一状态；UserDefaults 键为 `favoriteColorIDs`，清理无效和重复 ID。
+- 收藏、搜索及会员页统一通过根视图呈现。打开期间暂停自动切换，关闭后保留开关偏好并重新等待五秒。
+- `jcolors://color/<ID>` 退出全屏、停止自动切换、关闭弹窗，并幂等选择该颜色的月份与详情。关闭弹窗期间连续收到路由时，最后一条有效路由生效。`jcolors://premium` 打开原有会员页；非法 URL 不改变界面状态。
+- 时间线预生成七个本地公历日期；以日历运算跨日，2 月 29 日使用 `2_28`；每日申请重载，并在 App 察觉日期/时区变化时请求刷新。系统可能延迟刷新，链接始终使用实际展示条目的 ID。
+- App 是权益缓存唯一写入方；首次启动迁移现有会员标记，有效 CustomerInfo 更新共享缓存，仅在状态变化时请求刷新。失败请求不撤销缓存；Widget 没有 RevenueCat、图片或动画依赖。
+- iOS App Group 为 `group.org.gewill.JapaneseColors`；macOS 使用兼容 macOS 13 的 `RLK76T8Y89.org.gewill.JapaneseColors`。App 与各自扩展必须签入相同组。
+
+## 可重复的快速回归
+
+推荐执行 `bash scripts/VerifyCore.sh`。脚本定位自身所属仓库，临时编译产物退出时清理；不解析第三方包，不构建 App 或启动模拟器。PR 的 `Core regressions` 工作流运行同一命令，覆盖资源、目录、收藏、搜索、路由与小组件时间线。它不替代 UI、实际跨进程权益或真机签名验收。
+
+在仓库根目录运行：
+
+```sh
+python3 scripts/ValidateResources.py
+xcrun swiftc -swift-version 6 -strict-concurrency=complete \
+  JColors/Models/ColorModel.swift JColors/Models/ColorCatalog.swift \
+  JColors/Models/ModelTool.swift JColors/Models/FavoritesStore.swift \
+  JColors/Models/AppRoute.swift JColors/Models/AutoChangeCoordinator.swift scripts/VerifyModels.swift -o /tmp/jcolors-verify-models
+/tmp/jcolors-verify-models "$PWD"
+xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
+  JColors/Models/ColorModel.swift JColors/Models/ColorCatalog.swift \
+  JColors/Shared/WidgetAccess.swift JColorsWidgets/DailyColorSchedule.swift \
+  scripts/VerifyWidgets.swift -o /tmp/jcolors-verify-widgets
+/tmp/jcolors-verify-widgets scripts/byMonth
+```
+
+覆盖目录完整性、搜索字段及顺序/缓存、收藏去重/恢复/无效存档/通知、URL 校验、公历/跨年/闰日/DST/时区、七天时间线及权益缓存状态迁移。自动切换协调器与 App 使用同一份源码，验证单窗口持有、过期任务不能释放新持有者、多弹窗重叠暂停及重新计算五秒截止时间；该模型检查不替代 SwiftUI 任务取消和真实 UI 倒计时验收。
+
+## 历史验证记录（2026-09-12）
+
+| 验证 | 结果 |
+| --- | --- |
+| 资源检查与 Swift 6 严格并发回归 | 通过：365 色、目录缓存/搜索/收藏、365 个合法路由与 20 类无效输入、时间线与权益缓存 |
+| macOS Debug，arm64/x86_64 | App + macOS Widget 编译通过，下限 13.0 |
+| iOS Simulator Debug，arm64 | App + iOS Widget 编译通过，下限 16.0 |
+| tvOS Simulator Debug，arm64 | App 编译通过，下限 16.0；产物没有任何 `.appex` |
+| Widget 打包 | 仅十二个月份 JSON、隐私声明；无色图、RevenueCat、动画依赖 |
+| macOS 26.6.2 实际 App | `⌘F`、HEX 首尾空格/小写、结果定位、搜索无结果、收藏添加/取消/空态、两窗口同步通过 |
+| iPhone/iPad iOS 26.5 模拟器实际 App | 搜索、跨月份定位、收藏添加/取消/最近排序、列表选择/关闭、重装后保留通过；修复 iPad 工具栏未显示、iPhone 日期按钮文字裁切 |
+| 深链及倒计时 | iPhone 弹窗期间颜色深链、重复点击保持选择通过；实际路由/倒计时代码的独立回归覆盖关闭期间最后一次路由优先、取消后重新等待五秒与多窗口 owner 隔离 |
+| Widget 独立渲染 | 小/中尺寸及锁定页、明/暗色文字布局通过；未等同于系统宿主或真机验收 |
+| iPhone 模拟器 Widget 系统宿主 | 主屏幕小/中尺寸会员说明显示正常；点击小组件进入现有会员页并显示新增权益；付费态、系统着色及真机签名仍待验证 |
+
+以上构建均使用 `CODE_SIGNING_ALLOWED=NO`，不能作为正式签名有效的证据。首次 tvOS 构建存在原有 AppIcon 品牌资源命名警告；本版未修改图标。AppIntent 元数据提取提示没有 AppIntents 依赖，不影响静态 Widget。
+
+发布查询被本机钥匙串读取阻塞，尚未取得线上版本/构建状态。已终止挂起的只读 ASC 查询；计算机操作工具拒绝访问 SecurityAgent，不能代替用户处理授权。当前本机未找到此 App 的 provisioning profile 或 App Store Distribution 身份，远端 App Group/扩展注册状态仍待核实。
+
+另已实际尝试 iOS 自动签名构建（`-allowProvisioningUpdates`）：Xcode 对 App 与 Widget 均返回 `No Accounts`，选用的通配 `iOS Team Provisioning Profile: *` 不支持 App Groups 或本项目共享组。需先在 Xcode 登录对应开发者账号，配置 App/扩展的显式 Bundle ID 和 App Group profile，再进行设备与分发构建。
+
+## 当前复验（2026-09-28）
+
+- Xcode 27.0（27A266a）暴露 RevenueCat 5.31.0 的 `PaywallColor.init(stringRepresentation:)` 合成初始化方法冲突。按 [上游 #6949](https://github.com/RevenueCat/purchases-ios/pull/6949) 将唯一受影响依赖更新至首个声明修复的 [5.78.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.78.0)，锁定 `629a56ecef190469914b8f0914bf0446363eb09f`；其他包锁定版本不变。
+- 更新后 iOS Simulator、macOS、tvOS Simulator 的 arm64 Debug 构建全部通过；iOS/macOS 包含各自 Widget。均为 `CODE_SIGNING_ALLOWED=NO`，仍不代表设备或分发签名通过。
+- PR 核心回归已由 GitHub Actions 执行通过：[运行 36441438656](https://github.com/gewill/JapaneseColors/actions/runs/36441438656)，对应 `e2ea3f0`。工作流与本地使用同一个 `scripts/VerifyCore.sh`。
+- ASC 只读查询已恢复；线上 iOS/macOS 仍为 1.1.1，状态 `READY_FOR_DISTRIBUTION`。本机现有有效 Apple Distribution 身份。以上取代历史记录中的钥匙串及无分发身份结论。
+- 自动签名前的 Bundle ID 查询仅返回主 App。随后使用 `-allowProvisioningUpdates` 的 iOS Debug 设备构建成功；通过 `codesign -d --entitlements :-` 验证 App 与 iOS Widget 均属于团队 `RLK76T8Y89` 且包含 `group.org.gewill.JapaneseColors`。签名产物已通过 `devicectl` 安装至 iPhone 16 Pro / iOS 27.0；启动因设备锁定被系统拒绝（`FBSOpenApplicationErrorDomain Code 7 / Locked`），真机交互尚未通过。macOS 分发签名、真实权益闭环、TestFlight 和发布仍未完成。
+- 使用 AXe 在 iPhone 18 Pro / iOS 27.0 模拟器验证收藏空态、添加后显示及选择返回；截图和操作录像已通过 `gh issue edit --attach` 上传至 #4。搜索的模型回归通过，但本次 AXe 输入未实际进入查询框，不把工具发出事件当作 UI 搜索通过。
+- 逐项验收由 [#3](https://github.com/gewill/JapaneseColors/issues/3) 汇总，收藏 #4、搜索 #5、小组件 #6、发布 #7；Xcode 27 兼容修复 #8。
+
+### Mac 补充复验（2026-09-28，065fa6a）
+
+- macOS 27.0 / CUA：⌘F、首尾空格/小写/可选 # 的 HEX、假名、无结果提示、选择返回月份及详情通过。截图与搜索片段已附 #5。
+- 无会员状态实际执行：窗口 1 添加收藏，窗口 2 看见并取消，返回原窗口同步更新；详情与全屏均可收藏/取消；⌘Q 退出再启动后收藏列表恢复。截图与操作片段已附 #4。此记录不覆盖 iPad 多窗口。
+- 自动签名 macOS arm64 Debug 构建成功；App 与 Widget 的签名 readback 均含 `RLK76T8Y89.org.gewill.JapaneseColors`，`codesign --verify --deep --strict` 成功。此为开发签名，不等于 App Store 分发归档通过。
+- 最新核心 CI：[065fa6a / 36443939763](https://github.com/gewill/JapaneseColors/actions/runs/36443939763)。生产自动切换协调器已纳入回归。
+
+### 小组件自动检查补齐（2026-09-28）
+
+- `scripts/VerifyCore.sh` 新增 `VerifyContrast.swift`，直接编译生产 `ColorExtensions.swift`，用 Core Graphics 线性 sRGB 转换独立计算实际前景/背景对比度。365 色全部达到 4.5:1，最低 4.5850:1（9_1）；依据 [WCAG 1.4.3](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum)。仅证明原色模式的色对，不证明系统着色、字体布局或 VoiceOver 阅读顺序。
+- 对当前三平台产物检查：iOS/macOS 各一个对应 Widget，扩展资源均为十二个月份 JSON、无 JPG/PNG/Assets.car；链接依赖无 RevenueCat、ColorfulX 或 SwiftUIOverlayContainer。tvOS App 内没有 `.appex`。
+
+### Release 归档与分发导出（2026-09-28，908a8ca）
+
+- 使用 `asc xcode archive` 完成 iOS、macOS Release Archive，版本均为 1.2.0 (1)。iOS App/Widget 下限 16.0；macOS App/Widget 下限 13.0，均包含 arm64 与 x86_64。
+- 使用 `asc xcode export --method app-store-connect` 本地导出 IPA/PKG 成功。iOS 导出 App/Widget 的 App Store profile 和共享组正确、`get-task-allow=false`，严格签名校验通过；Mac PKG 由 `3rd Party Mac Developer Installer` 签名，证书链检查通过。
+- 本地候选位于 `/tmp/jcolors-issues-20260928/JColors-iOS-1.2.0-1.ipa` 与 `JColors-macOS-1.2.0-1.pkg`。IPA SHA-256：`a9df457eec03a10b08357cc64e90be77a7a14bfc8ac7828e54a3d35563f99b3a`；PKG：`ed1a4e56c5d676cf12109587448b5b6660da5c10a0a182039ecc9e4912d5c37f`。
+- 已开始上传候选，iOS upload `fcb531a3-a13b-4683-b034-23537813a88f` 已提交、ASC 状态 PROCESSING；macOS upload `fe12d1b7-8118-46f3-b386-b49f259abaad` 正在上传。后续状态以 #7 和 ASC 当前查询为准。此记录不是 TestFlight 处理成功、测试分发或商店发布证明。
+
+### ASC 构建号修正（2026-09-28）
+
+macOS 1.2.0 (1) 上传 `fe12d1b7-8118-46f3-b386-b49f259abaad` 被 ASC 拒绝，错误 90061：CFBundleVersion 1 必须高于此前版本的 22。按营销版本过滤 next-build-number 不能覆盖这一平台规则。随后不带版本过滤查询 iOS/macOS 完整历史，两者最高已处理/上传构建均为 24，因此主 App 与两个扩展的 Debug/Release 共六项构建号统一改为 25。候选 1 保留为历史，不用于后续发布。
+
+## 发布前必须完成
+
+- 注册 App Group，确认 App 与两项扩展的 Bundle ID、证书及 provisioning profile；构建并检查签名内的组一致。
+- 在 iPhone/iPad/Mac 系统宿主验证小号和中号小组件、系统着色、文字对比度与点击路由。
+- 使用真实沙盒购买/恢复/撤权验证 App 到 Widget 的权益同步，断网后保留最近有效权益。
+- 验证升级后的收藏恢复、多窗口同步、冷启动/重复/跨日深链及弹窗期间倒计时暂停。
+- 上传 TestFlight，通过设备验收后再提交商店审核。构建号应以远端当前记录为依据，不能仅凭本地默认值判断。
+
+## 商店更新说明草稿
+
+收藏喜欢的颜色，每天遇见一色。
+
+新增免费收藏与全局搜索，按色名、读音、典故或 HEX 找回心仪的颜色。终身会员现可使用小号和中号每日色小组件，点击即可阅读对应典故；已有会员无需再次购买。同时优化目录加载与浏览状态恢复。
+
+## 官方依据
+
+- [WidgetKit 时间线与刷新预算](https://developer.apple.com/documentation/widgetkit/keeping-a-widget-up-to-date)：时间线由系统调度；提前生成条目，不依赖后台常驻计时器。
+- [Widget 深链](https://developer.apple.com/documentation/widgetkit/linking-to-specific-app-scenes-from-your-widget-or-live-activity)：通过 `widgetURL` 与 App 的 `onOpenURL` 定位内容。
+- [不同小组件位置与外观](https://developer.apple.com/documentation/widgetkit/preparing-widgets-for-additional-contexts-and-appearances)：适配容器背景与系统着色。
+- [App Group entitlement](https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.security.application-groups) 与 [旧版 macOS App Sandbox 配置](https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html)：按目标系统选择组标识格式。
+
+## 构建 25：TestFlight 服务端确认（2026-09-28）
+
+| 平台 | Build ID | 处理状态 | 内测状态 |
+| --- | --- | --- | --- |
+| iOS | `1445b0d6-5f12-4779-bf76-e0f48e7d02d3` | VALID | IN_BETA_TESTING |
+| macOS | `2dfbb127-04b3-4a7d-aa8a-6f213d4f2c7c` | VALID | IN_BETA_TESTING |
+
+两平台 `usesNonExemptEncryption=false`。`asc builds groups list` 均确认既有“内测群” `8a26d1db-19a0-4116-9da1-0a4678ef9784`，membership 为 explicit-and-all-builds。已写入 zh-Hans What to Test，分别覆盖手机/平板和 Mac 验收重点。未新增测试人员，未提交外部 Beta 审核或 App Store 审核。服务端可内测不等于客户端已安装或验收通过。
+
+真机 Debug App 通过 devicectl 成功启动，iPhone Mirroring 实际显示“銀朱”详情，首次联网权限弹窗尚待用户选择。Xcode 27.0 (27A266a) 的 Device Hub CUA 读取仍超时；devicectl 截图虽成功写文件但内容全黑，显示信息报告主屏背光关闭，不能作为界面通过证据。镜像画面可读取；本次不宣称完成收藏/搜索/Widget 真机交互。
+
+## 深链窗口复用修复（2026-09-29）
+
+实际在 macOS 27.0 中从收藏弹窗打开 `jcolors://color/12_31`，原实现为每条 URL 新建 WindowGroup 窗口；原窗口的收藏弹窗仍留着。三次链接后窗口清单从一个主窗口增加到四个，因此仅验证 AppRoute 解析不足以证明路由验收通过。
+
+在根 ContentView 添加 `handlesExternalEvents(preferring: ["*"], allowing: ["*"])`，使已有场景优先处理链接；tvOS 排除。依据 [Apple 场景外部事件文档](https://developer.apple.com/documentation/swiftui/view/handlesexternalevents(preferring:allowing:))，保留无窗口时创建场景和手动多窗口能力。
+
+当前 Debug 构建使用 CUA + macOS open 实测：从全屏、搜索、收藏、会员弹窗打开颜色链接后退出遮挡并定位目标；重复有效链接与无效 `13_99` 后保持原选择；主窗口始终为同一个窗口 ID 8792，没有新增主窗口。Mac 和 iOS Debug 编译通过；这不代表 iPad 多场景或 Widget 宿主点击已验收。截图及 25 秒搜索路由操作片段通过 gh 上传 Issue #5。录像受窗口移动影响部分画面被裁切，只作操作片段，完整结果以截图与 AX/窗口清单联合核对。
+
+构建 25 是已处理的旧候选，未包含此修复，下一正式候选必须使用更高构建号。
+
+## 修复候选 26（2026-09-29）
+
+不限制营销版本的 ASC 历史查询确认 iOS/macOS 最高均为 25，全部六处构建配置统一提高为 26，提交 `627b4d4`。该提交 CI 成功。两个 Release 归档与 App Store 分发导出成功，归档内 App 和对应 Widget 的版本均为 1.2.0 (26)。
+
+- iOS IPA SHA-256：`17cdf415b03f072868a1079b54f336635c27cc99707b5b7996179d6758ca2b09`。
+- macOS PKG SHA-256：`66759510453f26e9597de70b557d05cdb009898516ece7ce739ab469ef68163c`。
+- 产物：`/tmp/jcolors-issues-20260928/JColors-iOS-1.2.0-26.ipa`、`/tmp/jcolors-issues-20260928/JColors-macOS-1.2.0-26.pkg`。
+
+各平台现有 `asc builds upload --wait` 进程正在跟踪上传/处理，不应因等待而重复上传。尚未记录构建 26 为 VALID，也未完成 TestFlight 客户端安装。设备镜像 CUA 当前返回 native pipe closed，联网权限仍未代用户选择。
+
+## 构建 26 内测与 iPad 实测（2026-09-29）
+
+- iOS build `88efab8e-b0b8-4b0e-a3a7-4fd32c01f438`：VALID / IN_BETA_TESTING，minOsVersion 16.0。
+- macOS build `514644f2-dec7-4f0b-a02f-933565f08a18`：VALID / IN_BETA_TESTING，minOsVersion 13.0。
+- 两平台均关联既有内测群，已写入 zh-Hans What to Test；上传等待进程均正常完成。仍未验证 TestFlight 客户端安装。
+
+同源 Debug 26 构建成功，安装到 iPad Pro 13-inch (M5) / iPadOS 26.5 模拟器（3D2FDC57-1EB1-40D3-812A-89792BB7A90A）。使用 AXe physical tap + describe-ui/截图验证：收藏空态、详情添加 1_1、列表显示、点击列表项关闭列表并定位详情，terminate/launch 后收藏仍存在；收藏弹窗中 simctl openurl 1_1，经系统 Open 确认后正确关闭弹窗并打开详情。
+
+搜索实际输入 `e34607` 与 ` #E34607 `，均唯一返回「銀朱 / 1.1 / #E34607」；`not-a-color-xyz` 显示无匹配。默认 simulator tap 曾只发送事件但未激活控件，切换 physical 模式后验证实际界面。中文/假名/正文的 iPad 实际输入、多窗口、会员自动切换和系统 Widget 仍未完成；模型测试不替代这些检查。收藏录像 56.53 秒，截图及录像通过 gh 上传 Issue #4；HEX 截图上传 Issue #5。
