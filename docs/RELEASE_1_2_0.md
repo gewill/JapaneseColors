@@ -94,6 +94,10 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 - 本地候选位于 `/tmp/jcolors-issues-20260928/JColors-iOS-1.2.0-1.ipa` 与 `JColors-macOS-1.2.0-1.pkg`。IPA SHA-256：`a9df457eec03a10b08357cc64e90be77a7a14bfc8ac7828e54a3d35563f99b3a`；PKG：`ed1a4e56c5d676cf12109587448b5b6660da5c10a0a182039ecc9e4912d5c37f`。
 - 已开始上传候选，iOS upload `fcb531a3-a13b-4683-b034-23537813a88f` 已提交、ASC 状态 PROCESSING；macOS upload `fe12d1b7-8118-46f3-b386-b49f259abaad` 正在上传。后续状态以 #7 和 ASC 当前查询为准。此记录不是 TestFlight 处理成功、测试分发或商店发布证明。
 
+### ASC 构建号修正（2026-09-28）
+
+macOS 1.2.0 (1) 上传 `fe12d1b7-8118-46f3-b386-b49f259abaad` 被 ASC 拒绝，错误 90061：CFBundleVersion 1 必须高于此前版本的 22。按营销版本过滤 next-build-number 不能覆盖这一平台规则。随后不带版本过滤查询 iOS/macOS 完整历史，两者最高已处理/上传构建均为 24，因此主 App 与两个扩展的 Debug/Release 共六项构建号统一改为 25。候选 1 保留为历史，不用于后续发布。
+
 ## 发布前必须完成
 
 - 注册 App Group，确认 App 与两项扩展的 Bundle ID、证书及 provisioning profile；构建并检查签名内的组一致。
