@@ -1,5 +1,5 @@
 // Compile with ColorModel.swift, ColorCatalog.swift, ModelTool.swift,
-// FavoritesStore.swift and AppRoute.swift from JColors/Models.
+// FavoritesStore.swift, AutoChangeCoordinator.swift and AppRoute.swift from JColors/Models.
 // No package resolution, app build or simulator is required.
 // Run the executable with the repository root as its first argument.
 import Combine
@@ -9,6 +9,47 @@ import Foundation
 struct VerifyModels {
   @MainActor
   static func main() throws {
+    // One active window owns playback. A cancelled task must not clear its successor.
+    let playback = AutoChangeCoordinator()
+    let firstPlaybackWindow = UUID()
+    let secondPlaybackWindow = UUID()
+    let playbackStart = Date(timeIntervalSince1970: 1_800_000_000)
+    let first = playback.acquire(for: firstPlaybackWindow)!
+    precondition(playback.acquire(for: secondPlaybackWindow) == nil)
+    playback.scheduleNextChange(for: first, now: playbackStart)
+    precondition(playback.nextChangeDate == playbackStart.addingTimeInterval(5))
+    let replacement = playback.acquire(for: firstPlaybackWindow)!
+    precondition(replacement != first)
+    playback.release(first)
+    playback.scheduleNextChange(for: first, now: playbackStart.addingTimeInterval(100))
+    precondition(playback.owner == replacement)
+    precondition(playback.nextChangeDate == playbackStart.addingTimeInterval(5))
+
+    // Every open sheet pauses the shared session; closing only one cannot resume it.
+    playback.setPaused(true, for: firstPlaybackWindow)
+    playback.setPaused(true, for: firstPlaybackWindow)
+    playback.setPaused(true, for: secondPlaybackWindow)
+    precondition(playback.isPaused)
+    playback.setPaused(false, for: firstPlaybackWindow)
+    precondition(playback.isPaused)
+    playback.setPaused(false, for: firstPlaybackWindow)
+    precondition(playback.isPaused)
+    playback.setPaused(false, for: secondPlaybackWindow)
+    precondition(!playback.isPaused)
+    playback.release(replacement)
+    precondition(playback.owner == nil && playback.nextChangeDate == nil)
+
+    // Resumption schedules five seconds from the new start, not the old deadline.
+    let resumed = playback.acquire(for: secondPlaybackWindow)!
+    let resumeDate = playbackStart.addingTimeInterval(73)
+    playback.scheduleNextChange(for: resumed, now: resumeDate)
+    precondition(playback.nextChangeDate == resumeDate.addingTimeInterval(5))
+    playback.release(replacement)
+    precondition(playback.owner == resumed)
+    playback.release(resumed)
+    precondition(playback.owner == nil && playback.nextChangeDate == nil)
+    print("PASS: playback single owner, stale task isolation, overlapping sheet pauses and fresh five-second deadline")
+
     let files = FileManager.default
     let root = URL(fileURLWithPath: CommandLine.arguments.dropFirst().first ?? files.currentDirectoryPath)
     let fixture = files.temporaryDirectory.appendingPathComponent("JColors-\(UUID().uuidString).bundle")

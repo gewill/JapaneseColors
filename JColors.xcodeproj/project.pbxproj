@@ -105,6 +105,7 @@
 		23B87B155168D90F97F007BA /* 12.json in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = BE64CBFD2A90D051004FD3C8 /* 12.json */; };
 		302347F7257E777931D49C9C /* PrivacyInfo.xcprivacy in JColorsWidgetsmacOS Resources */ = {isa = PBXBuildFile; fileRef = CC046A71ADE8B8DE8969FA84 /* PrivacyInfo.xcprivacy */; };
 		BA5704EC71A257CC86406D3D /* JColorsWidgetsmacOS.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 237048014E123F0F4754503B /* JColorsWidgetsmacOS.appex */; platformFilters = (macos,); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CC2026092800000000000001 /* AutoChangeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2026092800000000000002 /* AutoChangeCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -200,6 +201,7 @@
 		CC046A71ADE8B8DE8969FA84 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "PrivacyInfo.xcprivacy"; sourceTree = "<group>"; };
 		798FCCA4A22A9BDC5BAA5345 /* JColorsWidgetsiOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JColorsWidgetsiOS.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		237048014E123F0F4754503B /* JColorsWidgetsmacOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JColorsWidgetsmacOS.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC2026092800000000000002 /* AutoChangeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoChangeCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +350,7 @@
 				02DE8CAD17472F247F27D287 /* ColorCatalog.swift */,
 				1FFD0CC699C590763481B256 /* ModelTool.swift */,
 				4A01FF20D7FF4E03BDAF48EC /* FavoritesStore.swift */,
+				CC2026092800000000000002 /* AutoChangeCoordinator.swift */,
 				08DAF12C8B435FAD121C7C6A /* AppRoute.swift */,
 			);
 			path = Models;
@@ -589,6 +592,7 @@
 				BE7786CD7FFF7E3BB99711BD /* ColorCatalog.swift in Sources */,
 				A5E3BAF3403B5C461AD020A4 /* ModelTool.swift in Sources */,
 				54E0AACD9A4D677C42A91018 /* FavoritesStore.swift in Sources */,
+				CC2026092800000000000001 /* AutoChangeCoordinator.swift in Sources */,
 				1250334D2C73A153278A4C08 /* AppRoute.swift in Sources */,
 				5B634F9F9D7708457DF3196C /* ColorLibraryView.swift in Sources */,
 				3848B6597DB4C58D5C0A79EA /* FavoriteButton.swift in Sources */,

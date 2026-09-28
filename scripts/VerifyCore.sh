@@ -11,7 +11,7 @@ python3 scripts/ValidateResources.py
 xcrun swiftc -swift-version 6 -strict-concurrency=complete \
   JColors/Models/ColorModel.swift JColors/Models/ColorCatalog.swift \
   JColors/Models/ModelTool.swift JColors/Models/FavoritesStore.swift \
-  JColors/Models/AppRoute.swift scripts/VerifyModels.swift \
+  JColors/Models/AppRoute.swift JColors/Models/AutoChangeCoordinator.swift scripts/VerifyModels.swift \
   -o "$verification_dir/verify-models"
 "$verification_dir/verify-models" "$repository_dir"
 

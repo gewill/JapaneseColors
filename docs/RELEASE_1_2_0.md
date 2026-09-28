@@ -33,7 +33,7 @@ python3 scripts/ValidateResources.py
 xcrun swiftc -swift-version 6 -strict-concurrency=complete \
   JColors/Models/ColorModel.swift JColors/Models/ColorCatalog.swift \
   JColors/Models/ModelTool.swift JColors/Models/FavoritesStore.swift \
-  JColors/Models/AppRoute.swift scripts/VerifyModels.swift -o /tmp/jcolors-verify-models
+  JColors/Models/AppRoute.swift JColors/Models/AutoChangeCoordinator.swift scripts/VerifyModels.swift -o /tmp/jcolors-verify-models
 /tmp/jcolors-verify-models "$PWD"
 xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
   JColors/Models/ColorModel.swift JColors/Models/ColorCatalog.swift \
@@ -42,7 +42,7 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 /tmp/jcolors-verify-widgets scripts/byMonth
 ```
 
-覆盖目录完整性、搜索字段及顺序/缓存、收藏去重/恢复/无效存档/通知、URL 校验、公历/跨年/闰日/DST/时区、七天时间线及权益缓存状态迁移。
+覆盖目录完整性、搜索字段及顺序/缓存、收藏去重/恢复/无效存档/通知、URL 校验、公历/跨年/闰日/DST/时区、七天时间线及权益缓存状态迁移。自动切换协调器与 App 使用同一份源码，验证单窗口持有、过期任务不能释放新持有者、多弹窗重叠暂停及重新计算五秒截止时间；该模型检查不替代 SwiftUI 任务取消和真实 UI 倒计时验收。
 
 ## 历史验证记录（2026-09-12）
 
