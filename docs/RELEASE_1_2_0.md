@@ -1,6 +1,6 @@
 # v1.2.0 — 收藏喜欢的颜色，每天遇见一色
 
-状态（2026-09-29）：功能已实现，核心回归、三平台编译及 iOS/macOS 分发签名通过。1.2.0 (25) 两平台均为 ASC VALID / IN_BETA_TESTING，现有内测群已关联；仍待 TestFlight 客户端安装、真机小组件与真实权益验收、PR 审阅合入及正式发布。构建 25 尚未包含 Mac 深链窗口复用修复；新候选 26（`627b4d4`）已完成归档与分发导出，正在上传处理。后文较早阶段记录保留为历史，以本段和最新结果为准。
+状态（2026-09-29）：功能已实现，核心回归、三平台编译及 iOS/macOS 分发签名通过。1.2.0 (25) 两平台均为 ASC VALID / IN_BETA_TESTING，现有内测群已关联；仍待 TestFlight 客户端安装、真机小组件与真实权益验收、PR 审阅合入及正式发布。构建 25 尚未包含 Mac 深链窗口复用修复；新候选 26（`627b4d4`）两平台均已 VALID / IN_BETA_TESTING，已关联内测群并写入测试说明。后文较早阶段记录保留为历史，以本段和最新结果为准。
 
 ## 功能与边界
 
@@ -149,3 +149,13 @@ macOS 1.2.0 (1) 上传 `fe12d1b7-8118-46f3-b386-b49f259abaad` 被 ASC 拒绝，�
 - 产物：`/tmp/jcolors-issues-20260928/JColors-iOS-1.2.0-26.ipa`、`/tmp/jcolors-issues-20260928/JColors-macOS-1.2.0-26.pkg`。
 
 各平台现有 `asc builds upload --wait` 进程正在跟踪上传/处理，不应因等待而重复上传。尚未记录构建 26 为 VALID，也未完成 TestFlight 客户端安装。设备镜像 CUA 当前返回 native pipe closed，联网权限仍未代用户选择。
+
+## 构建 26 内测与 iPad 实测（2026-09-29）
+
+- iOS build `88efab8e-b0b8-4b0e-a3a7-4fd32c01f438`：VALID / IN_BETA_TESTING，minOsVersion 16.0。
+- macOS build `514644f2-dec7-4f0b-a02f-933565f08a18`：VALID / IN_BETA_TESTING，minOsVersion 13.0。
+- 两平台均关联既有内测群，已写入 zh-Hans What to Test；上传等待进程均正常完成。仍未验证 TestFlight 客户端安装。
+
+同源 Debug 26 构建成功，安装到 iPad Pro 13-inch (M5) / iPadOS 26.5 模拟器（3D2FDC57-1EB1-40D3-812A-89792BB7A90A）。使用 AXe physical tap + describe-ui/截图验证：收藏空态、详情添加 1_1、列表显示、点击列表项关闭列表并定位详情，terminate/launch 后收藏仍存在；收藏弹窗中 simctl openurl 1_1，经系统 Open 确认后正确关闭弹窗并打开详情。
+
+搜索实际输入 `e34607` 与 ` #E34607 `，均唯一返回「銀朱 / 1.1 / #E34607」；`not-a-color-xyz` 显示无匹配。默认 simulator tap 曾只发送事件但未激活控件，切换 physical 模式后验证实际界面。中文/假名/正文的 iPad 实际输入、多窗口、会员自动切换和系统 Widget 仍未完成；模型测试不替代这些检查。收藏录像 56.53 秒，截图及录像通过 gh 上传 Issue #4；HEX 截图上传 Issue #5。
