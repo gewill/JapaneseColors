@@ -1,6 +1,6 @@
 # v1.2.0 — 收藏喜欢的颜色，每天遇见一色
 
-状态（2026-09-28）：功能已实现，核心回归、三平台编译及 iOS/macOS 分发签名通过。1.2.0 (25) 两平台均为 ASC VALID / IN_BETA_TESTING，现有内测群已关联；仍待 TestFlight 客户端安装、真机小组件与真实权益验收、PR 审阅合入及正式发布。后文较早阶段记录保留为历史，以本段和最新结果为准。
+状态（2026-09-29）：功能已实现，核心回归、三平台编译及 iOS/macOS 分发签名通过。1.2.0 (25) 两平台均为 ASC VALID / IN_BETA_TESTING，现有内测群已关联；仍待 TestFlight 客户端安装、真机小组件与真实权益验收、PR 审阅合入及正式发布。构建 25 尚未包含本次发现的 Mac 深链窗口复用修复，不能作为最终候选；需重新归档上传。后文较早阶段记录保留为历史，以本段和最新结果为准。
 
 ## 功能与边界
 
@@ -129,3 +129,13 @@ macOS 1.2.0 (1) 上传 `fe12d1b7-8118-46f3-b386-b49f259abaad` 被 ASC 拒绝，�
 两平台 `usesNonExemptEncryption=false`。`asc builds groups list` 均确认既有“内测群” `8a26d1db-19a0-4116-9da1-0a4678ef9784`，membership 为 explicit-and-all-builds。已写入 zh-Hans What to Test，分别覆盖手机/平板和 Mac 验收重点。未新增测试人员，未提交外部 Beta 审核或 App Store 审核。服务端可内测不等于客户端已安装或验收通过。
 
 真机 Debug App 通过 devicectl 成功启动，iPhone Mirroring 实际显示“銀朱”详情，首次联网权限弹窗尚待用户选择。Xcode 27.0 (27A266a) 的 Device Hub CUA 读取仍超时；devicectl 截图虽成功写文件但内容全黑，显示信息报告主屏背光关闭，不能作为界面通过证据。镜像画面可读取；本次不宣称完成收藏/搜索/Widget 真机交互。
+
+## 深链窗口复用修复（2026-09-29）
+
+实际在 macOS 27.0 中从收藏弹窗打开 `jcolors://color/12_31`，原实现为每条 URL 新建 WindowGroup 窗口；原窗口的收藏弹窗仍留着。三次链接后窗口清单从一个主窗口增加到四个，因此仅验证 AppRoute 解析不足以证明路由验收通过。
+
+在根 ContentView 添加 `handlesExternalEvents(preferring: ["*"], allowing: ["*"])`，使已有场景优先处理链接；tvOS 排除。依据 [Apple 场景外部事件文档](https://developer.apple.com/documentation/swiftui/view/handlesexternalevents(preferring:allowing:))，保留无窗口时创建场景和手动多窗口能力。
+
+当前 Debug 构建使用 CUA + macOS open 实测：从全屏、搜索、收藏、会员弹窗打开颜色链接后退出遮挡并定位目标；重复有效链接与无效 `13_99` 后保持原选择；主窗口始终为同一个窗口 ID 8792，没有新增主窗口。Mac 和 iOS Debug 编译通过；这不代表 iPad 多场景或 Widget 宿主点击已验收。截图及 25 秒搜索路由操作片段通过 gh 上传 Issue #5。录像受窗口移动影响部分画面被裁切，只作操作片段，完整结果以截图与 AX/窗口清单联合核对。
+
+构建 25 是已处理的旧候选，未包含此修复，下一正式候选必须使用更高构建号。

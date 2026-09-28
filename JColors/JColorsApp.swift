@@ -19,6 +19,10 @@ struct JColorsApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
+        #if !os(tvOS)
+        // Reuse an existing scene for widget links, including while it presents a sheet.
+        .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
+        #endif
         .onAppear { refreshWidgetCalendar() }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
           refreshWidgetCalendar()
