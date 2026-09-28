@@ -75,6 +75,13 @@ xcrun swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete \
 - 使用 AXe 在 iPhone 18 Pro / iOS 27.0 模拟器验证收藏空态、添加后显示及选择返回；截图和操作录像已通过 `gh issue edit --attach` 上传至 #4。搜索的模型回归通过，但本次 AXe 输入未实际进入查询框，不把工具发出事件当作 UI 搜索通过。
 - 逐项验收由 [#3](https://github.com/gewill/JapaneseColors/issues/3) 汇总，收藏 #4、搜索 #5、小组件 #6、发布 #7；Xcode 27 兼容修复 #8。
 
+### Mac 补充复验（2026-09-28，065fa6a）
+
+- macOS 27.0 / CUA：⌘F、首尾空格/小写/可选 # 的 HEX、假名、无结果提示、选择返回月份及详情通过。截图与搜索片段已附 #5。
+- 无会员状态实际执行：窗口 1 添加收藏，窗口 2 看见并取消，返回原窗口同步更新；详情与全屏均可收藏/取消；⌘Q 退出再启动后收藏列表恢复。截图与操作片段已附 #4。此记录不覆盖 iPad 多窗口。
+- 自动签名 macOS arm64 Debug 构建成功；App 与 Widget 的签名 readback 均含 `RLK76T8Y89.org.gewill.JapaneseColors`，`codesign --verify --deep --strict` 成功。此为开发签名，不等于 App Store 分发归档通过。
+- 最新核心 CI：[065fa6a / 36443939763](https://github.com/gewill/JapaneseColors/actions/runs/36443939763)。生产自动切换协调器已纳入回归。
+
 ## 发布前必须完成
 
 - 注册 App Group，确认 App 与两项扩展的 Bundle ID、证书及 provisioning profile；构建并检查签名内的组一致。
