@@ -1,6 +1,6 @@
 # v1.2.0 — 收藏喜欢的颜色，每天遇见一色
 
-状态：功能已实现，本地回归与三平台编译通过；尚未完成正式签名、真机小组件验收、TestFlight 或发布。
+状态（2026-09-28）：功能已实现，核心回归、三平台编译及 iOS/macOS 分发签名通过。1.2.0 (25) 两平台均为 ASC VALID / IN_BETA_TESTING，现有内测群已关联；仍待 TestFlight 客户端安装、真机小组件与真实权益验收、PR 审阅合入及正式发布。后文较早阶段记录保留为历史，以本段和最新结果为准。
 
 ## 功能与边界
 
@@ -118,3 +118,14 @@ macOS 1.2.0 (1) 上传 `fe12d1b7-8118-46f3-b386-b49f259abaad` 被 ASC 拒绝，�
 - [Widget 深链](https://developer.apple.com/documentation/widgetkit/linking-to-specific-app-scenes-from-your-widget-or-live-activity)：通过 `widgetURL` 与 App 的 `onOpenURL` 定位内容。
 - [不同小组件位置与外观](https://developer.apple.com/documentation/widgetkit/preparing-widgets-for-additional-contexts-and-appearances)：适配容器背景与系统着色。
 - [App Group entitlement](https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.security.application-groups) 与 [旧版 macOS App Sandbox 配置](https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html)：按目标系统选择组标识格式。
+
+## 构建 25：TestFlight 服务端确认（2026-09-28）
+
+| 平台 | Build ID | 处理状态 | 内测状态 |
+| --- | --- | --- | --- |
+| iOS | `1445b0d6-5f12-4779-bf76-e0f48e7d02d3` | VALID | IN_BETA_TESTING |
+| macOS | `2dfbb127-04b3-4a7d-aa8a-6f213d4f2c7c` | VALID | IN_BETA_TESTING |
+
+两平台 `usesNonExemptEncryption=false`。`asc builds groups list` 均确认既有“内测群” `8a26d1db-19a0-4116-9da1-0a4678ef9784`，membership 为 explicit-and-all-builds。已写入 zh-Hans What to Test，分别覆盖手机/平板和 Mac 验收重点。未新增测试人员，未提交外部 Beta 审核或 App Store 审核。服务端可内测不等于客户端已安装或验收通过。
+
+真机 Debug App 通过 devicectl 成功启动，iPhone Mirroring 实际显示“銀朱”详情，首次联网权限弹窗尚待用户选择。Xcode 27.0 (27A266a) 的 Device Hub CUA 读取仍超时；devicectl 截图虽成功写文件但内容全黑，显示信息报告主屏背光关闭，不能作为界面通过证据。镜像画面可读取；本次不宣称完成收藏/搜索/Widget 真机交互。
